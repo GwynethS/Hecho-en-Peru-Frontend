@@ -10,7 +10,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'customer',
+    path: 'shop',
     loadChildren: () =>
       import('./layouts/customer/customer.module').then(
         (m) => m.CustomerModule
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'customer',
+    redirectTo: 'shop',
     pathMatch: 'full'
   },
   {
