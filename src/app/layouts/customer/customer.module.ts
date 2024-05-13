@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerComponent } from './customer.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
-    CustomerComponent
+    CustomerComponent,
+    NavbarComponent
   ],
   imports: [
     CommonModule,
