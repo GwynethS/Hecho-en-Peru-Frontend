@@ -1,1 +1,74 @@
-<p>footer works!</p>
+<footer>
+  <div class="logo">
+    <a class="text-decoration-none" routerLink="home"
+      ><img
+        src="../../../../../assets/img/logo-footer.png"
+        alt="Logo de Hecho en Perú"
+    /></a>
+  </div>
+  <div class="footer-navigation-list-items">
+    <h3>Navegación</h3>
+    <mat-nav-list>
+      <div class="footer-navigation-list-item">
+        <a
+          routerLink="home"
+          mat-list-item
+        >
+          <span>Inicio</span>
+        </a>
+      </div>
+      <div class="footer-navigation-list-item">
+        <a
+          routerLink="catalog"
+          mat-list-item
+        >
+          <span>Catalogo</span>
+        </a>
+      </div>
+      <div class="footer-navigation-list-item">
+        <a
+          routerLink="regions"
+          mat-list-item
+        >
+          <span>Regiones</span>
+        </a>
+      </div>
+      <div class="footer-navigation-list-item">
+        <a
+          routerLink="about-us"
+          mat-list-item
+        >
+          <span>Quiénes somos</span>
+        </a>
+      </div>
+    </mat-nav-list>
+  </div>
+  <div class="footer-payment">
+    <h3>Métodos de pago</h3>
+    <mat-list class="footer-flex-list">
+      <mat-list-item><i class="fa-brands fa-cc-visa"></i></mat-list-item>
+      <mat-list-item><i class="fa-brands fa-cc-mastercard"></i></mat-list-item>
+      <mat-list-item><i class="fa-brands fa-cc-paypal"></i></mat-list-item>
+    </mat-list>
+    <mat-list class="footer-flex-list">
+      <mat-list-item><i class="fa-brands fa-cc-diners-club"></i></mat-list-item>
+      <mat-list-item><i class="fa-brands fa-cc-amex"></i></mat-list-item>
+      <mat-list-item><i class="fa-solid fa-qrcode"></i></mat-list-item>
+    </mat-list>
+  </div>
+  <div class="footer-shipping">
+    <h3>Métodos de envío</h3>
+    <mat-list class="footer-flex-list">
+      <mat-list-item><i class="fas fa-shipping-fast"></i></mat-list-item>
+      <mat-list-item><i class="fas fa-truck"></i></mat-list-item>
+    </mat-list>
+  </div>
+  <div class="footer-social">
+    <h3>Redes sociales</h3>
+    <mat-list class="footer-flex-list">
+      <mat-list-item><i class="fa-brands fa-facebook"></i></mat-list-item>
+      <mat-list-item><i class="fa-brands fa-whatsapp"></i></mat-list-item>
+      <mat-list-item><i class="fab fa-instagram"></i></mat-list-item>
+    </mat-list>
+  </div>
+</footer>
