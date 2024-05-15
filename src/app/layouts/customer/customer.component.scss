@@ -1,0 +1,7 @@
+.header-content{
+  height: 6rem;
+}
+.pages-content{
+  height: calc(100% - 6rem);
+  overflow-y: scroll;
+}
