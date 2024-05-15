@@ -1,4 +1,5 @@
-h2, h3{
+h2,
+h3 {
   font-weight: 500;
 }
 
@@ -136,16 +137,15 @@ h2, h3{
 .services-container {
   margin: 5rem 0;
   background-color: #a9e5bb3b;
-  padding: 2rem 0;
+  padding: 2rem 4rem;
   h2 {
-    padding: 2rem 0;
     text-align: center;
+    margin-bottom: 3rem;
   }
   .cards-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-content: center;
-    padding: 0 2rem;
     padding-bottom: 2rem;
     .card {
       width: calc(100% / 4 - 2rem);
@@ -182,134 +182,91 @@ h2, h3{
   }
 }
 
-// .regiones {
-//   //display: none;
-//   .row {
-//       padding-left: 0;
-//       padding-right: 0;
-//   }
+.regions-container {
+  background-image: url("../../../../../assets/img/banner-regiones.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 25rem;
+  display: flex;
+  align-items: center;
+  .regions-card {
+    width: 30%;
+    height: 18rem;
+    transition: all 0.5s ease;
+    margin-left: 4rem;
+    display: flex;
+    align-items: center;
+    background-color: #ffffffd1;
+    div {
+      height: 12rem;
+      padding: 3rem 4rem;
+      position: relative;
+      h2 {
+        margin: 0;
+        margin-bottom: 1.5rem;
+      }
+      p {
+        margin: 0;
+        line-height: 1.5;
+      }
+      button {
+        position: absolute;
+        bottom: 3rem;
+        background-color: #e9806e;
+        color: #fff;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        &:hover {
+          background-color: #e46953;
+        }
+      }
+    }
+  }
+}
 
-//   .fondo-regiones-img {
-//       background-image: url("../images/img-index/banner-regiones.jpg");
-//       background-repeat: no-repeat;
-//       background-size: cover;
-//       border-radius: 0.25rem;
-//       height: 25rem;
-//   }
-
-//   .regiones-fondo {
-//       width: 30%;
-//       height: 25rem;
-//       font-size: small;
-//       transition: all 0.5s ease;
-//       color: $color_2;
-//       margin-left: 3.5rem;
-//       display: flex;
-//       align-items: center;
-
-//       .div-region {
-//           background-color: $background-color_10;
-//           display: flex;
-//           align-content: center;
-//           align-items: center;
-//           padding: 1rem 4rem;
-//           height: 18rem;
-//           width: 100%;
-
-//           .p-regiones {
-//               margin-bottom: 3.5rem;
-//           }
-//       }
-
-//       button {
-//           background-color: $background-color_6;
-//           color: $color_5;
-//           border: none;
-//           width: 11.2rem;
-//           height: 2.5rem;
-//           font-size: 0.9rem;
-//           font-weight: 500;
-//           padding: 0 0.6rem;
-//           border-radius: 0.5rem;
-//           cursor: pointer;
-//           transition: all 0.3s ease;
-
-//           &:hover {
-//               background-color: $background-color_7;
-//               color: $color_5;
-//               box-shadow: 0rem 0.2rem 0.2rem #0000001a;
-//           }
-//       }
-//   }
-// }
-
-// .container-personal {
-//   margin: 4rem 0;
-// }
-
-// .our-team {
-//   background-color: $background-color_11;
-//   display: flex;
-//   align-items: center;
-//   flex-direction: column;
-//   padding-top: 3rem;
-//   padding-bottom: 2rem;
-
-//   h2 {
-//       padding-bottom: 0;
-//   }
-
-//   .row {
-//       display: flex;
-//       flex-wrap: wrap;
-//       justify-content: space-between;
-//       width: 90%;
-
-//       button {
-//           background-color: $background-color_6;
-//           color: $color_5;
-//           border: none;
-//           width: 100%;
-//           height: 2.5rem;
-//           font-size: 0.9rem;
-//           font-weight: 500;
-//           border-radius: 0.5rem;
-//           cursor: pointer;
-//           transition: all 1s ease;
-
-//           &:hover {
-//               background-color: $background-color_7;
-//               color: $color_5;
-//               box-shadow: 0rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1019607843);
-//           }
-//       }
-
-//       .personal {
-//           padding: 0;
-//           display: flex;
-//           flex-direction: column;
-//           justify-content: center;
-//           position: relative;
-//           width: 18%;
-
-//           img {
-//               margin-top: 2rem;
-//               border-radius: 1rem;
-//               height: 70%;
-//               object-fit: cover;
-//           }
-
-//           &:hover {
-//               img {
-//                   transform: scale(1.06, 1.06);
-//               }
-//           }
-
-//           p {
-//               padding: 0.3rem;
-//               padding-top: 1rem;
-//               font-weight: 500;
-//           }
-//       }
-//   }
-// }
+.team-container {
+  background-color: #f9c94625;
+  margin: 4rem 0;
+  padding: 2rem 4rem;
+  h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .team-cards-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% / 5 - 2rem);
+      figure {
+        width: 90%;
+        margin: 0;
+        border-radius: 0.5rem;
+        img {
+          width: 100%;
+          border-radius: 0.5rem;
+          transition: all ease 0.5s;
+        }
+      }
+      &:hover {
+        figure {
+          img {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+    button{
+      width: calc(100% / 5 - 2rem);
+      background-color: #e9806e;
+      color: #fff;
+      &:hover{
+        background-color: #e46953;
+      }
+    }
+  }
+}
