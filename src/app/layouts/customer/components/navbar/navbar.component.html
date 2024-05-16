@@ -1,8 +1,10 @@
 <nav>
   <div class="logo">
-    <a routerLink="home"
-      ><img src="../../../../../assets/img/logo-navbar.png" alt="Logo de Hecho en Perú"
-    /></a>
+    <a routerLink="home">
+      <img
+        src="../../../../../assets/img/logo-navbar.png"
+        alt="Logo de Hecho en Perú"/>
+    </a>
   </div>
 
   <mat-nav-list class="menu-list-items">
@@ -25,7 +27,7 @@
         routerLink="catalog"
         mat-list-item
       >
-        <span>Catalogo</span>
+        <span>Catálogo</span>
       </a>
     </div>
     <div class="menu-list-item">
@@ -61,13 +63,7 @@
           value=""
         />
       </mat-form-field>
-      <button
-        (click)="onCreate()"
-        mat-flat-button
-        type="submit"
-      >
-        Buscar
-      </button>
+      <button (click)="onCreate()" mat-flat-button type="submit">Buscar</button>
     </form>
   </div>
   <div class="nav-icons">

@@ -30,6 +30,27 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'sign-up',
+        loadChildren: () =>
+          import('./pages/sign-up/sign-up.module').then(
+            (m) => m.SignUpModule
+          ),
+      },
+      {
+        path: 'auth',
+        loadChildren: () =>
+          import('./pages/auth/auth.module').then(
+            (m) => m.AuthModule
+          ),
+      },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./pages/user/user.module').then(
+            (m) => m.UserModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

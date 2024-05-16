@@ -1,1 +1,63 @@
-<p>sign-up works!</p>
+<section>
+  <div class="form-container">
+    <h1>Registrarse</h1>
+    <form [formGroup]="signUpForm">
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input
+          formControlName="name"
+          matInput
+          placeholder="Ingresa tu nombre"
+          value=""
+        />
+      </mat-form-field>
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input
+          formControlName="lastName"
+          matInput
+          placeholder="Ingresa tus apellidos"
+          value=""
+        />
+      </mat-form-field>
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="Ingresa tu correo electrónico"
+          value=""
+        />
+      </mat-form-field>
+
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input
+          formControlName="password"
+          matInput
+          [type]="revealPassword ? 'text' : 'password'"
+        />
+        <button
+          (click)="revealPassword = !revealPassword"
+          matSuffix
+          mat-icon-button
+          type="button"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="btn-submit" (click)="OnSubmit()" mat-flat-button type="submit">
+        Crear cuenta
+      </button>
+    </form>
+    <div class="send-to-register-box">
+      <p>Ya tienes una cuenta? <a href="/shop/auth">Inicia sesión</a></p>
+    </div>
+  </div>
+  <div class="img-container">
+    <figure>
+      <img src="../../../../../assets/img/2-llamitas.jpg" alt="llamita" />
+    </figure>
+  </div>
+</section>
+

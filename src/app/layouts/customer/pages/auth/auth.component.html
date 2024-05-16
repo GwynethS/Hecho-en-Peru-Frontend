@@ -1,1 +1,45 @@
-<p>auth works!</p>
+<section>
+  <div class="img-container">
+    <figure>
+      <img src="../../../../../assets/img/llama-machupichu.jpg" alt="llamita" />
+    </figure>
+  </div>
+
+  <div class="form-container">
+    <h1>Iniciar sesión</h1>
+    <form [formGroup]="authForm">
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          formControlName="email"
+          matInput
+          placeholder="Ingresa tu correo electrónico"
+          value=""
+        />
+      </mat-form-field>
+
+      <mat-form-field class="field" appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input
+          formControlName="password"
+          matInput
+          [type]="revealPassword ? 'text' : 'password'"
+        />
+        <button
+          (click)="revealPassword = !revealPassword"
+          matSuffix
+          mat-icon-button
+          type="button"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-form-field>
+      <button class="btn-submit" (click)="OnSubmit()" mat-flat-button type="submit">
+        Iniciar sesión
+      </button>
+    </form>
+    <div class="send-to-register-box">
+      <p>¿No tienes una cuenta? <a href="/shop/sign-up">Regístrate</a></p>
+    </div>
+  </div>
+</section>
