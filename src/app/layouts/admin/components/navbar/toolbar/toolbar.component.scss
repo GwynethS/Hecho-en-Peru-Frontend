@@ -1,15 +1,28 @@
 mat-toolbar {
-    height: 85px;
+    height: 6rem;
     background-color: #F5F5F5;
     color: black;
-    box-shadow: 0px 4px 8px rgba(0.1, 0.1, 0.1, 0.1);
+    box-shadow: 0 0.25rem 0.25rem rgba(0.1, 0.1, 0.1, 0.1);
     display: flex;
     justify-items: center;
     justify-content: start;
-    padding: 0 38px;
+    padding: 0 2.375rem;
 }
 
-.ng-image img {
-    width: 35px;
-    padding-right: 10px;
+.style-logo {
+    font-size: 1.125rem; 
+    font-weight: 400;
+    padding-left: 1.125rem; 
+    padding-top: 1.25rem;
+    display: flex; 
+    justify-items: center;
+}
+
+.style-name-admin {
+    background-color: #ffffff;
+    color: black;
+    padding: 0.25rem;
+    padding-left: 0.938rem;
+    padding-right: 0.938rem;
+    font-size: 0.875rem;
 }

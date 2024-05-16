@@ -1,27 +1,27 @@
-.ng-image {
-    width: 150px;
+.width-image {
+    width: 9.375rem;
 }
 
 .position-image {
-    height: 220px;
+    height: 13.75rem;
     display: flex;
     justify-content: center;
     align-items: center; 
 }
 
 mat-list-item {
-    margin-bottom: 15px;
+    margin-bottom: 0.938rem;
     padding-left: 2.5rem;
 }
 
 mat-list-item a {
-    font-size: 14px;
+    font-size: 0.875rem;
 }
 
 .active-link a {
     color: #CC5454;
-    border-bottom: #E09898 solid 2px;
-    font-size: 14px;
+    border-bottom: #E09898 solid 0.125rem;
+    font-size: 0.875rem;
 }
 
 .active-link i {
@@ -29,5 +29,5 @@ mat-list-item a {
 }
 
 .px-2 {
-    padding-right: 10px;
+    padding-right: 0.625rem;
 }
