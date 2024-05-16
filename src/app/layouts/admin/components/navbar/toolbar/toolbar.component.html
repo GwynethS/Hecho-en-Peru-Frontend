@@ -1,1 +1,28 @@
-<p>toolbar works!</p>
+<mat-toolbar style="display: flex; justify-content: space-between;" color="primary">
+    <div style="display: flex; justify-items: center;">
+        <div style="padding-top: 12px;">
+            <button (click)="toggleSidebar.emit()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <img style="padding-left: 15px" src="../../../../../../favicon.ico" alt="Logo de Hecho en Peru" />
+        <span style="font-size: 18px; font-weight: 400; padding-left: 18px; padding-top: 20px; display: flex; justify-items: center;">Hecho en Perú</span>
+    </div>
+    <div style="display: flex; justify-items: center;">
+        <img src="../../../../../assets/images/logo-user.png" alt="" />
+        <div style="
+        background-color: #ffffff;
+        color: black;
+        padding: 4px;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 14px;">
+            <span>Jean Carlos Achamizo</span>
+            <i class="fa-regular fa-user" style="padding-left: 8px"></i>
+        </div>
+        <div style="padding-left: 30px;">
+            <button mat-flat-button type="submit" style="background-color: #F9C846;">Cerrar sesión</button>
+        </div>
+    </div>
+</mat-toolbar>

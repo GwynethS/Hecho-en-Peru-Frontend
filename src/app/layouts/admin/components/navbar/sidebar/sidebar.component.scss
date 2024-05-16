@@ -1,0 +1,32 @@
+.ng-image {
+    width: 150px;
+}
+
+.position-image {
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+mat-list-item {
+    margin-bottom: 15px;
+}
+
+mat-list-item a {
+    font-size: 14px;
+}
+
+.active-link a {
+    color: #CC5454;
+    border-bottom: #E09898 solid 2px;
+    font-size: 14px;
+}
+
+.active-link i {
+    color: #E09898;
+}
+
+.px-2 {
+    padding-right: 10px;
+}
