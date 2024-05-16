@@ -6,7 +6,6 @@ import { AdminComponent } from './admin.component';
 import { SidebarComponent } from './components/navbar/sidebar/sidebar.component';
 import { ToolbarComponent } from './components/navbar/toolbar/toolbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MaterialModule } from '../../shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
@@ -23,7 +22,6 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     CommonModule,
     AdminRoutingModule,
     SharedModule,
-    MaterialModule,
     ReactiveFormsModule
   ],
   providers:[
@@ -33,6 +31,9 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
         subscriptSizing: 'dynamic'
       }
     }
+  ],
+  exports: [
+    SharedModule
   ]
 })
 export class AdminModule { }

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SharedModule } from '../../../../shared/shared.module';
-import { MaterialModule } from '../../../../shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
@@ -16,7 +15,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     UserRoutingModule,
     SharedModule,
-    MaterialModule,
     ReactiveFormsModule
   ]
 })

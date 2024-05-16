@@ -149,6 +149,7 @@ h3 {
     padding-bottom: 2rem;
     .card {
       width: calc(100% / 4 - 2rem);
+      height: 20rem;
       text-align: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -174,6 +175,7 @@ h3 {
         }
       }
       .card-shadow {
+        height: 15rem;
         padding: 2.5rem 1.5rem;
         transition: all ease 0.5s;
         color: #00000000;
