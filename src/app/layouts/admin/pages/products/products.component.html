@@ -1,9 +1,105 @@
-<div>
-  <div class="div-add-product">
-    <button mat-flat-button color="primary">
-      <mat-icon>add</mat-icon>Add user
+<div class="div-add-product grid formgrid flex justify-content-center align-items-center">
+  <div class="col-2">
+    <button (click)="onCreateProduct()" mat-flat-button class="w-full" style="background-color: #F9C846; border-radius: 0.75rem; height: 2.8rem;">
+      <mat-icon>add</mat-icon> Añadir producto
     </button>
   </div>
-  <span style="font-size: 1.125rem; font-weight: 400;">PRODUCTOS</span>
-
+  <div class="col-2">
+    <button mat-flat-button class="w-full" style="background-color: #FBA570; border-radius: 0.75rem; height: 2.8rem;">
+      <mat-icon>add</mat-icon> Añadir categoría
+    </button>
+  </div>
+  <div class="col-5 style-title">
+    <span>PRODUCTOS</span>
+  </div>
+  <div class="col-3 search-bar">
+    <form class="product-form-search flex justify-content-between">
+      <mat-form-field class="field" appearance="outline">
+        <input formControlName="id-product" matInput placeholder="Ingresa el ID" value="" />
+      </mat-form-field>
+      <button mat-flat-button type="submit" class="style-button">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+  <mat-tab-group #tabGroup class="w-full pt-2">
+    <mat-tab>
+      <div class="table-container">
+        <table mat-table [dataSource]="products" class="mat-elevation-z8">
+          <ng-container matColumnDef="productId">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.productId }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="category_name">
+            <th mat-header-cell *matHeaderCellDef>Categoría</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.category_name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="region_name">
+            <th mat-header-cell *matHeaderCellDef>Región</th>
+            <td mat-cell *matCellDef="let product">
+                {{ product.region_name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="localCraftsman_fullname">
+            <th mat-header-cell *matHeaderCellDef>Artesano</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.localCraftsman_fullname }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.price }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef>Stock</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.stock }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="average_rating">
+            <th mat-header-cell *matHeaderCellDef>Rating promedio</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.average_rating }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="enable">
+            <th mat-header-cell *matHeaderCellDef>Habilitar</th>
+            <td mat-cell *matCellDef="let product">
+              {{ product.enable }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let product">
+              <button (click)="onEditProduct(product)" mat-icon-button
+                color="accent">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="primary">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button (click)="onDeleteProduct(product)" mat-icon-button
+                color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
