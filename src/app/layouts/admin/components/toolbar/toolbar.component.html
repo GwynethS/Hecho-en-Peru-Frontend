@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <div class="position-center">
+    <div class="icon-menu-container">
+      <button (click)="toggleSidebar.emit()" mat-icon-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <img src="../../../../../../favicon.ico" alt="Logo de Hecho en Peru" />
+    <span class="logo-custom">Hecho en Perú</span>
+  </div>
+  <div class="position-center">
+    <div class="name-admin-custom">
+      <span>Jean Carlos Achamizo</span>
+      <i class="fa-regular fa-user space-left-icon"></i>
+    </div>
+    <div class="space-left-btn">
+      <button mat-flat-button type="submit">
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

@@ -1,9 +1,27 @@
-<div>
-  <div class="div-add-product">
-    <button mat-flat-button color="primary">
-      <mat-icon>add</mat-icon>Add user
+<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
+  <div class="col-2">
+    <button (click)="onCreateProduct()" mat-flat-button class="w-full btn-add-product">
+      <mat-icon>add</mat-icon> Añadir producto
     </button>
   </div>
-  <span style="font-size: 1.125rem; font-weight: 400;">PRODUCTOS</span>
-
+  <div class="col-2">
+    <button mat-flat-button class="w-full btn-add-category">
+      <mat-icon>add</mat-icon> Añadir categoría
+    </button>
+  </div>
+  <div class="col-5 centered-header">
+    <span>PRODUCTOS</span>
+  </div>
+  <div class="col-3 search-bar">
+    <form class="product-form-search flex justify-content-around">
+      <mat-form-field class="field" appearance="outline">
+        <input formControlName="id-product" matInput placeholder="Ingrese el ID" value="" />
+      </mat-form-field>
+      <button mat-flat-button type="submit" class="btn-search-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+  <app-product-table class="w-full" [dataSource]="products" (editProduct)="onEditProduct($event)"
+    (deleteProduct)="onDeleteProduct($event)"></app-product-table>
 </div>

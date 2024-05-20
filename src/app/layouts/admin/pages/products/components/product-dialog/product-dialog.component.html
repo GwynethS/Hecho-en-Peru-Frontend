@@ -1,0 +1,79 @@
+<div class="modal-container">
+    <h1 mat-dialog-title class="flex align-items-center justify-content-center py-3">
+        DATOS DEL PRODUCTO
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="productForm" class="grid formgrid">
+            <div class="col-6 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" placeholder="Ingrese el nombre del producto" matInput type="text" />
+                </mat-form-field>
+            </div>
+            <div class="col-3 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Precio</mat-label>
+                    <input formControlName="price" placeholder="Ingrese el precio" matInput type="number" />
+                </mat-form-field>
+            </div>
+            <div class="col-3 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Stock</mat-label>
+                    <input formControlName="stock" placeholder="Ingrese el stock" matInput type="number" />
+                </mat-form-field>
+            </div>
+            <div class="col-3 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select formControlName="category_name" placeholder="Seleccione la categoría">
+                        <mat-option value="true">True</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-3 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Región</mat-label>
+                    <mat-select formControlName="region_name" placeholder="Seleccione la región">
+                        <mat-option value="true">True</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-4 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Artesano</mat-label>
+                    <mat-select formControlName="enable" placeholder="Seleccione el artesano">
+                        <mat-option value="true">True</mat-option>
+                        <mat-option value="false">False</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-2 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Habilitado</mat-label>
+                    <mat-select formControlName="enable" placeholder="Estado">
+                        <mat-option value="true">True</mat-option>
+                        <mat-option value="false">False</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-6 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Detalles</mat-label>
+                    <textarea formControlName="details" matInput type="text"
+                        placeholder="Ingrese los detalles del producto"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="col-6 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Historia</mat-label>
+                    <textarea formControlName="history" matInput type="text"
+                        placeholder="Ingrese la historia del producto"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions class="flex justify-content-center gap-2">
+        <button (click)="onCreate()" mat-raised-button type="submit" class="col-2 btn-save-color"> Save </button>
+        <button (click)="onClearInputs()" [mat-dialog-close]="false" mat-raised-button type="button" class="col-2 btn-clean-color"> Limpiar </button>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="modal-container">
+    <h1 mat-dialog-title class="flex align-items-center justify-content-center py-3">
+        DATOS DEL REGION
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="regionForm" class="grid formgrid">
+            <div class="col-12 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Nombre</mat-label>
+                    <input formControlName="name" placeholder="Ingrese el nombre de la región" matInput type="text" />
+                </mat-form-field>
+            </div>
+            <div class="col-12 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Historia</mat-label>
+                    <textarea formControlName="history" placeholder="Ingrese la historia de la región" matInput type="text"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="col-12 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Introducción de los lugares turísticos</mat-label>
+                    <textarea formControlName="siteIntroduction" placeholder="Ingrese la historia de la región" matInput type="text"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="col-12 py-2">
+                <mat-form-field class="w-full">
+                    <mat-label>Introducción de los artesanos</mat-label>
+                    <textarea formControlName="craftsmenIntroduction" placeholder="Ingrese la historia de la región" matInput type="text"></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions class="flex justify-content-center gap-2">
+        <button (click)="onCreate()" mat-raised-button type="submit" class="col-2 btn-save-color"> Save </button>
+        <button (click)="onClearInputs()" [mat-dialog-close]="false" mat-raised-button type="button" class="col-2 btn-clean-color"> Limpiar </button>
+    </div>
+</div>
