@@ -20,11 +20,9 @@ import { LocalCraftsmenService } from './local-craftsmen.service';
     CommonModule,
     LocalCraftsmenRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    LocalCraftsmenService
-  ]
+  providers: [LocalCraftsmenService],
 })
-export class LocalCraftsmenModule { }
+export class LocalCraftsmenModule {}

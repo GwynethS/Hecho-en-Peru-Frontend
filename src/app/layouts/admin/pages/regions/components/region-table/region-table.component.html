@@ -1,7 +1,11 @@
 <mat-tab-group #tabGroup class="w-full pt-2">
   <mat-tab>
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 shadow-table">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 shadow-table"
+      >
         <ng-container matColumnDef="regionId">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let region">
@@ -21,13 +25,17 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="siteIntroduction">
-          <th mat-header-cell *matHeaderCellDef>Introducción de los lugares turísticos</th>
+          <th mat-header-cell *matHeaderCellDef>
+            Introducción de los lugares turísticos
+          </th>
           <td mat-cell *matCellDef="let region">
             {{ region.siteIntroduction }}
           </td>
         </ng-container>
         <ng-container matColumnDef="craftsmenIntroduction">
-          <th mat-header-cell *matHeaderCellDef>Introducción de los artesanos</th>
+          <th mat-header-cell *matHeaderCellDef>
+            Introducción de los artesanos
+          </th>
           <td mat-cell *matCellDef="let region">
             {{ region.craftsmenIntroduction }}
           </td>
@@ -35,7 +43,11 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let region">
-            <button (click)="editRegion.emit(region)" mat-icon-button color="accent">
+            <button
+              (click)="editRegion.emit(region)"
+              mat-icon-button
+              color="accent"
+            >
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="primary">

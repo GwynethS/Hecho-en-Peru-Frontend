@@ -11,20 +11,14 @@ import { RegionsService } from './regions.service';
 
 
 @NgModule({
-  declarations: [
-    RegionsComponent,
-    RegionTableComponent,
-    RegionDialogComponent
-  ],
+  declarations: [RegionsComponent, RegionTableComponent, RegionDialogComponent],
   imports: [
     CommonModule,
     RegionsRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    RegionsService
-  ]
+  providers: [RegionsService],
 })
-export class RegionsModule { }
+export class RegionsModule {}

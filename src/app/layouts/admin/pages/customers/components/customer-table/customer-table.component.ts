@@ -4,7 +4,7 @@ import { Customer } from '../../models/customer';
 @Component({
   selector: 'app-customer-table',
   templateUrl: './customer-table.component.html',
-  styleUrl: './customer-table.component.scss'
+  styleUrl: './customer-table.component.scss',
 })
 export class CustomerTableComponent {
   @Input()
@@ -16,7 +16,16 @@ export class CustomerTableComponent {
   @Output()
   deleteCustomer = new EventEmitter<Customer>();
 
-  displayedColumns: string[] = ['customerId', 'name', 'lastName', 'email',  'roles_nameRole',  'dateCreated', 'enabled', 'actions'];
+  displayedColumns: string[] = [
+    'customerId',
+    'name',
+    'lastName',
+    'email',
+    'roles_nameRole',
+    'dateCreated',
+    'enabled',
+    'actions',
+  ];
 
   constructor() {}
 }

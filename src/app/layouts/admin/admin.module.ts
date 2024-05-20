@@ -16,25 +16,23 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     AdminComponent,
     SidebarComponent,
     ToolbarComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers:[
+  providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
         subscriptSizing: 'dynamic',
         appearance: 'outline',
-      }
-    }
+      },
+    },
   ],
-  exports: [
-    SharedModule
-  ]
+  exports: [SharedModule],
 })
-export class AdminModule { }
+export class AdminModule {}

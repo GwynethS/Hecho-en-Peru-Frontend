@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-region-dialog',
   templateUrl: './region-dialog.component.html',
-  styleUrl: './region-dialog.component.scss'
+  styleUrl: './region-dialog.component.scss',
 })
 export class RegionDialogComponent {
   hide = true;
@@ -16,14 +16,17 @@ export class RegionDialogComponent {
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<RegionDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-      private editingRegion? : Region
-    ) {
+    private editingRegion?: Region
+  ) {
     this.regionForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       image: [Validators.required],
       history: ['', [Validators.required, Validators.minLength(3)]],
       siteIntroduction: ['', [Validators.required, Validators.minLength(3)]],
-      craftsmenIntroduction: ['', [Validators.required, Validators.minLength(3)]],
+      craftsmenIntroduction: [
+        '',
+        [Validators.required, Validators.minLength(3)],
+      ],
     });
     if (this.editingRegion) {
       this.regionForm.patchValue(this.editingRegion);
@@ -39,9 +42,9 @@ export class RegionDialogComponent {
   }
 
   onCreate(): void {
-    if(this.regionForm.invalid){
+    if (this.regionForm.invalid) {
       this.regionForm.markAllAsTouched();
-    }else{
+    } else {
       this.matDialogRef.close(this.regionForm.value);
     }
   }

@@ -1,53 +1,53 @@
 mat-toolbar {
-	height: 6rem;
-	background-color: #F5F5F5;
-	color: black;
-	box-shadow: 0 0.25rem 0.25rem rgba(0.1, 0.1, 0.1, 0.1);
-	display: flex;
-	justify-items: center;
-	justify-content: space-between;
-	padding: 0 2.375rem;
+  height: 6rem;
+  background-color: #f5f5f5;
+  color: black;
+  box-shadow: 0 0.25rem 0.25rem rgba(0.1, 0.1, 0.1, 0.1);
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  padding: 0 2.375rem;
 }
 
 .position-center {
-	display: flex;
-	justify-items: center;
+  display: flex;
+  justify-items: center;
 }
 
 .icon-menu-container {
-	padding-top: 0.85rem
+  padding-top: 0.85rem;
 }
 
 mat-toolbar img {
-	padding-left: 0.938rem;
+  padding-left: 0.938rem;
 }
 
 .logo-custom {
-	font-size: 1.125rem;
-	font-weight: 400;
-	padding-left: 1.125rem;
-	padding-top: 1.25rem;
-	display: flex;
-	justify-items: center;
+  font-size: 1.125rem;
+  font-weight: 400;
+  padding-left: 1.125rem;
+  padding-top: 1.25rem;
+  display: flex;
+  justify-items: center;
 }
 
 .name-admin-custom {
-	background-color: #ffffff;
-	color: black;
-	padding: 0.25rem;
-	padding-left: 0.938rem;
-	padding-right: 0.938rem;
-	font-size: 0.875rem;
+  background-color: #ffffff;
+  color: black;
+  padding: 0.25rem;
+  padding-left: 0.938rem;
+  padding-right: 0.938rem;
+  font-size: 0.875rem;
 }
 
 .space-left-icon {
-	padding-left: 0.70rem;
+  padding-left: 0.7rem;
 }
 
 .space-left-btn {
-	padding-left: 1.875rem;
+  padding-left: 1.875rem;
 }
 
 .space-left-btn button {
-	background-color: #f9c846
+  background-color: #f9c846;
 }

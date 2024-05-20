@@ -31,6 +31,5 @@ export class CustomersComponent {
     );
   }
 
-  onViewProduct(customer: Customer) {
-  }
+  onViewProduct(customer: Customer) {}
 }

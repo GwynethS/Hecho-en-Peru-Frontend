@@ -14,17 +14,15 @@ import { ProductsService } from './products.service';
   declarations: [
     ProductsComponent,
     ProductTableComponent,
-    ProductDialogComponent
+    ProductDialogComponent,
   ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    ProductsService
-  ]
+  providers: [ProductsService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

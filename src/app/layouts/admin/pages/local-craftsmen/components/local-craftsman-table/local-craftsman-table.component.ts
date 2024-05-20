@@ -4,7 +4,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 @Component({
   selector: 'app-local-craftsman-table',
   templateUrl: './local-craftsman-table.component.html',
-  styleUrl: './local-craftsman-table.component.scss'
+  styleUrl: './local-craftsman-table.component.scss',
 })
 export class LocalCraftsmanTableComponent {
   @Input()
@@ -16,7 +16,15 @@ export class LocalCraftsmanTableComponent {
   @Output()
   deleteLocalCraftsman = new EventEmitter<LocalCraftsman>();
 
-  displayedColumns: string[] = ['localCraftsmanId', 'fullName', 'specialty', 'experience', 'region_name', 'enabled', 'actions'];
+  displayedColumns: string[] = [
+    'localCraftsmanId',
+    'fullName',
+    'specialty',
+    'experience',
+    'region_name',
+    'enabled',
+    'actions',
+  ];
 
   constructor() {}
 }

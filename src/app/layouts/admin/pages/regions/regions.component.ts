@@ -8,7 +8,7 @@ import { RegionDialogComponent } from './components/region-dialog/region-dialog.
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
-  styleUrl: './regions.component.scss'
+  styleUrl: './regions.component.scss',
 })
 export class RegionsComponent implements OnDestroy {
   regions: Region[] = [];

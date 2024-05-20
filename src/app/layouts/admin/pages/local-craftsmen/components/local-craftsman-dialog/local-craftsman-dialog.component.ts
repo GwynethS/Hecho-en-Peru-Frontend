@@ -6,7 +6,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 @Component({
   selector: 'app-local-craftsman-dialog',
   templateUrl: './local-craftsman-dialog.component.html',
-  styleUrl: './local-craftsman-dialog.component.scss'
+  styleUrl: './local-craftsman-dialog.component.scss',
 })
 export class LocalCraftsmanDialogComponent {
   hide = true;
@@ -16,8 +16,8 @@ export class LocalCraftsmanDialogComponent {
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<LocalCraftsmanDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-      private editinglocalCraftsman? : LocalCraftsman
-    ) {
+    private editinglocalCraftsman?: LocalCraftsman
+  ) {
     this.localCraftsmanForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
@@ -43,9 +43,9 @@ export class LocalCraftsmanDialogComponent {
   }
 
   onCreate(): void {
-    if(this.localCraftsmanForm.invalid){
+    if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
-    }else{
+    } else {
       this.matDialogRef.close(this.localCraftsmanForm.value);
     }
   }

@@ -5,7 +5,7 @@ import { environment } from '../../../../../environments/environment';
 
 @Injectable()
 export class CustomersService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getCustomers() {
     return this.httpClient.get<Customer[]>(`${environment.apiURL}users`);
@@ -20,6 +20,8 @@ export class CustomersService {
   }
 
   getSearchOrderDetailsByID(orderId: string, userId: string) {
-    return this.httpClient.get<Customer[]>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`);
+    return this.httpClient.get<Customer[]>(
+      `${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`
+    );
   }
 }

@@ -1,7 +1,11 @@
 <mat-tab-group #tabGroup class="w-full pt-2">
   <mat-tab>
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 shadow-table">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 shadow-table"
+      >
         <ng-container matColumnDef="localCraftsmanId">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let localCraftsman">
@@ -41,13 +45,21 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let localCraftsman">
-            <button (click)="editLocalCraftsman.emit(localCraftsman)" mat-icon-button color="accent">
+            <button
+              (click)="editLocalCraftsman.emit(localCraftsman)"
+              mat-icon-button
+              color="accent"
+            >
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="primary">
               <mat-icon>visibility</mat-icon>
             </button>
-            <button (click)="deleteLocalCraftsman.emit(localCraftsman.id)" mat-icon-button color="warn">
+            <button
+              (click)="deleteLocalCraftsman.emit(localCraftsman.id)"
+              mat-icon-button
+              color="warn"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </td>

@@ -4,7 +4,7 @@ import { Region } from '../../models/region';
 @Component({
   selector: 'app-region-table',
   templateUrl: './region-table.component.html',
-  styleUrl: './region-table.component.scss'
+  styleUrl: './region-table.component.scss',
 })
 export class RegionTableComponent {
   @Input()
@@ -13,7 +13,14 @@ export class RegionTableComponent {
   @Output()
   editRegion = new EventEmitter<Region>();
 
-  displayedColumns: string[] = ['regionId', 'name', 'history', 'siteIntroduction', 'craftsmenIntroduction', 'actions'];
+  displayedColumns: string[] = [
+    'regionId',
+    'name',
+    'history',
+    'siteIntroduction',
+    'craftsmenIntroduction',
+    'actions',
+  ];
 
   constructor() {}
 }

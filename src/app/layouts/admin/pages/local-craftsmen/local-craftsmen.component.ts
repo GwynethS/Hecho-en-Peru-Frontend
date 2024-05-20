@@ -9,7 +9,7 @@ import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dial
 @Component({
   selector: 'app-local-craftsmen',
   templateUrl: './local-craftsmen.component.html',
-  styleUrl: './local-craftsmen.component.scss'
+  styleUrl: './local-craftsmen.component.scss',
 })
 export class LocalCraftsmenComponent implements OnDestroy {
   localCraftsmen: LocalCraftsman[] = [];
@@ -40,11 +40,13 @@ export class LocalCraftsmenComponent implements OnDestroy {
         .subscribe({
           next: (localCraftsmanData) => {
             if (localCraftsmanData) {
-              this.localCraftsmenService.addLocalCraftsmen(localCraftsmanData).subscribe({
-                next: (localCraftsmen) => {
-                  this.localCraftsmen = localCraftsmen;
-                },
-              });
+              this.localCraftsmenService
+                .addLocalCraftsmen(localCraftsmanData)
+                .subscribe({
+                  next: (localCraftsmen) => {
+                    this.localCraftsmen = localCraftsmen;
+                  },
+                });
             }
           },
         })
@@ -62,7 +64,10 @@ export class LocalCraftsmenComponent implements OnDestroy {
           next: (localCraftsmanData) => {
             if (localCraftsmanData) {
               this.localCraftsmenService
-                .updateLocalCraftsmen(localCraftsman.localCraftsmanId, localCraftsmanData)
+                .updateLocalCraftsmen(
+                  localCraftsman.localCraftsmanId,
+                  localCraftsmanData
+                )
                 .subscribe({
                   next: (localCraftsmen) => {
                     this.localCraftsmen = localCraftsmen;
@@ -85,11 +90,13 @@ export class LocalCraftsmenComponent implements OnDestroy {
       .showConfirmDeleteAction('este artesano')
       .then((result) => {
         if (result.isConfirmed) {
-          this.localCraftsmenService.deleteLocalCraftsmenByID(id.localCraftsmanId).subscribe({
-            next: (localCraftsmen) => {
-              this.localCraftsmen = localCraftsmen;
-            },
-          });
+          this.localCraftsmenService
+            .deleteLocalCraftsmenByID(id.localCraftsmanId)
+            .subscribe({
+              next: (localCraftsmen) => {
+                this.localCraftsmen = localCraftsmen;
+              },
+            });
         }
       });
   }

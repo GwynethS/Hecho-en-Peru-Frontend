@@ -1,7 +1,11 @@
 <mat-tab-group #tabGroup class="w-full pt-2">
   <mat-tab>
     <div class="table-container">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 shadow-table">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 shadow-table"
+      >
         <ng-container matColumnDef="productId">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let product">

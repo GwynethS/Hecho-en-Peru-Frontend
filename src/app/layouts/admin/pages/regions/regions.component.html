@@ -1,21 +1,36 @@
-<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
-    <div class="col-2">
-        <button (click)="onCreateRegion()" mat-flat-button class="w-full btn-add-region">
-            <mat-icon>add</mat-icon> Añadir región
-        </button>
-    </div>
-    <div class="col-7 centered-header">
-        <span>REGIONES</span>
-    </div>
-    <div class="col-3 search-bar">
-        <form class="region-form-search flex justify-content-between">
-            <mat-form-field class="field" appearance="outline">
-                <input formControlName="id-region" matInput placeholder="Ingrese el nombre" value="" />
-            </mat-form-field>
-            <button mat-flat-button type="submit" class="btn-search-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </form>
-    </div>
-    <app-region-table class="w-full" [dataSource]="regions" (editRegion)="onEditRegion($event)"></app-region-table>
+<div
+  class="div-add-container grid formgrid flex justify-content-center align-items-top"
+>
+  <div class="col-2">
+    <button
+      (click)="onCreateRegion()"
+      mat-flat-button
+      class="w-full btn-add-region"
+    >
+      <mat-icon>add</mat-icon> Añadir región
+    </button>
+  </div>
+  <div class="col-7 centered-header">
+    <span>REGIONES</span>
+  </div>
+  <div class="col-3 search-bar">
+    <form class="region-form-search flex justify-content-between">
+      <mat-form-field class="field" appearance="outline">
+        <input
+          formControlName="id-region"
+          matInput
+          placeholder="Ingrese el nombre"
+          value=""
+        />
+      </mat-form-field>
+      <button mat-flat-button type="submit" class="btn-search-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+  <app-region-table
+    class="w-full"
+    [dataSource]="regions"
+    (editRegion)="onEditRegion($event)"
+  ></app-region-table>
 </div>

@@ -1,60 +1,64 @@
 <mat-tab-group #tabGroup class="w-full pt-2">
-    <mat-tab>
-        <div class="table-container">
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 shadow-table">
-                <ng-container matColumnDef="customerId">
-                    <th mat-header-cell *matHeaderCellDef>ID</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.customerId }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.name }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="lastName">
-                    <th mat-header-cell *matHeaderCellDef>Apellido</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.lastName }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef>Email</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.email }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="roles_nameRole">
-                    <th mat-header-cell *matHeaderCellDef>Rol</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.roles_nameRole }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="dateCreated">
-                    <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.dateCreated }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="enabled">
-                    <th mat-header-cell *matHeaderCellDef>Habilitado</th>
-                    <td mat-cell *matCellDef="let customer">
-                        {{ customer.enabled }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                    <td mat-cell *matCellDef="let customer">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-        </div>
-    </mat-tab>
+  <mat-tab>
+    <div class="table-container">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 shadow-table"
+      >
+        <ng-container matColumnDef="customerId">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.customerId }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.name }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef>Apellido</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.lastName }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.email }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="roles_nameRole">
+          <th mat-header-cell *matHeaderCellDef>Rol</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.roles_nameRole }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="dateCreated">
+          <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.dateCreated }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="enabled">
+          <th mat-header-cell *matHeaderCellDef>Habilitado</th>
+          <td mat-cell *matCellDef="let customer">
+            {{ customer.enabled }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let customer">
+            <button mat-icon-button color="primary">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-tab>
 </mat-tab-group>

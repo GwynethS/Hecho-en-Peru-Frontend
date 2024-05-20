@@ -6,7 +6,7 @@ import { Product } from '../../models/product';
 @Component({
   selector: 'app-product-dialog',
   templateUrl: './product-dialog.component.html',
-  styleUrl: './product-dialog.component.scss'
+  styleUrl: './product-dialog.component.scss',
 })
 export class ProductDialogComponent {
   hide = true;
@@ -16,8 +16,8 @@ export class ProductDialogComponent {
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-      private editingProduct? : Product
-    ) {
+    private editingProduct?: Product
+  ) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       category_name: ['', [Validators.required, Validators.minLength(3)]],
@@ -51,9 +51,9 @@ export class ProductDialogComponent {
   }
 
   onCreate(): void {
-    if(this.productForm.invalid){
+    if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
-    }else{
+    } else {
       this.matDialogRef.close(this.productForm.value);
     }
   }
