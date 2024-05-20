@@ -1,1 +1,22 @@
-<p>local-craftsmen works!</p>
+<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
+    <div class="col-2">
+        <button (click)="onCreateLocalCraftsman()" mat-flat-button class="w-full btn-add-local">
+            <mat-icon>add</mat-icon> Añadir artesano
+        </button>
+    </div>
+    <div class="col-7 centered-header">
+        <span>ARTESANOS</span>
+    </div>
+    <div class="col-3 search-bar">
+        <form class="local-form-search flex justify-content-between">
+            <mat-form-field class="field" appearance="outline">
+                <input formControlName="id-local" matInput placeholder="Ingrese el ID" value="" />
+            </mat-form-field>
+            <button mat-flat-button type="submit" class="btn-search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+    <app-local-craftsman-table class="w-full" [dataSource]="localCraftsmen" (editLocalCraftsman)="onEditLocalCraftsman($event)"
+    (deleteLocalCraftsman)="onDeleteLocalCraftsman($event)"></app-local-craftsman-table>
+</div>

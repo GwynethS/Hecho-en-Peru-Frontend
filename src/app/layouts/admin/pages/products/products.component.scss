@@ -1,15 +1,15 @@
-.div-add-product {
+.div-add-container {
   margin: 0.5rem;
   padding: 2rem;
   background-color: #F5F5F5;
 }
 
-.style-title {
+.centered-header {
   font-size: 1.125rem;
-  font-weight: 400;
+  font-weight: 500;
+  margin-top: 0.75rem;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .search-bar {
@@ -19,8 +19,24 @@
   }
 }
 
-.style-button {
+.btn-search-icon {
   background-color: #E09898;
   color: white;
-  padding: 1.75rem;
+  padding: 1.7rem;
+}
+
+.btn-add-product {
+  background-color: #f9c846;
+  font-weight: 400;
+  border-radius: 0.75rem;
+  padding: 1.4rem;
+  box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-category {
+  background-color: #fba570;
+  font-weight: 400;
+  border-radius: 0.75rem;
+  padding: 1.4rem;
+  box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
 }

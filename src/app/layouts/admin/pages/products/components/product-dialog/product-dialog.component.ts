@@ -2,9 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Product } from '../../models/product';
-import { ProductsService } from '../../products.service';
-import { AlertService } from '../../../../../../core/alert.service';
-import { LocalCraftsmenComponent } from '../../../local-craftsmen/local-craftsmen.component';
 
 @Component({
   selector: 'app-product-dialog',
@@ -14,16 +11,13 @@ import { LocalCraftsmenComponent } from '../../../local-craftsmen/local-craftsme
 export class ProductDialogComponent {
   hide = true;
   productForm: FormGroup;
-  localCraftsman: any[] = [];
-  viewMode: boolean;
 
   constructor(
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<ProductDialogComponent>,
-
-    @Inject(MAT_DIALOG_DATA) public data: { product: Product, view: boolean, edit: boolean },
-    private productsService: ProductsService, private alertService: AlertService) {
-    this.viewMode = this.data.view;
+    @Inject(MAT_DIALOG_DATA)
+      private editingProduct? : Product
+    ) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       category_name: ['', [Validators.required, Validators.minLength(3)]],
@@ -37,11 +31,11 @@ export class ProductDialogComponent {
       image: [Validators.required],
       enable: ['', Validators.required],
     });
-    if (this.data.edit) {
-      this.productForm.patchValue(this.data.product);
+    if (this.editingProduct) {
+      this.productForm.patchValue(this.editingProduct);
     }
-    if (this.data.view) {
-      this.productForm.patchValue(this.data.product);
+    if (this.editingProduct) {
+      this.productForm.patchValue(this.editingProduct);
       this.productForm.get('name')?.disable();
       this.productForm.get('category_name')?.disable();
       this.productForm.get('region_name')?.disable();
@@ -56,25 +50,15 @@ export class ProductDialogComponent {
     }
   }
 
-  ngOnInit(): void {
-    // this.getLocalCraftsmen();
-  }
-
-  onSubmit(): void {
-    if (this.productForm.invalid) {
-      this.markFormGroupTouched(this.productForm);
-      this.alertService.showError('Inválido','Esta acción es inválida')
-      return;
+  onCreate(): void {
+    if(this.productForm.invalid){
+      this.productForm.markAllAsTouched();
+    }else{
+      this.matDialogRef.close(this.productForm.value);
     }
-    this.matDialogRef.close(this.productForm.value);
   }
 
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
-    });
+  onClearInputs(): void {
+    this.productForm.reset();
   }
 }

@@ -1,1 +1,17 @@
-<p>customers works!</p>
+<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
+    <div class="col-2"></div>
+    <div class="col-7 centered-header">
+        <span>CLIENTES</span>
+    </div>
+    <div class="col-3 search-bar">
+        <form class="customer-form-search flex justify-content-between">
+            <mat-form-field class="field" appearance="outline">
+                <input formControlName="id-customer" matInput placeholder="Ingrese el ID" value="" />
+            </mat-form-field>
+            <button mat-flat-button type="submit" class="btn-search-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+    <app-customer-table class="w-full" [dataSource]="customers"></app-customer-table>
+</div>

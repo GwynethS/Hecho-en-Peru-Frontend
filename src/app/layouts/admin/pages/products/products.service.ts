@@ -4,9 +4,7 @@ import { Product } from './models/product';
 import { Observable, mergeMap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProductsService {
   constructor(private httpClient: HttpClient) { }
 
