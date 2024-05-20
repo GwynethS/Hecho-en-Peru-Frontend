@@ -15,7 +15,7 @@ export class AlertService {
       }
     });
   }
-  
+
   showSuccess(title: string, message: string): void{
     this.notification$.next({
       icon: 'success',
@@ -23,7 +23,7 @@ export class AlertService {
       text: message
     });
   }
-  
+
   showError(title: string, message?: string): void{
     this.notification$.next({
       icon: 'error',
