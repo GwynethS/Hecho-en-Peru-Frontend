@@ -1,1 +1,165 @@
-<p>catalog works!</p>
+<div class="hero-section-container">
+  <div class="hero-section-shadow">
+    <div class="hero-section-content">
+      <h1>Catálogo</h1>
+      <p>
+        Explora nuestro amplio catálogo de productos artesanales. Desde joyería
+        exquisita y textiles hechos a mano hasta cerámica única y decoración
+        para el hogar, encontrarás una variedad de opciones para todos los
+        gustos. Cada artículo es creado con habilidad y amor, reflejando la rica
+        herencia cultural de nuestros artesanos. Sumérgete en la belleza y
+        autenticidad de las artesanías tradicionales.
+      </p>
+    </div>
+  </div>
+</div>
+
+<section class="catalog-container">
+  <div class="filter-container">
+    <h3>Filtrar por</h3>
+    <mat-expansion-panel expanded="true" class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Precio</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-slider discrete min="10" max="1500" step="10" color="accent">
+        <input value="10" matSliderStartThumb />
+        <input value="1500" matSliderEndThumb />
+      </mat-slider>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true" class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Ordenar por</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button value="PDSC"
+          >Precio de mayor a menor</mat-radio-button
+        >
+        <mat-radio-button value="PASC"
+          >Precio de menor a mayor</mat-radio-button
+        >
+        <mat-radio-button value="RDSC">Mejor calificados</mat-radio-button>
+      </mat-radio-group>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Categorías</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="checkboxes-container">
+        <mat-checkbox value="1">Accesorios</mat-checkbox>
+        <mat-checkbox value="2">Muebles</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Regiones</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="checkboxes-container">
+        <mat-checkbox value="1">Amazonas</mat-checkbox>
+        <mat-checkbox value="2">Áncash</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+        <mat-checkbox value="">Disabled</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+  </div>
+
+  <div class="products-container">
+    <div class="product-card">
+      <figure>
+        <img
+          src="../../../../../assets/img/catalog/poncho-lana-main.jpg"
+          alt="poncho"
+        />
+      </figure>
+
+      <div class="rating">
+        <i class="fa-solid fa-star"></i>
+        <span class="rating-value">4.5</span>
+      </div>
+
+      <div class="product-info">
+        <h4>Poncho de lana</h4>
+        <p>s/.150.00</p>
+      </div>
+      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+    </div>
+    <div class="product-card">
+      <figure>
+        <img
+          src="../../../../../assets/img/catalog/poncho-tejido-crochet-main.jpg"
+          alt="poncho"
+        />
+      </figure>
+
+      <div class="rating">
+        <i class="fa-solid fa-star"></i>
+        <span class="rating-value">4.5</span>
+      </div>
+
+      <div class="product-info">
+        <h4>Poncho de lana tejido a crochet</h4>
+        <p>s/.170.00</p>
+      </div>
+      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+    </div>
+    <div class="product-card">
+      <figure>
+        <img
+          src="../../../../../assets/img/catalog/plato-urpi-main.jpg"
+          alt="poncho"
+        />
+      </figure>
+
+      <div class="rating">
+        <i class="fa-solid fa-star"></i>
+        <span class="rating-value">3.5</span>
+      </div>
+
+      <div class="product-info">
+        <h4>Plato Urpi</h4>
+        <p>s/.75.00</p>
+      </div>
+      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+    </div>
+    <div class="product-card">
+      <figure>
+        <img
+          src="../../../../../assets/img/catalog/aretes-hilo.jpg"
+          alt="poncho"
+        />
+      </figure>
+
+      <div class="rating">
+        <i class="fa-solid fa-star"></i>
+        <span class="rating-value">4.5</span>
+      </div>
+
+      <div class="product-info">
+        <h4>Aretes de fibra de chambira</h4>
+        <p>s/.30.00</p>
+      </div>
+      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+    </div>
+    <mat-paginator class="paginator"
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSize]="pageSize"
+      hidePageSize=true
+      [pageIndex]="pageIndex"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</section>

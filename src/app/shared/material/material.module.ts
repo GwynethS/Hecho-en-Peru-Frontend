@@ -13,6 +13,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const materialModules = [
   MatSidenavModule,
@@ -28,6 +33,11 @@ const materialModules = [
   MatSelectModule,
   MatCardModule,
   MatProgressSpinnerModule,
+  MatExpansionModule,
+  MatRadioModule,
+  MatCheckboxModule,
+  MatSliderModule,
+  MatPaginatorModule,
 ];
 
 @NgModule({
