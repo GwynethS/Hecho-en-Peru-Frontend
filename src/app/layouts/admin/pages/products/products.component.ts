@@ -62,7 +62,7 @@ export class ProductsComponent implements OnDestroy {
           next: (productData) => {
             if (productData) {
               this.productsService
-                .updateProducts(product.productId, productData)
+                .updateProducts(product.id, productData)
                 .subscribe({
                   next: (products) => {
                     this.products = products;
@@ -80,12 +80,12 @@ export class ProductsComponent implements OnDestroy {
     });
   }
 
-  onDeleteProduct(id: Product) {
+  onDeleteProduct(id: string) {
     this.alertService
       .showConfirmDeleteAction('este producto')
       .then((result) => {
         if (result.isConfirmed) {
-          this.productsService.deleteProductsByID(id.productId).subscribe({
+          this.productsService.deleteProductsByID(id).subscribe({
             next: (products) => {
               this.products = products;
             },

@@ -14,10 +14,10 @@ export class RegionTableComponent {
   editRegion = new EventEmitter<Region>();
 
   displayedColumns: string[] = [
-    'regionId',
+    'id',
     'name',
     'history',
-    'siteIntroduction',
+    'sitesIntroduction',
     'craftsmenIntroduction',
     'actions',
   ];

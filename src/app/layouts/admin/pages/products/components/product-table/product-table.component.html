@@ -6,10 +6,10 @@
         [dataSource]="dataSource"
         class="mat-elevation-z8 shadow-table"
       >
-        <ng-container matColumnDef="productId">
+        <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let product">
-            {{ product.productId }}
+            {{ product.id }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -48,10 +48,10 @@
             {{ product.stock }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="average_rating">
+        <ng-container matColumnDef="averageRating">
           <th mat-header-cell *matHeaderCellDef>Rating promedio</th>
           <td mat-cell *matCellDef="let product">
-            {{ product.average_rating }}
+            {{ product.averageRating }}
           </td>
         </ng-container>
         <ng-container matColumnDef="enable">

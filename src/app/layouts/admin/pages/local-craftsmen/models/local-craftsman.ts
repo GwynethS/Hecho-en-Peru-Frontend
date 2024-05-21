@@ -5,6 +5,6 @@ export interface LocalCraftsman {
   specialty: string;
   image: File;
   experience: string;
-  region_name: string;
+  region: string;
   enabled: boolean;
 }

@@ -6,10 +6,10 @@
         [dataSource]="dataSource"
         class="mat-elevation-z8 shadow-table"
       >
-        <ng-container matColumnDef="localCraftsmanId">
+        <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let localCraftsman">
-            {{ localCraftsman.localCraftsmanId }}
+            {{ localCraftsman.id }}
           </td>
         </ng-container>
         <ng-container matColumnDef="fullName">
@@ -30,10 +30,10 @@
             {{ localCraftsman.experience }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="region_name">
+        <ng-container matColumnDef="region">
           <th mat-header-cell *matHeaderCellDef>Región</th>
           <td mat-cell *matCellDef="let localCraftsman">
-            {{ localCraftsman.region_name }}
+            {{ localCraftsman.region }}
           </td>
         </ng-container>
         <ng-container matColumnDef="enabled">

@@ -14,17 +14,17 @@ export class ProductTableComponent {
   editProduct = new EventEmitter<Product>();
 
   @Output()
-  deleteProduct = new EventEmitter<Product>();
+  deleteProduct = new EventEmitter<string>();
 
   displayedColumns: string[] = [
-    'productId',
+    'id',
     'name',
     'category_name',
     'region_name',
     'localCraftsman_fullname',
     'price',
     'stock',
-    'average_rating',
+    'averageRating',
     'enable',
     'actions',
   ];

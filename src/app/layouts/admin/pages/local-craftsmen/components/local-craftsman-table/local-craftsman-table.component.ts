@@ -17,11 +17,11 @@ export class LocalCraftsmanTableComponent {
   deleteLocalCraftsman = new EventEmitter<LocalCraftsman>();
 
   displayedColumns: string[] = [
-    'localCraftsmanId',
+    'id',
     'fullName',
     'specialty',
     'experience',
-    'region_name',
+    'region',
     'enabled',
     'actions',
   ];

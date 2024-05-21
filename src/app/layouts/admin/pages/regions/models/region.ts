@@ -3,6 +3,6 @@ export interface Region {
   name: string;
   image: File;
   history: string;
-  siteIntroduction: string;
+  sitesIntroduction: string;
   craftsmenIntroduction: string;
 }
