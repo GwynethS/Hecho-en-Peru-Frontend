@@ -26,6 +26,7 @@ export class CustomersComponent {
       this.customersService.getCustomers().subscribe({
         next: (customers) => {
           this.customers = customers;
+          console.log(customers);
         },
       })
     );

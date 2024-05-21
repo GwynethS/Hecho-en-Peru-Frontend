@@ -6,10 +6,10 @@
         [dataSource]="dataSource"
         class="mat-elevation-z8 shadow-table"
       >
-        <ng-container matColumnDef="customerId">
+        <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let customer">
-            {{ customer.customerId }}
+            {{ customer.id }}
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
@@ -30,16 +30,16 @@
             {{ customer.email }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="roles_nameRole">
+        <ng-container matColumnDef="name_role">
           <th mat-header-cell *matHeaderCellDef>Rol</th>
           <td mat-cell *matCellDef="let customer">
-            {{ customer.roles_nameRole }}
+            {{ customer.roles[0].nameRole }}
           </td>
         </ng-container>
         <ng-container matColumnDef="dateCreated">
           <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
           <td mat-cell *matCellDef="let customer">
-            {{ customer.dateCreated }}
+            {{ customer.dateCreated | date: 'short' }}
           </td>
         </ng-container>
         <ng-container matColumnDef="enabled">

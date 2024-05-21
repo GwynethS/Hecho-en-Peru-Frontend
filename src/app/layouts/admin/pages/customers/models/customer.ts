@@ -1,10 +1,12 @@
+import { Role } from "./role";
+
 export interface Customer {
-  customerId: string;
+  id: string;
   name: string;
   lastName: string;
   dateCreated: string;
   email: string;
   password: number;
   enabled: number;
-  roles_nameRole: string;
+  roles: Role[];
 }

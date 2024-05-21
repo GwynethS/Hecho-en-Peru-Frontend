@@ -17,11 +17,11 @@ export class CustomerTableComponent {
   deleteCustomer = new EventEmitter<Customer>();
 
   displayedColumns: string[] = [
-    'customerId',
+    'id',
     'name',
     'lastName',
     'email',
-    'roles_nameRole',
+    'name_role',
     'dateCreated',
     'enabled',
     'actions',
