@@ -10,13 +10,8 @@
   <div class="product-description">
     <div class="rating-comments">
       <div class="rating">
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-        <i class="fa-solid fa-star"></i>
-
-        <span class="rating-value">4.5</span>
+        <p-rating [(ngModel)] = "avgRating" [readonly]="true" [cancel]="false" />
+        <p class="rating-value">4.5</p>
       </div>
       <a class="number-comments" href="#"> 40 comentarios </a>
     </div>

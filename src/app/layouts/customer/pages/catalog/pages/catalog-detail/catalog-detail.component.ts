@@ -16,6 +16,8 @@ export class CatalogDetailComponent {
 
   commentForm: FormGroup;
 
+  avgRating = 4.5;
+
   constructor(private fb: FormBuilder) {
     this.commentForm = this.fb.group({
       textCommentary: this.fb.control('', Validators.required),

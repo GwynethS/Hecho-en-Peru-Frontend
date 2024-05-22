@@ -55,13 +55,10 @@ a {
       margin-bottom: 1rem;
       .rating {
         width: 50%;
-        i {
-          color: #e0dedecc;
-        }
-        .rated {
-          color: #f9c846;
-        }
+        display: flex;
+        align-items: center;
         .rating-value {
+          margin: 0;
           margin-left: 0.5rem;
         }
       }
@@ -224,7 +221,7 @@ a {
     align-items: baseline;
     p {
       margin-left: 1rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
   }
   .new-comment {
