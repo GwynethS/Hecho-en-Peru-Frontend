@@ -139,16 +139,17 @@
       <i class="fa-solid fa-user"></i>
       <h4>Jean Sánchez</h4>
     </div>
-    <form class="comment-form">
+    <form [formGroup]="commentForm" class="comment-form">
       <mat-form-field>
-        <textarea
+        <textarea formControlName="textCommentary"
           matInput
           type="text"
           placeholder="Agrega un comentario..."
         ></textarea>
       </mat-form-field>
+      <star-rating-control formControlName="rating"></star-rating-control>
       <div class="btn-comment">
-        <button mat-flat-button>Comentar</button>
+        <button mat-flat-button type="submit" (click)="onSubmit()">Comentar</button>
       </div>
     </form>
   </div>
