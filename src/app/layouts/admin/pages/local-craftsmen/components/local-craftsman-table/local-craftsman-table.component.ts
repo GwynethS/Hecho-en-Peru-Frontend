@@ -21,7 +21,7 @@ export class LocalCraftsmanTableComponent {
     'fullName',
     'specialty',
     'experience',
-    'region',
+    'name_region',
     'enabled',
     'actions',
   ];

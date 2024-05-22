@@ -1,3 +1,5 @@
+import { Region } from "./region";
+
 export interface LocalCraftsman {
   localCraftsmanId: string;
   fullName: string;
@@ -5,6 +7,6 @@ export interface LocalCraftsman {
   specialty: string;
   image: File;
   experience: string;
-  region: string;
+  region: Region;
   enabled: boolean;
 }

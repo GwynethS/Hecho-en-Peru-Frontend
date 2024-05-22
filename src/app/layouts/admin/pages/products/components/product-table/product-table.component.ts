@@ -19,13 +19,13 @@ export class ProductTableComponent {
   displayedColumns: string[] = [
     'id',
     'name',
-    'category_name',
-    'region_name',
-    'localCraftsman_fullname',
+    'name_category',
+    'name_region',
+    'fullname_localCraftsman',
     'price',
     'stock',
     'averageRating',
-    'enable',
+    'enabled',
     'actions',
   ];
 

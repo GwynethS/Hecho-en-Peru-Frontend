@@ -27,6 +27,7 @@ export class LocalCraftsmenComponent implements OnDestroy {
       this.localCraftsmenService.getLocalCraftsmen().subscribe({
         next: (localCraftsmen) => {
           this.localCraftsmen = localCraftsmen;
+          console.log(localCraftsmen);
         },
       })
     );

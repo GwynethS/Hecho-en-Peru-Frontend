@@ -24,7 +24,7 @@ export class LocalCraftsmanDialogComponent {
       specialty: ['', Validators.required],
       image: [Validators.required],
       experience: ['', [Validators.required, Validators.minLength(3)]],
-      region_name: ['', [Validators.required, Validators.minLength(3)]],
+      name_region: ['', [Validators.required, Validators.minLength(3)]],
       enabled: ['', Validators.required],
     });
     if (this.editinglocalCraftsman) {
@@ -37,7 +37,7 @@ export class LocalCraftsmanDialogComponent {
       this.localCraftsmanForm.get('specialty')?.disable();
       this.localCraftsmanForm.get('image')?.disable();
       this.localCraftsmanForm.get('experience')?.disable();
-      this.localCraftsmanForm.get('region_name')?.disable();
+      this.localCraftsmanForm.get('name_region')?.disable();
       this.localCraftsmanForm.get('enabled')?.disable();
     }
   }

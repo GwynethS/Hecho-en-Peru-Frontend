@@ -22,11 +22,8 @@ export class RegionDialogComponent {
       name: ['', [Validators.required, Validators.minLength(3)]],
       image: [Validators.required],
       history: ['', [Validators.required, Validators.minLength(3)]],
-      siteIntroduction: ['', [Validators.required, Validators.minLength(3)]],
-      craftsmenIntroduction: [
-        '',
-        [Validators.required, Validators.minLength(3)],
-      ],
+      sitesIntroduction: ['', [Validators.required, Validators.minLength(3)]],
+      craftsmenIntroduction: ['', [Validators.required, Validators.minLength(3)]],
     });
     if (this.editingRegion) {
       this.regionForm.patchValue(this.editingRegion);
@@ -36,7 +33,7 @@ export class RegionDialogComponent {
       this.regionForm.get('name')?.disable();
       this.regionForm.get('image')?.disable();
       this.regionForm.get('history')?.disable();
-      this.regionForm.get('siteIntroduction')?.disable();
+      this.regionForm.get('sitesIntroduction')?.disable();
       this.regionForm.get('craftsmenIntroduction')?.disable();
     }
   }
