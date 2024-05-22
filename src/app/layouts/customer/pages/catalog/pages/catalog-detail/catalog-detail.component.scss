@@ -249,22 +249,16 @@ a {
         width: 100%;
         margin: 1rem 0;
       }
+      p-rating{
+        width: 100%;
+        margin: 1rem 0;
+      }
       button {
         font-weight: 500;
         color: #fff;
         background-color: #242423;
         &:hover {
           background-color: #0e0e0e;
-        }
-      }
-      .bottom-input {
-        .rating-input {
-          i.active {
-            color: #f9c846;
-          }
-          .error-rating {
-            color: #dc3545;
-          }
         }
       }
     }

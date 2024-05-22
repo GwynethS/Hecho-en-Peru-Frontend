@@ -147,7 +147,7 @@
           placeholder="Agrega un comentario..."
         ></textarea>
       </mat-form-field>
-      <star-rating-control formControlName="rating"></star-rating-control>
+      <p-rating formControlName="rating" [cancel]="false" />
       <div class="btn-comment">
         <button mat-flat-button type="submit" (click)="onSubmit()">Comentar</button>
       </div>

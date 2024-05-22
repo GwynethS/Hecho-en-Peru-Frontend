@@ -5,11 +5,9 @@ import { CatalogRoutingModule } from './catalog-routing.module';
 import { CatalogComponent } from './catalog.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CatalogDetailComponent } from './pages/catalog-detail/catalog-detail.component';
-import { StarRatingConfigService, StarRatingModule } from 'angular-star-rating';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StarRatingService } from './star-rating.service';
-
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [
@@ -22,12 +20,7 @@ import { StarRatingService } from './star-rating.service';
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    StarRatingModule.forRoot()
-  ],
-  providers: [
-    {
-      provide: StarRatingConfigService, useClass: StarRatingService
-    }
+    RatingModule
   ]
 })
 export class CatalogModule { }
