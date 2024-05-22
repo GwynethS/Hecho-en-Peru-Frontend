@@ -18,7 +18,7 @@
 
         <span class="rating-value">4.5</span>
       </div>
-      <a class="number-comments" href="#enlace-comentarios"> 40 comentarios </a>
+      <a class="number-comments" href="#"> 40 comentarios </a>
     </div>
     <h2 class="product-title">Poncho de lana</h2>
     <h2 class="precio-product">s/.150.00</h2>
@@ -129,7 +129,7 @@
   </div>
 </section>
 
-<section id="enlace-comentarios" class="comments-section">
+<section class="comments-section">
   <div class="comments-section-header">
     <h2>Comentarios</h2>
     <p>40 comentarios</p>
@@ -139,100 +139,51 @@
       <i class="fa-solid fa-user"></i>
       <h4>Jean Sánchez</h4>
     </div>
-    <div class="comment-column">
-      <div class="input-box">
-        <input
-          id="newComment"
-          class="input-comment"
+    <form class="comment-form">
+      <mat-form-field>
+        <textarea
+          matInput
           type="text"
           placeholder="Agrega un comentario..."
-        />
-        <div class="error-input">Escriba un comentario</div>
-        <div class="bottom-input">
-          <div class="rating-input">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <div class="error-rating">Otorgue una calificación</div>
-          </div>
-          <div class="btn-comment">
-            <!--<button class="btn-reset">Cancelar</button>-->
-            <button class="btn-comentar" onclick="nComentario()">
-              Comentar
-            </button>
-          </div>
-        </div>
+        ></textarea>
+      </mat-form-field>
+      <div class="btn-comment">
+        <button mat-flat-button>Comentar</button>
+      </div>
+    </form>
+  </div>
+  <div class="comments-list-container">
+    <div class="comment">
+      <div class="comment-user">
+        <i class="fa-solid fa-user"></i>
+        <h4>Juan Sánchez</h4>
+      </div>
+      <div class="comment-rating">
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star"></i>
+      </div>
+      <div class="comment-text">
+        ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la atención al detalle que se pusieron en cada puntada se reflejan en su hermoso diseño y calidad.
       </div>
     </div>
-  </div>
-  <ul id="comments-list" class="comments-container">
-    <li class="comment">
+    <div class="comment">
       <div class="comment-user">
-        <i class="fa-solid fa-user fa-2x"></i>
+        <i class="fa-solid fa-user"></i>
+        <h4>Gabriel Sánchez</h4>
+      </div>
+      <div class="comment-rating">
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star active"></i>
+        <i class="fa-solid fa-star"></i>
       </div>
       <div class="comment-text">
-        <h4>Jesus Saenz</h4>
-        <div class="rating-comment-box">
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-        </div>
-        ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana
-        cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la
-        atención al detalle que se pusieron en cada puntada se reflejan en su
-        hermoso diseño y calidad.
+        ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la atención al detalle que se pusieron en cada puntada se reflejan en su hermoso diseño y calidad.
       </div>
-      <div class="comment-votes">
-        <div class="liked-comment" onclick="likeComment(this)">
-          <i class="fa-regular fa-thumbs-up fa-"></i>
-          <p class="count">0</p>
-        </div>
-        <div class="dislike-comment" onclick="dislikeComment(this)">
-          <i class="fa-regular fa-thumbs-down"></i>
-          <p class="count">0</p>
-        </div>
-      </div>
-    </li>
-    <li class="comment">
-      <div class="comment-user">
-        <i class="fa-solid fa-user fa-2x"></i>
-      </div>
-      <div class="comment-text">
-        <h4>Cecilia Hurtado</h4>
-        <div class="rating-comment-box">
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star active"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-        Este poncho de lana cusqueño es simplemente espectacular. Me encanta su
-        diseño tradicional y los colores vibrantes que lo adornan. Además de ser
-        una pieza de arte, es increíblemente cálido y suave al tacto.
-      </div>
-      <div class="comment-votes">
-        <div class="liked-comment" onclick="likeComment(this)">
-          <i class="fa-regular fa-thumbs-up fa-"></i>
-          <p class="count">0</p>
-        </div>
-        <div class="dislike-comment" onclick="dislikeComment(this)">
-          <i class="fa-regular fa-thumbs-down"></i>
-          <p class="count">0</p>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <div class="pagination-buttons">
-    <button id="prevPageBtn" onclick="showPreviousPage()">
-      <i class="fa-solid fa-caret-left fa-2x"></i>
-    </button>
-    <span id="currentPageIndicator"></span>
-    <button id="nextPageBtn" onclick="showNextPage()">
-      <i class="fa-solid fa-caret-right fa-2x"></i>
-    </button>
+    </div>
   </div>
 </section>
