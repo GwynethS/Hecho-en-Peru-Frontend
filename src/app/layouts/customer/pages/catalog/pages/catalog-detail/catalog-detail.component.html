@@ -185,5 +185,14 @@
         ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la atención al detalle que se pusieron en cada puntada se reflejan en su hermoso diseño y calidad.
       </div>
     </div>
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="length"
+      [pageSize]="pageSize"
+      hidePageSize=true
+      [pageIndex]="pageIndex"
+      aria-label="Select page"
+    >
+    </mat-paginator>
   </div>
 </section>
