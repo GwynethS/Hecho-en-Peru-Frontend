@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { RegionsRoutingModule } from './regions-routing.module';
 import { RegionsComponent } from './regions.component';
+import { SharedModule } from 'primeng/api';
+import { MaterialModule } from '../../../../shared/material/material.module';
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { RegionsComponent } from './regions.component';
   ],
   imports: [
     CommonModule,
-    RegionsRoutingModule
+    RegionsRoutingModule,
+    SharedModule,
+    MaterialModule
   ]
 })
 export class RegionsModule { }
