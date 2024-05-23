@@ -17,9 +17,17 @@
         mat-flat-button
         type="button"
         class="btn-search-icon"
-        (click)="onSearch()"
+        (click)="onSearch(customerSearchForm.value.id)"
       >
         <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn-clean-icon"
+        (click)="onClean()"
+      >
+        <i class="fa-solid fa-broom"></i>
       </button>
     </form>
   </div>
@@ -27,4 +35,11 @@
     class="w-full"
     [dataSource]="customers"
   ></app-customer-table>
+</div>
+<div class="no-results-container" *ngIf="!customers.data.length && searchAttempted">
+  <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+  <div>
+    <p>No se encontraron resultados</p>
+    <p> para su búsqueda</p>
+  </div>
 </div>

@@ -1,11 +1,9 @@
-.style-footer {
+.footer-container {
   background-color: #242423;
   color: white;
-  position: relative;
+  padding: 0.5rem;
+  position: fixed;
   bottom: 0;
-  padding: 0.438rem;
-  font-size: 0.875rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  text-align: center;
 }

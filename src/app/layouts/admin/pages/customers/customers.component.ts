@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Customer } from './models/customer';
 import { CustomersService } from './customers.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from '../../../../core/alert.service';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,15 +14,15 @@ export class CustomersComponent implements OnInit, OnDestroy {
   customers = new MatTableDataSource<Customer>();
   customerSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
+  searchAttempted: boolean = false;
 
   constructor(
     private customersService: CustomersService,
-    private matDialog: MatDialog,
-    private alertService: AlertService,
     private fb: FormBuilder
   ) {
     this.customerSearchForm = this.fb.group({
       id: this.fb.control('', [
+        Validators.required,
         Validators.pattern('^[0-9]+$'),
       ]),
     });
@@ -53,32 +51,30 @@ export class CustomersComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadCustomerById(id: string): void {
-    this.subscriptions.push(
-      this.customersService.getSearchCustomerByID(id).subscribe({
-        next: (customer) => {
-          this.customers.data = customer ? [customer] : [];
-          console.log(this.customers.data);
-        },
-        error: (err) => {
-          this.customers.data = [];
-          console.error(`Failed to load customer with ID ${id}`, err);
-        }
-      })
-    );
-  }
-
-  onSearch(): void {
+  onSearch(id: string): void {
     if (this.customerSearchForm.invalid) {
       this.customerSearchForm.markAllAsTouched();
     } else {
-      const id = this.customerSearchForm.value.id;
-      if (id) {
-        this.loadCustomerById(id);
-      } else {
-        this.loadAllCustomers();
-      }
+      this.subscriptions.push(
+        this.customersService.getSearchCustomerByID(id).subscribe({
+          next: (customer) => {
+            this.customers.data = customer ? [customer] : [];
+            console.log(this.customers.data);
+            this.searchAttempted = true;
+          },
+          error: (err) => {
+            this.customers.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load customer with ID ${id}`, err);
+          }
+        })
+      );
     }
+  }
+
+  onClean(): void {
+    this.customerSearchForm.reset();
+    this.loadAllCustomers();
   }
 
   onViewProduct(customer: Customer) { }
