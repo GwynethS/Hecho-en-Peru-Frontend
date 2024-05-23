@@ -8,6 +8,7 @@ import { CatalogDetailComponent } from './pages/catalog-detail/catalog-detail.co
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
+import { ProductsService } from '../../../admin/pages/products/products.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,9 @@ import { RatingModule } from 'primeng/rating';
     MaterialModule,
     ReactiveFormsModule,
     RatingModule
+  ],
+  providers: [
+    ProductsService
   ]
 })
 export class CatalogModule { }

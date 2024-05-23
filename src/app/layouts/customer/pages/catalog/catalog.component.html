@@ -76,90 +76,35 @@
   </div>
 
   <div class="products-container">
-    <div class="product-card">
+    <div *ngFor="let product of products" class="product-card">
       <figure>
         <img
-          src="../../../../../assets/img/catalog/poncho-lana-main.jpg"
+          src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
           alt="poncho"
         />
       </figure>
 
       <div class="rating">
         <i class="fa-solid fa-star"></i>
-        <span class="rating-value">4.5</span>
+        <span class="rating-value">{{product.averageRating}}</span>
       </div>
 
       <div class="product-info">
-        <h4>Poncho de lana</h4>
-        <p>s/.150.00</p>
+        <h4>{{product.name}}</h4>
+        <p>s/.{{product.price | number: '1.2-2'}}</p>
       </div>
       <button mat-flat-button class="add-cart">Añadir al carrito</button>
     </div>
-    <div class="product-card">
-      <figure>
-        <img
-          src="../../../../../assets/img/catalog/poncho-tejido-crochet-main.jpg"
-          alt="poncho"
-        />
-      </figure>
-
-      <div class="rating">
-        <i class="fa-solid fa-star"></i>
-        <span class="rating-value">4.5</span>
-      </div>
-
-      <div class="product-info">
-        <h4>Poncho de lana tejido a crochet</h4>
-        <p>s/.170.00</p>
-      </div>
-      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+    <div class="paginator">
+      <button mat-icon-button type="button">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <mat-form-field>
+        <input matInput type="number" value="1" min="1">
+      </mat-form-field>
+      <button mat-icon-button type="button">
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
     </div>
-    <div class="product-card">
-      <figure>
-        <img
-          src="../../../../../assets/img/catalog/plato-urpi-main.jpg"
-          alt="poncho"
-        />
-      </figure>
-
-      <div class="rating">
-        <i class="fa-solid fa-star"></i>
-        <span class="rating-value">3.5</span>
-      </div>
-
-      <div class="product-info">
-        <h4>Plato Urpi</h4>
-        <p>s/.75.00</p>
-      </div>
-      <button mat-flat-button class="add-cart">Añadir al carrito</button>
-    </div>
-    <div class="product-card">
-      <figure>
-        <img
-          src="../../../../../assets/img/catalog/aretes-hilo.jpg"
-          alt="poncho"
-        />
-      </figure>
-
-      <div class="rating">
-        <i class="fa-solid fa-star"></i>
-        <span class="rating-value">4.5</span>
-      </div>
-
-      <div class="product-info">
-        <h4>Aretes de fibra de chambira</h4>
-        <p>s/.30.00</p>
-      </div>
-      <button mat-flat-button class="add-cart">Añadir al carrito</button>
-    </div>
-    <mat-paginator class="paginator"
-      (page)="handlePageEvent($event)"
-      [length]="length"
-      [pageSize]="pageSize"
-      hidePageSize=true
-      [pageIndex]="pageIndex"
-      aria-label="Select page"
-    >
-    </mat-paginator>
   </div>
 </section>
