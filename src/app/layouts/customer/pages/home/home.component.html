@@ -10,33 +10,63 @@
         talento de nuestros artesanos!
       </p>
       <br />
-      <button (click)="redirectTo('catalog')" mat-flat-button type="button">Ver catálogo</button>
+      <button (click)="redirectTo('catalog')" mat-flat-button type="button">
+        Ver catálogo
+      </button>
     </div>
   </div>
 </div>
 
 <section class="container-best-sellers">
   <h2>PRODUCTOS MÁS VENDIDOS</h2>
-  <div class="container-slider">
-    <div class="container-carousel">
-      <i id="left" class="caret fa-solid fa-angle-left fa-2x"></i>
-      <ul class="carousel">
-        <li class="carousel-product">
-          <figure>
-            <img
-              src="./public/assests/images/img-catalogo/aretes-hilo.jpg"
-              alt="Producto 1"
-            />
-          </figure>
-          <div class="info-product">
-            <h3>Aretes de fibra de chambira</h3>
-            <p>s/.30.00</p>
-          </div>
-          <p>Región: Loreto</p>
-        </li>
-      </ul>
-      <i id="right" class="caret fa-solid fa-angle-right fa-2x"></i>
-    </div>
+  <div class="container-carousel">
+    <button mat-icon-button (click)="previousPage()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <ul class="carousel">
+      <li class="carousel-product">
+        <figure>
+          <img
+            src="./public/assests/images/img-catalogo/aretes-hilo.jpg"
+            alt="Producto 1"
+          />
+        </figure>
+        <div class="info-product">
+          <h3>Aretes de fibra de chambira</h3>
+          <p>s/.30.00</p>
+        </div>
+        <p>Región: Loreto</p>
+      </li>
+      <li class="carousel-product">
+        <figure>
+          <img
+            src="./public/assests/images/img-catalogo/aretes-hilo.jpg"
+            alt="Producto 1"
+          />
+        </figure>
+        <div class="info-product">
+          <h3>Aretes de fibra de chambira</h3>
+          <p>s/.30.00</p>
+        </div>
+        <p>Región: Loreto</p>
+      </li>
+      <li class="carousel-product">
+        <figure>
+          <img
+            src="./public/assests/images/img-catalogo/aretes-hilo.jpg"
+            alt="Producto 1"
+          />
+        </figure>
+        <div class="info-product">
+          <h3>Aretes de fibra de chambira</h3>
+          <p>s/.30.00</p>
+        </div>
+        <p>Región: Loreto</p>
+      </li>
+    </ul>
+    <button mat-icon-button (click)="nextPage()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
   </div>
 </section>
 
@@ -101,7 +131,9 @@
         Explora la riqueza cultural de nuestras regiones detrás de las
         artesanías peruanas.
       </p>
-      <button (click)="redirectTo('regions')" mat-flat-button type="button">Conocer más</button>
+      <button (click)="redirectTo('regions')" mat-flat-button type="button">
+        Conocer más
+      </button>
     </div>
   </div>
 </section>
@@ -111,36 +143,30 @@
   <div class="team-cards-container">
     <div class="team-card">
       <figure>
-        <img
-          src="../../../../../assets/img/quienes-somos/personal/g.jpg"
-        />
+        <img src="../../../../../assets/img/quienes-somos/personal/g.jpg" />
       </figure>
       <p>Gwyneth Lyu Gisele Segura Silva</p>
     </div>
     <div class="team-card">
       <figure>
-        <img
-          src="../../../../../assets/img/quienes-somos/personal/j.jpg"
-        />
+        <img src="../../../../../assets/img/quienes-somos/personal/j.jpg" />
       </figure>
       <p>Alvaro Alison Patricio Acuña</p>
     </div>
     <div class="team-card">
       <figure>
-        <img
-          src="../../../../../assets/img/quienes-somos/personal/d.jpg"
-        />
+        <img src="../../../../../assets/img/quienes-somos/personal/d.jpg" />
       </figure>
       <p>Deyvid Joseph Guevara Cueva</p>
     </div>
     <div class="team-card">
       <figure>
-        <img
-          src="../../../../../assets/img/quienes-somos/personal/r.jpg"
-        />
+        <img src="../../../../../assets/img/quienes-somos/personal/r.jpg" />
       </figure>
       <p>Raul Gonzalo Pingo Amaya</p>
     </div>
-    <button (click)="redirectTo('about-us')" mat-flat-button type="button">Ver más</button>
+    <button (click)="redirectTo('about-us')" mat-flat-button type="button">
+      Ver más
+    </button>
   </div>
 </section>
