@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Product } from './models/product';
 import { Observable, mergeMap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
+import { Category } from './models/category';
 
 @Injectable()
 export class ProductsService {
@@ -40,5 +41,15 @@ export class ProductsService {
     return this.httpClient
       .put<Product[]>(`${environment.apiURL}product/${id}`, data)
       .pipe(mergeMap(() => this.getProducts()));
+  }
+
+  getCategories() {
+    return this.httpClient.get<Category[]>(`${environment.apiURL}categories`);
+  }
+
+  addCategories(data: Category) {
+    return this.httpClient
+      .post<Category>(`${environment.apiURL}category`, data)
+      .pipe(mergeMap(() => this.getCategories()));
   }
 }

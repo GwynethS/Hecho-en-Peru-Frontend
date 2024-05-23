@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from './models/customer';
 import { environment } from '../../../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CustomersService {
@@ -12,7 +13,7 @@ export class CustomersService {
   }
 
   getSearchCustomerByID(id: string) {
-    return this.httpClient.get<Customer[]>(`${environment.apiURL}user/${id}`);
+    return this.httpClient.get<Customer>(`${environment.apiURL}user/${id}`);
   }
 
   getOrders() {

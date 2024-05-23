@@ -11,7 +11,11 @@
     </button>
   </div>
   <div class="col-2">
-    <button mat-flat-button class="w-full btn-add-category">
+    <button
+      (click)="onCreateCategory()"
+      mat-flat-button
+      class="w-full btn-add-category"
+    >
       <mat-icon>add</mat-icon> Añadir categoría
     </button>
   </div>

@@ -24,7 +24,7 @@ export class CategoryDialogComponent {
   onConfirm(): void {
     if (this.categoryForm.valid) {
       const newCategory: Category = {
-        categoryId: this.categoryForm.value.categoryId,
+        id: this.categoryForm.value.categoryId,
         name: this.categoryForm.value.name
       };
       this.matDialogRef.close(newCategory);

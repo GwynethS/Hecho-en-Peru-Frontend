@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Customer } from '../../models/customer';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-customer-table',
@@ -8,7 +9,7 @@ import { Customer } from '../../models/customer';
 })
 export class CustomerTableComponent {
   @Input()
-  dataSource: Customer[] = [];
+  dataSource!: MatTableDataSource<Customer>;
 
   @Output()
   editCustomer = new EventEmitter<Customer>();

@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { ProductsService } from './products.service';
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ProductsService } from './products.service';
     ProductsComponent,
     ProductTableComponent,
     ProductDialogComponent,
+    CategoryDialogComponent
   ],
   imports: [
     CommonModule,

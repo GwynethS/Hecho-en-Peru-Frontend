@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductsService } from './products.service';
 import { AlertService } from '../../../../core/alert.service';
 import { Subscription } from 'rxjs';
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { Category } from './models/category';
 
 @Component({
   selector: 'app-products',
@@ -13,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProductsComponent implements OnDestroy {
   products: Product[] = [];
-
+  categories: Category[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -28,6 +30,14 @@ export class ProductsComponent implements OnDestroy {
         next: (products) => {
           this.products = products;
           console.log(products);
+        },
+      })
+    );
+    this.subscriptions.push(
+      this.productsService.getCategories().subscribe({
+        next: (categories) => {
+          this.categories = categories;
+          console.log(categories);
         },
       })
     );
@@ -56,7 +66,7 @@ export class ProductsComponent implements OnDestroy {
     this.subscriptions.push(
       this.matDialog
         .open(ProductDialogComponent, {
-          data: { product: product, view: false, edit: true },
+          data: { product: product, view: true, edit: true },
         })
         .afterClosed()
         .subscribe({
@@ -75,11 +85,7 @@ export class ProductsComponent implements OnDestroy {
     );
   }
 
-  onViewProduct(product: Product) {
-    this.matDialog.open(ProductDialogComponent, {
-      data: { product: product, view: true, edit: false },
-    });
-  }
+  onViewProduct(product: Product) { }
 
   onDeleteProduct(id: string) {
     this.alertService
@@ -93,6 +99,25 @@ export class ProductsComponent implements OnDestroy {
           });
         }
       });
+  }
+
+  onCreateCategory(): void {
+    this.subscriptions.push(
+      this.matDialog
+        .open(CategoryDialogComponent)
+        .afterClosed()
+        .subscribe({
+          next: (categoryData) => {
+            if (categoryData) {
+              this.productsService.addProducts(categoryData).subscribe({
+                next: (categories) => {
+                  this.categories = categories;
+                },
+              });
+            }
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {
