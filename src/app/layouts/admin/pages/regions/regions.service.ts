@@ -13,7 +13,7 @@ export class RegionsService {
   }
 
   getSearchRegionByName(name: string) {
-    return this.httpClient.get<Region>(
+    return this.httpClient.get<Region[]>(
       `${environment.apiURL}regionSearch/${name}`
     );
   }

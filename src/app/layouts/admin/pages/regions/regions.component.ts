@@ -14,7 +14,7 @@ import { AlertService } from '../../../../core/alert.service';
   styleUrl: './regions.component.scss',
 })
 export class RegionsComponent implements OnInit, OnDestroy {
-  regions = new MatTableDataSource<Region>();
+  regions: Region[] = [];
   regionSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
@@ -27,7 +27,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     this.regionSearchForm = this.fb.group({
       name: this.fb.control('', [
         Validators.required,
-        Validators.pattern('[a-zA-Z]*'),
+        Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*'),
       ]),
     });
   }
@@ -44,11 +44,11 @@ export class RegionsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.regionsService.getRegions().subscribe({
         next: (regions) => {
-          this.regions.data = regions || [];
+          this.regions = regions || [];
           console.log(regions);
         },
         error: (err) => {
-          this.regions.data = [];
+          this.regions = [];
           console.error('Failed to load regions', err);
         }
       })
@@ -56,19 +56,18 @@ export class RegionsComponent implements OnInit, OnDestroy {
   }
 
   onSearch(): void {
-    console.log(name);
     if (this.regionSearchForm.invalid) {
       this.regionSearchForm.markAllAsTouched();
     } else {
       this.subscriptions.push(
         this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
           next: (regions) => {
-            this.regions.data = regions ? [regions] : [];
-            console.log(this.regions.data);
+            this.regions = regions;
+            console.log(this.regions);
             this.searchAttempted = true;
           },
           error: (err) => {
-            this.regions.data = [];
+            this.regions = [];
             this.searchAttempted = true;
             console.error(`Failed to load regions with name ${this.regionSearchForm.value.name}`, err);
           }
@@ -92,7 +91,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
             if (regionData) {
               this.regionsService.addRegions(regionData).subscribe({
                 next: (regions) => {
-                  this.regions.data = regions;
+                  this.regions = regions;
                 },
               });
             }
@@ -115,7 +114,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
                 .updateRegions(region.regionId, regionData)
                 .subscribe({
                   next: (regions) => {
-                    this.regions.data = regions;
+                    this.regions = regions;
                   },
                 });
             }

@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class RegionTableComponent {
   @Input()
-  dataSource!: MatTableDataSource<Region>;
+  dataSource: Region[] = [];
 
   @Output()
   editRegion = new EventEmitter<Region>();
