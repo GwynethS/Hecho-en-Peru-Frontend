@@ -15,7 +15,7 @@ export class LocalCraftsmenService {
   }
 
   getSearchLocalCraftsmanDetailsByID(id: string) {
-    return this.httpClient.get<LocalCraftsman[]>(
+    return this.httpClient.get<LocalCraftsman>(
       `${environment.apiURL}localCraftsmanDetail/${id}`
     );
   }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LocalCraftsman } from '../../models/local-craftsman';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-local-craftsman-table',
@@ -8,7 +9,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 })
 export class LocalCraftsmanTableComponent {
   @Input()
-  dataSource: LocalCraftsman[] = [];
+  dataSource!: MatTableDataSource<LocalCraftsman>;
 
   @Output()
   editLocalCraftsman = new EventEmitter<LocalCraftsman>();
