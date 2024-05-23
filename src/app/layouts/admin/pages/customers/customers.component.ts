@@ -51,12 +51,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSearch(id: string): void {
+  onSearch(): void {
     if (this.customerSearchForm.invalid) {
       this.customerSearchForm.markAllAsTouched();
     } else {
       this.subscriptions.push(
-        this.customersService.getSearchCustomerByID(id).subscribe({
+        this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
           next: (customer) => {
             this.customers.data = customer ? [customer] : [];
             console.log(this.customers.data);
@@ -65,7 +65,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.customers.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load customer with ID ${id}`, err);
+            console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           }
         })
       );

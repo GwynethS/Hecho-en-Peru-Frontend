@@ -21,7 +21,7 @@ export class CustomersService {
   }
 
   getSearchOrderDetailsByID(orderId: string, userId: string) {
-    return this.httpClient.get<Customer[]>(
+    return this.httpClient.get<Customer>(
       `${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`
     );
   }

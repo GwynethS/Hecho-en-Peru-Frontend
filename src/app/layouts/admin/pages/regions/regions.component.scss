@@ -19,16 +19,42 @@
   }
 }
 
-.btn-search-icon {
-  background-color: #e09898;
-  color: white;
-  padding: 1.7rem;
-}
-
 .btn-add-region {
   background-color: #f9c846;
   font-weight: 400;
   border-radius: 0.75rem;
   padding: 1.4rem;
   box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.2);
+}
+
+.btn-search-icon {
+  background-color: #e09898;
+  color: white;
+  padding: 1.77rem;
+}
+
+.btn-clean-icon {
+  background-color: rgba(0, 0, 0, 0.131);
+  color: black;
+  padding: 1.77rem;
+}
+
+.no-results-container {
+  margin: 5rem;
+  padding: 1.25rem;
+  text-align: center;
+  max-width: 80%;
+  opacity: 0.5;
+  .emoji {
+    font-size: 3rem;
+    margin-bottom: 1.25rem;
+  }
+  div {
+    font-size: 1.125rem;
+    color: #333;
+    margin: 1.2rem;
+    p {
+      margin: 0.3rem;
+    }
+  }
 }

@@ -1,33 +1,85 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Region } from './models/region';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { RegionsService } from './regions.service';
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertService } from '../../../../core/alert.service';
 
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
   styleUrl: './regions.component.scss',
 })
-export class RegionsComponent implements OnDestroy {
-  regions: Region[] = [];
-
+export class RegionsComponent implements OnInit, OnDestroy {
+  regions = new MatTableDataSource<Region>();
+  regionSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
+  searchAttempted: boolean = false;
 
   constructor(
     private regionsService: RegionsService,
-    private matDialog: MatDialog
-  ) {}
+    private matDialog: MatDialog,
+    private fb: FormBuilder
+  ) {
+    this.regionSearchForm = this.fb.group({
+      name: this.fb.control('', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z]*'),
+      ]),
+    });
+  }
 
   ngOnInit(): void {
+    this.loadAllRegions();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
+  }
+
+  loadAllRegions(): void {
     this.subscriptions.push(
       this.regionsService.getRegions().subscribe({
         next: (regions) => {
-          this.regions = regions;
+          this.regions.data = regions || [];
+          console.log(regions);
         },
+        error: (err) => {
+          this.regions.data = [];
+          console.error('Failed to load regions', err);
+        }
       })
     );
+  }
+
+  onSearch(): void {
+    console.log(name);
+    if (this.regionSearchForm.invalid) {
+      this.regionSearchForm.markAllAsTouched();
+    } else {
+      this.subscriptions.push(
+        this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
+          next: (regions) => {
+            this.regions.data = regions ? [regions] : [];
+            console.log(this.regions.data);
+            this.searchAttempted = true;
+          },
+          error: (err) => {
+            this.regions.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load regions with name ${this.regionSearchForm.value.name}`, err);
+          }
+        })
+      );
+    }
+  }
+
+  onClean(): void {
+    this.regionSearchForm.reset();
+    this.loadAllRegions();
   }
 
   onCreateRegion(): void {
@@ -40,7 +92,7 @@ export class RegionsComponent implements OnDestroy {
             if (regionData) {
               this.regionsService.addRegions(regionData).subscribe({
                 next: (regions) => {
-                  this.regions = regions;
+                  this.regions.data = regions;
                 },
               });
             }
@@ -63,7 +115,7 @@ export class RegionsComponent implements OnDestroy {
                 .updateRegions(region.regionId, regionData)
                 .subscribe({
                   next: (regions) => {
-                    this.regions = regions;
+                    this.regions.data = regions;
                   },
                 });
             }
@@ -76,9 +128,5 @@ export class RegionsComponent implements OnDestroy {
     this.matDialog.open(RegionDialogComponent, {
       data: { region: region, view: true, edit: false },
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

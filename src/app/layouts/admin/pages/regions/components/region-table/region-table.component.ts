@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Region } from '../../models/region';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-region-table',
@@ -8,7 +9,7 @@ import { Region } from '../../models/region';
 })
 export class RegionTableComponent {
   @Input()
-  dataSource: Region[] = [];
+  dataSource!: MatTableDataSource<Region>;
 
   @Output()
   editRegion = new EventEmitter<Region>();

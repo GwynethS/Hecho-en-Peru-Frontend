@@ -13,14 +13,8 @@ export class ProductsService {
     return this.httpClient.get<Product[]>(`${environment.apiURL}products`);
   }
 
-  getProductDetailsByID(id: string) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}productDetails/${id}`
-    );
-  }
-
   getSearchProductDetailsByID(id: string) {
-    return this.httpClient.get<Product[]>(
+    return this.httpClient.get<Product>(
       `${environment.apiURL}productDetails/${id}`
     );
   }

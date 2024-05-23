@@ -1,14 +1,16 @@
+import { LocalCraftsman } from "../../local-craftsmen/models/local-craftsman";
+import { Category } from "./category";
+
 export interface Product {
   id: string;
   name: string;
-  category_name: string;
-  region_name: string;
-  localCraftsman_fullname: string;
+  category: Category;
+  localCraftsman: LocalCraftsman;
   price: number;
   stock: number;
   averageRating: number;
   history: string;
   details: string;
   image: File;
-  enable: boolean;
+  enabled: boolean;
 }

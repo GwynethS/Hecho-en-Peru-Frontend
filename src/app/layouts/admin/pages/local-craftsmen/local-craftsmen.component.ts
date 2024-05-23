@@ -56,12 +56,12 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSearch(id: string): void {
+  onSearch(): void {
     if (this.localCraftsmanSearchForm.invalid) {
       this.localCraftsmanSearchForm.markAllAsTouched();
     } else {
       this.subscriptions.push(
-        this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(id).subscribe({
+        this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id).subscribe({
           next: (localCraftsmen) => {
             this.localCraftsmen.data = localCraftsmen ? [localCraftsmen] : [];
             console.log(this.localCraftsmen.data);
@@ -70,7 +70,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.localCraftsmen.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load local craftsman with ID ${id}`, err);
+            console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           }
         })
       );

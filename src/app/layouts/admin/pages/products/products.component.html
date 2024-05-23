@@ -23,17 +23,32 @@
     <span>PRODUCTOS</span>
   </div>
   <div class="col-3 search-bar">
-    <form class="product-form-search flex justify-content-around">
-      <mat-form-field class="field" appearance="outline">
+    <form
+      [formGroup]="productSearchForm"
+      class="product-form-search flex justify-content-around"
+    >
+      <mat-form-field class="field">
         <input
-          formControlName="id-product"
+          formControlName="id"
           matInput
           placeholder="Ingrese el ID"
-          value=""
         />
       </mat-form-field>
-      <button mat-flat-button type="submit" class="btn-search-icon">
+      <button
+        mat-flat-button
+        type="button"
+        class="btn-search-icon"
+        (click)="onSearch()"
+      >
         <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn-clean-icon"
+        (click)="onClean()"
+      >
+        <i class="fa-solid fa-broom"></i>
       </button>
     </form>
   </div>
@@ -43,4 +58,11 @@
     (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"
   ></app-product-table>
+</div>
+<div class="no-results-container" *ngIf="!products.data.length && searchAttempted">
+  <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+  <div>
+    <p>No se encontraron resultados</p>
+    <p> para su búsqueda</p>
+  </div>
 </div>

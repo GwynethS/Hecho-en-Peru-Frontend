@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../../models/product';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-product-table',
@@ -8,7 +9,7 @@ import { Product } from '../../models/product';
 })
 export class ProductTableComponent {
   @Input()
-  dataSource: Product[] = [];
+  dataSource!: MatTableDataSource<Product>;
 
   @Output()
   editProduct = new EventEmitter<Product>();
