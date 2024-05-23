@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container" autosize>
+<mat-drawer-container class="container" autosize>
   <mat-drawer
     [opened]="showSidebar"
     #drawer
@@ -8,9 +8,9 @@
   >
     <app-sidebar></app-sidebar>
   </mat-drawer>
-  <div class="example-sidenav-content">
+  <div class="sidenav-content">
     <app-toolbar (toggleSidebar)="showSidebar = !showSidebar"></app-toolbar>
-    <main>
+    <main class="content-pages">
       <router-outlet></router-outlet>
     </main>
     <app-footer></app-footer>

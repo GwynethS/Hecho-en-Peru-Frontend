@@ -11,3 +11,12 @@ mat-drawer {
 main {
   padding: 1.5rem;
 }
+
+.sidenav-content{
+  height: 100%;
+}
+
+.content-pages {
+  height: calc(100% - 10rem);
+  overflow-y: scroll;
+}

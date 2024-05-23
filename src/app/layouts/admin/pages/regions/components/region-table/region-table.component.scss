@@ -2,11 +2,21 @@
   box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.2);
 }
 
-.mdc-data-table__header-cell {
+table {
+  table-layout: fixed;
+}
+
+th {
   text-align: center;
 }
 
-.mdc-data-table__cell {
+td {
+  text-align: justify;
+  padding: 1rem;
+  position: relative;
+}
+
+.text-center{
   text-align: center;
 }
 
@@ -14,10 +24,21 @@
   width: 3.5rem;
 }
 
-.w-size-history {
-  width: 18rem;
+.width-size {
+  width: 29rem;
 }
 
-.w-size-actions {
-  width: 5rem;
+.overflow-div {
+  height: 3.5rem;
+  white-space: wrap;
+  overflow: hidden;
+  display: flex;
+}
+
+.dots{
+  position: absolute;
+  bottom: 0.7rem;
+  right: 1rem;
+  padding-left: 1rem;
+  background-color: #fff;
 }
