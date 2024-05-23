@@ -8,23 +8,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { ProductsService } from './products.service';
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 
 
 @NgModule({
   declarations: [
     ProductsComponent,
     ProductTableComponent,
-    ProductDialogComponent
+    ProductDialogComponent,
+    CategoryDialogComponent
   ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    ProductsService
-  ]
+  providers: [ProductsService],
 })
-export class ProductsModule { }
+export class ProductsModule {}

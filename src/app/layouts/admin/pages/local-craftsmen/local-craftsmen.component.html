@@ -1,22 +1,59 @@
-<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
-    <div class="col-2">
-        <button (click)="onCreateLocalCraftsman()" mat-flat-button class="w-full btn-add-local">
-            <mat-icon>add</mat-icon> Añadir artesano
-        </button>
-    </div>
-    <div class="col-7 centered-header">
-        <span>ARTESANOS</span>
-    </div>
-    <div class="col-3 search-bar">
-        <form class="local-form-search flex justify-content-between">
-            <mat-form-field class="field" appearance="outline">
-                <input formControlName="id-local" matInput placeholder="Ingrese el ID" value="" />
-            </mat-form-field>
-            <button mat-flat-button type="submit" class="btn-search-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </form>
-    </div>
-    <app-local-craftsman-table class="w-full" [dataSource]="localCraftsmen" (editLocalCraftsman)="onEditLocalCraftsman($event)"
-    (deleteLocalCraftsman)="onDeleteLocalCraftsman($event)"></app-local-craftsman-table>
+<div
+  class="div-add-container grid formgrid flex justify-content-center align-items-top"
+>
+  <div class="col-2">
+    <button
+      (click)="onCreateLocalCraftsman()"
+      mat-flat-button
+      class="w-full btn-add-local"
+    >
+      <mat-icon>add</mat-icon> Añadir artesano
+    </button>
+  </div>
+  <div class="col-7 centered-header">
+    <span>ARTESANOS</span>
+  </div>
+  <div class="col-3 search-bar">
+    <form
+      [formGroup]="localCraftsmanSearchForm"
+      class="local-form-search flex justify-content-between"
+    >
+      <mat-form-field class="field">
+        <input
+          formControlName="id"
+          matInput
+          placeholder="Ingrese el ID"
+        />
+      </mat-form-field>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn-search-icon"
+        (click)="onSearch(localCraftsmanSearchForm.value.id)"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button
+        mat-flat-button
+        type="button"
+        class="btn-clean-icon"
+        (click)="onClean()"
+      >
+        <i class="fa-solid fa-broom"></i>
+      </button>
+    </form>
+  </div>
+  <app-local-craftsman-table
+    class="w-full"
+    [dataSource]="localCraftsmen"
+    (editLocalCraftsman)="onEditLocalCraftsman($event)"
+    (deleteLocalCraftsman)="onDeleteLocalCraftsman($event)"
+  ></app-local-craftsman-table>
+</div>
+<div class="no-results-container" *ngIf="!localCraftsmen.data.length && searchAttempted">
+  <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+  <div>
+    <p>No se encontraron resultados</p>
+    <p> para su búsqueda</p>
+  </div>
 </div>

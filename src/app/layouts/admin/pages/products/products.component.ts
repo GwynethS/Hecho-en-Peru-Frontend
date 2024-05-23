@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductsService } from './products.service';
 import { AlertService } from '../../../../core/alert.service';
 import { Subscription } from 'rxjs';
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { Category } from './models/category';
 
 @Component({
   selector: 'app-products',
@@ -13,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProductsComponent implements OnDestroy {
   products: Product[] = [];
-
+  categories: Category[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -27,6 +29,15 @@ export class ProductsComponent implements OnDestroy {
       this.productsService.getProducts().subscribe({
         next: (products) => {
           this.products = products;
+          console.log(products);
+        },
+      })
+    );
+    this.subscriptions.push(
+      this.productsService.getCategories().subscribe({
+        next: (categories) => {
+          this.categories = categories;
+          console.log(categories);
         },
       })
     );
@@ -55,14 +66,14 @@ export class ProductsComponent implements OnDestroy {
     this.subscriptions.push(
       this.matDialog
         .open(ProductDialogComponent, {
-          data: { product: product, view: false, edit: true },
+          data: { product: product, view: true, edit: true },
         })
         .afterClosed()
         .subscribe({
           next: (productData) => {
             if (productData) {
               this.productsService
-                .updateProducts(product.productId, productData)
+                .updateProducts(product.id, productData)
                 .subscribe({
                   next: (products) => {
                     this.products = products;
@@ -74,24 +85,39 @@ export class ProductsComponent implements OnDestroy {
     );
   }
 
-  onViewProduct(product: Product) {
-    this.matDialog.open(ProductDialogComponent, {
-      data: { product: product, view: true, edit: false },
-    });
-  }
+  onViewProduct(product: Product) { }
 
-  onDeleteProduct(id: Product) {
+  onDeleteProduct(id: string) {
     this.alertService
       .showConfirmDeleteAction('este producto')
       .then((result) => {
         if (result.isConfirmed) {
-          this.productsService.deleteProductsByID(id.productId).subscribe({
+          this.productsService.deleteProductsByID(id).subscribe({
             next: (products) => {
               this.products = products;
             },
           });
         }
       });
+  }
+
+  onCreateCategory(): void {
+    this.subscriptions.push(
+      this.matDialog
+        .open(CategoryDialogComponent)
+        .afterClosed()
+        .subscribe({
+          next: (categoryData) => {
+            if (categoryData) {
+              this.productsService.addProducts(categoryData).subscribe({
+                next: (categories) => {
+                  this.categories = categories;
+                },
+              });
+            }
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {

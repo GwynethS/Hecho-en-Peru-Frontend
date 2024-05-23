@@ -10,19 +10,14 @@ import { CustomerTableComponent } from './components/customer-table/customer-tab
 
 
 @NgModule({
-  declarations: [
-    CustomersComponent,
-    CustomerTableComponent
-  ],
+  declarations: [CustomersComponent, CustomerTableComponent],
   imports: [
     CommonModule,
     CustomersRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    CustomersService
-  ]
+  providers: [CustomersService],
 })
-export class CustomersModule { }
+export class CustomersModule {}

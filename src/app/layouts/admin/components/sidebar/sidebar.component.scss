@@ -1,33 +1,33 @@
 .width-image {
-    width: 9.375rem;
+  width: 9.375rem;
 }
 
 .position-image {
-    height: 13.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+  height: 13.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 mat-list-item {
-    margin-bottom: 0.938rem;
-    padding-left: 2.10rem;
+  margin-bottom: 0.938rem;
+  padding-left: 2.1rem;
 }
 
 mat-list-item a {
-    font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 .active-link a {
-    color: #CC5454;
-    border-bottom: #E09898 solid 0.125rem;
-    font-size: 0.875rem;
+  color: #cc5454;
+  border-bottom: #e09898 solid 0.125rem;
+  font-size: 0.875rem;
 }
 
 .active-link i {
-    color: #E09898;
+  color: #e09898;
 }
 
 .px-2 {
-    padding-right: 0.625rem;
+  padding-right: 0.625rem;
 }

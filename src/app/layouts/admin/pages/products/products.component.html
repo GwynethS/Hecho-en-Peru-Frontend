@@ -1,11 +1,21 @@
-<div class="div-add-container grid formgrid flex justify-content-center align-items-top">
+<div
+  class="div-add-container grid formgrid flex justify-content-center align-items-top"
+>
   <div class="col-2">
-    <button (click)="onCreateProduct()" mat-flat-button class="w-full btn-add-product">
+    <button
+      (click)="onCreateProduct()"
+      mat-flat-button
+      class="w-full btn-add-product"
+    >
       <mat-icon>add</mat-icon> Añadir producto
     </button>
   </div>
   <div class="col-2">
-    <button mat-flat-button class="w-full btn-add-category">
+    <button
+      (click)="onCreateCategory()"
+      mat-flat-button
+      class="w-full btn-add-category"
+    >
       <mat-icon>add</mat-icon> Añadir categoría
     </button>
   </div>
@@ -15,13 +25,22 @@
   <div class="col-3 search-bar">
     <form class="product-form-search flex justify-content-around">
       <mat-form-field class="field" appearance="outline">
-        <input formControlName="id-product" matInput placeholder="Ingrese el ID" value="" />
+        <input
+          formControlName="id-product"
+          matInput
+          placeholder="Ingrese el ID"
+          value=""
+        />
       </mat-form-field>
       <button mat-flat-button type="submit" class="btn-search-icon">
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
     </form>
   </div>
-  <app-product-table class="w-full" [dataSource]="products" (editProduct)="onEditProduct($event)"
-    (deleteProduct)="onDeleteProduct($event)"></app-product-table>
+  <app-product-table
+    class="w-full"
+    [dataSource]="products"
+    (editProduct)="onEditProduct($event)"
+    (deleteProduct)="onDeleteProduct($event)"
+  ></app-product-table>
 </div>

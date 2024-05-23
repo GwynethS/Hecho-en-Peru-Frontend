@@ -4,7 +4,7 @@ import { Product } from '../../models/product';
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
-  styleUrl: './product-table.component.scss'
+  styleUrl: './product-table.component.scss',
 })
 export class ProductTableComponent {
   @Input()
@@ -14,9 +14,20 @@ export class ProductTableComponent {
   editProduct = new EventEmitter<Product>();
 
   @Output()
-  deleteProduct = new EventEmitter<Product>();
+  deleteProduct = new EventEmitter<string>();
 
-  displayedColumns: string[] = ['productId', 'name', 'category_name', 'region_name', 'localCraftsman_fullname', 'price', 'stock', 'average_rating', 'enable', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'name_category',
+    'name_region',
+    'fullname_localCraftsman',
+    'price',
+    'stock',
+    'averageRating',
+    'enabled',
+    'actions',
+  ];
 
   constructor() {}
 }

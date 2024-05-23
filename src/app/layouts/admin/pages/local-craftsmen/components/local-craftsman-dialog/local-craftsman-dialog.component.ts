@@ -6,7 +6,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 @Component({
   selector: 'app-local-craftsman-dialog',
   templateUrl: './local-craftsman-dialog.component.html',
-  styleUrl: './local-craftsman-dialog.component.scss'
+  styleUrl: './local-craftsman-dialog.component.scss',
 })
 export class LocalCraftsmanDialogComponent {
   hide = true;
@@ -16,15 +16,15 @@ export class LocalCraftsmanDialogComponent {
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<LocalCraftsmanDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-      private editinglocalCraftsman? : LocalCraftsman
-    ) {
+    private editinglocalCraftsman?: LocalCraftsman
+  ) {
     this.localCraftsmanForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
       specialty: ['', Validators.required],
       image: [Validators.required],
       experience: ['', [Validators.required, Validators.minLength(3)]],
-      region_name: ['', [Validators.required, Validators.minLength(3)]],
+      name_region: ['', [Validators.required, Validators.minLength(3)]],
       enabled: ['', Validators.required],
     });
     if (this.editinglocalCraftsman) {
@@ -37,15 +37,15 @@ export class LocalCraftsmanDialogComponent {
       this.localCraftsmanForm.get('specialty')?.disable();
       this.localCraftsmanForm.get('image')?.disable();
       this.localCraftsmanForm.get('experience')?.disable();
-      this.localCraftsmanForm.get('region_name')?.disable();
+      this.localCraftsmanForm.get('name_region')?.disable();
       this.localCraftsmanForm.get('enabled')?.disable();
     }
   }
 
   onCreate(): void {
-    if(this.localCraftsmanForm.invalid){
+    if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
-    }else{
+    } else {
       this.matDialogRef.close(this.localCraftsmanForm.value);
     }
   }

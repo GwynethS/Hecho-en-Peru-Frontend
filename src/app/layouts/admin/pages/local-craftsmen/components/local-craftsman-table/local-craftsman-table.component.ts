@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LocalCraftsman } from '../../models/local-craftsman';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-local-craftsman-table',
   templateUrl: './local-craftsman-table.component.html',
-  styleUrl: './local-craftsman-table.component.scss'
+  styleUrl: './local-craftsman-table.component.scss',
 })
 export class LocalCraftsmanTableComponent {
   @Input()
-  dataSource: LocalCraftsman[] = [];
+  dataSource!: MatTableDataSource<LocalCraftsman>;
 
   @Output()
   editLocalCraftsman = new EventEmitter<LocalCraftsman>();
@@ -16,7 +17,15 @@ export class LocalCraftsmanTableComponent {
   @Output()
   deleteLocalCraftsman = new EventEmitter<LocalCraftsman>();
 
-  displayedColumns: string[] = ['localCraftsmanId', 'fullName', 'specialty', 'experience', 'region_name', 'enabled', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'fullName',
+    'specialty',
+    'experience',
+    'name_region',
+    'enabled',
+    'actions',
+  ];
 
   constructor() {}
 }

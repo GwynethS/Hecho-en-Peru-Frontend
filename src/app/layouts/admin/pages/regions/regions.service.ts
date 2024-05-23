@@ -6,28 +6,33 @@ import { Observable, mergeMap } from 'rxjs';
 
 @Injectable()
 export class RegionsService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getRegions() {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regions`);
   }
 
   getSearchRegionDetailsByName(region_name: string) {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}regionSearch/${region_name}`);
+    return this.httpClient.get<Region[]>(
+      `${environment.apiURL}regionSearch/${region_name}`
+    );
   }
 
   getSearchRegionDetailsByID(id: string) {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}regionDetail/${id}`);
+    return this.httpClient.get<Region[]>(
+      `${environment.apiURL}regionDetail/${id}`
+    );
   }
 
   addRegions(data: Region) {
     return this.httpClient
-    .post<Region>(`${environment.apiURL}region`, data)
-    .pipe(mergeMap(() => this.getRegions()));
+      .post<Region>(`${environment.apiURL}region`, data)
+      .pipe(mergeMap(() => this.getRegions()));
   }
 
   updateRegions(id: string, data: Region): Observable<Region[]> {
-    return this.httpClient.put<Region[]>(`${environment.apiURL}region/${id}`, data)
-    .pipe(mergeMap(() => this.getRegions()));
+    return this.httpClient
+      .put<Region[]>(`${environment.apiURL}region/${id}`, data)
+      .pipe(mergeMap(() => this.getRegions()));
   }
 }

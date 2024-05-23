@@ -2,17 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Customer } from './models/customer';
 import { environment } from '../../../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CustomersService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getCustomers() {
     return this.httpClient.get<Customer[]>(`${environment.apiURL}users`);
   }
 
   getSearchCustomerByID(id: string) {
-    return this.httpClient.get<Customer[]>(`${environment.apiURL}user/${id}`);
+    return this.httpClient.get<Customer>(`${environment.apiURL}user/${id}`);
   }
 
   getOrders() {
@@ -20,6 +21,8 @@ export class CustomersService {
   }
 
   getSearchOrderDetailsByID(orderId: string, userId: string) {
-    return this.httpClient.get<Customer[]>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`);
+    return this.httpClient.get<Customer[]>(
+      `${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`
+    );
   }
 }

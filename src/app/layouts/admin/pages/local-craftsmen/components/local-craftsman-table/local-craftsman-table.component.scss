@@ -1,3 +1,11 @@
 .shadow-table {
-    box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.2);
+}
+
+.mdc-data-table__header-cell {
+  text-align: center;
+}
+
+.mdc-data-table__cell  {
+  text-align: center;
 }

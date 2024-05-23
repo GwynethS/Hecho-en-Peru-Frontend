@@ -1,11 +1,9 @@
-.style-footer {
-    background-color: #242423;
-    color: white;
-    position: sticky;
-    bottom: 0;
-    padding: 0.438rem;
-    font-size: 0.875rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.footer-container {
+  background-color: #242423;
+  color: white;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }
