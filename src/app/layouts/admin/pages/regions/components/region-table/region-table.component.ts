@@ -1,15 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Region } from '../../models/region';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-region-table',
   templateUrl: './region-table.component.html',
   styleUrl: './region-table.component.scss',
 })
-export class RegionTableComponent {
+export class RegionTableComponent implements AfterViewInit {
   @Input()
-  dataSource: Region[] = [];
+  set dataSource(data: Region[]) {
+    this._dataSource.data = data;
+  }
+
+  get dataSource(): Region[] {
+    return this._dataSource.data;
+  }
 
   @Output()
   editRegion = new EventEmitter<Region>();
@@ -23,5 +30,13 @@ export class RegionTableComponent {
     'actions',
   ];
 
+  _dataSource = new MatTableDataSource<Region>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor() {}
+
+  ngAfterViewInit() {
+    this._dataSource.paginator = this.paginator;
+  }
 }

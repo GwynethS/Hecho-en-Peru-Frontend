@@ -1,23 +1,26 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Region } from './models/region';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { RegionsService } from './regions.service';
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '../../../../core/alert.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
   styleUrl: './regions.component.scss',
 })
-export class RegionsComponent implements OnInit, OnDestroy {
+export class RegionsComponent implements OnInit, OnDestroy, AfterViewInit {
   regions: Region[] = [];
+  dataSource = new MatTableDataSource<Region>();
   regionSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private regionsService: RegionsService,
@@ -36,8 +39,12 @@ export class RegionsComponent implements OnInit, OnDestroy {
     this.loadAllRegions();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   ngOnDestroy(): void {
-    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   loadAllRegions(): void {
@@ -45,10 +52,12 @@ export class RegionsComponent implements OnInit, OnDestroy {
       this.regionsService.getRegions().subscribe({
         next: (regions) => {
           this.regions = regions || [];
+          this.dataSource.data = this.regions;
           console.log(regions);
         },
         error: (err) => {
           this.regions = [];
+          this.dataSource.data = this.regions;
           console.error('Failed to load regions', err);
         }
       })
@@ -63,11 +72,13 @@ export class RegionsComponent implements OnInit, OnDestroy {
         this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
           next: (regions) => {
             this.regions = regions;
+            this.dataSource.data = this.regions;
             console.log(this.regions);
             this.searchAttempted = true;
           },
           error: (err) => {
             this.regions = [];
+            this.dataSource.data = this.regions;
             this.searchAttempted = true;
             console.error(`Failed to load regions with name ${this.regionSearchForm.value.name}`, err);
           }
@@ -92,6 +103,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
               this.regionsService.addRegions(regionData).subscribe({
                 next: (regions) => {
                   this.regions = regions;
+                  this.dataSource.data = this.regions;
                 },
               });
             }
@@ -115,6 +127,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
                 .subscribe({
                   next: (regions) => {
                     this.regions = regions;
+                    this.dataSource.data = this.regions;
                   },
                 });
             }
