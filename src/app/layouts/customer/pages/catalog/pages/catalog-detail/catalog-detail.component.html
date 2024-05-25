@@ -2,7 +2,7 @@
   <div class="product-img">
     <figure>
       <img
-        src="../../../../../../../assets/img/catalog/poncho-lana-main.jpg"
+        src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.image}}"
         class="product-img"
       />
     </figure>
@@ -10,13 +10,13 @@
   <div class="product-description">
     <div class="rating-comments">
       <div class="rating">
-        <p-rating [(ngModel)] = "avgRating" [readonly]="true" [cancel]="false" />
-        <p class="rating-value">4.5</p>
+        <p-rating [(ngModel)]= "avgRating" [readonly]="true" [cancel]="false" />
+        <p class="rating-value">{{productSelected?.averageRating | number: '1.1-1'}}</p>
       </div>
       <a class="number-comments" href="#"> 40 comentarios </a>
     </div>
-    <h2 class="product-title">Poncho de lana</h2>
-    <h2 class="precio-product">s/.150.00</h2>
+    <h2 class="product-title">{{productSelected?.name}}</h2>
+    <h2 class="precio-product">s/.{{productSelected?.price | number: '1.2-2'}}</h2>
 
     <div class="quantity-box">
       <h4>Número de unidades</h4>
@@ -25,7 +25,7 @@
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field class="product-quantity">
-          <input matInput type="number" value="1" />
+          <input matInput type="number" value="1" min="1"/>
         </mat-form-field>
         <button mat-icon-button>
           <mat-icon>add</mat-icon>
@@ -34,7 +34,7 @@
     </div>
     <div class="stock">
       <h4>Stock:</h4>
-      <span>10 unidades</span>
+      <span>{{productSelected?.stock}} unidades</span>
     </div>
     <button mat-flat-button class="btn-add-cart">
       <span>Agregar al carrito</span><i class="fa-solid fa-cart-shopping"></i>
@@ -44,83 +44,33 @@
 
 <section class="more-info-product">
   <figure>
-    <img src="../../../../../../../assets/img/hand-craftsmen/fátima.jpg" />
+    <img src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.localCraftsman?.image}}" />
   </figure>
   <div class="info-crafstman">
     <h3>Información del artesano</h3>
-    <p><b>Artesana:</b> Fátima Quispe Huamaní</p>
-    <p><b>Ubicación:</b> Cusco, Perú</p>
-    <p><b>Especialidad:</b> Tejidos andinos</p>
+    <p><b>Artesano:</b> {{productSelected?.localCraftsman?.fullName}}</p>
+    <p><b>Ubicación:</b> {{productSelected?.localCraftsman?.region?.name}}, Perú</p>
+    <p><b>Especialidad:</b> {{productSelected?.localCraftsman?.specialty}}</p>
     <p>
-      <b>Experiencia:</b> Más de 15 años en el tejido de textiles tradicionales
+      <b>Experiencia:</b> {{productSelected?.localCraftsman?.experience}}
     </p>
     <p>
-      <b>Historia:</b> Fátima Quispe es una talentosa artesana peruana con un
-      profundo amor por su cultura y tradiciones. Originaria de Cusco, una
-      región conocida por su rica herencia textil, Fátima se ha dedicado al arte
-      del tejido desde una edad temprana. Ha aprendido las técnicas ancestrales
-      de su comunidad y ha perfeccionado su habilidad a lo largo de los años. Su
-      trabajo se destaca por la precisión de sus diseños y el uso de colores
-      vibrantes que representan la vida y la naturaleza de los Andes peruanos.
+      <b>Historia:</b> {{productSelected?.localCraftsman?.description}}
     </p>
   </div>
   <div class="history-product">
     <h3>Historia del producto</h3>
     <p>
-      El Poncho de lana tejido a mano por Fátima Quispe es una verdadera obra de
-      arte que captura la esencia de la cultura cusqueña. Fátima, una talentosa
-      artesana de la región, ha dedicado su vida a preservar y transmitir las
-      tradiciones ancestrales del tejido.
-    </p>
-    <p>
-      Con habilidad y pasión, Fátima selecciona cuidadosamente las mejores
-      fibras de lana de alpaca y lana de oveja, que son reconocidas por su
-      suavidad y calidez. Utilizando técnicas transmitidas de generación en
-      generación, Fátima teje a mano cada poncho con dedicación y minuciosidad.
-    </p>
-    <p>
-      El resultado es un poncho de lana cusqueño único, con diseños auténticos y
-      colores vibrantes que reflejan la identidad cultural de la región. Cada
-      detalle y patrón cuenta una historia y representa la conexión profunda con
-      la naturaleza, los símbolos ancestrales y la cosmovisión andina.
+      {{productSelected?.history}}
     </p>
     <div class="region">
-      <span>Región:</span><label class="region-name" for="cusco">Cusco</label
+      <span>Región:</span><label class="region-name" for="cusco">{{productSelected?.localCraftsman?.region?.name}}</label
       ><button mat-flat-button class="btn-region">Conocer más</button>
     </div>
   </div>
   <div class="product-details">
     <h3>Detalles del producto</h3>
-    <p>
-      <b>Materiales:</b> Nuestros ponchos de lana cusqueños están confeccionados
-      con una exquisita combinación de fibras de alpaca y lana de oveja de
-      primera calidad. Estas materias primas naturales son seleccionadas
-      minuciosamente para garantizar la suavidad, calidez y durabilidad
-      excepcionales de cada poncho.
-    </p>
-
-    <p>
-      <b>Diseño:</b> Cada poncho presenta diseños únicos y vibrantes que
-      capturan la rica diversidad cultural de la región andina. Nuestros
-      talentosos artesanos entrelazan hábilmente patrones tradicionales, como
-      motivos geométricos y símbolos ancestrales, creando una auténtica obra de
-      arte textil en cada pieza.
-    </p>
-
-    <p>
-      <b>Colores:</b> Los colores utilizados en nuestros ponchos son una
-      verdadera explosión de vivacidad y alegría. Para lograrlos, empleamos
-      tintes naturales extraídos de plantas autóctonas, lo que nos permite
-      ofrecer una amplia gama de tonalidades ricas y auténticas en nuestros
-      productos.
-    </p>
-
-    <p>
-      <b>Funcionalidad:</b> Además de su indiscutible valor artístico, nuestros
-      ponchos de lana cusqueños son altamente funcionales. Han sido diseñados
-      pensando en brindar calidez y protección contra el frío y los vientos de
-      las alturas de los Andes.
-    </p>
+    <p>{{productSelected?.details}}</p>
   </div>
 </section>
 
