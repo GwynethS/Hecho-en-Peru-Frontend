@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LocalCraftsman } from './models/local-craftsman';
 import { Subscription } from 'rxjs';
 import { LocalCraftsmenService } from './local-craftsmen.service';
@@ -7,17 +7,21 @@ import { AlertService } from '../../../../core/alert.service';
 import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dialog/local-craftsman-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-local-craftsmen',
   templateUrl: './local-craftsmen.component.html',
   styleUrl: './local-craftsmen.component.scss',
 })
-export class LocalCraftsmenComponent implements OnInit, OnDestroy {
-  localCraftsmen = new MatTableDataSource<LocalCraftsman>();
+export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit {
+  localCraftsmen: LocalCraftsman[] = [];
+  dataSource = new MatTableDataSource<LocalCraftsman>();
   localCraftsmanSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private localCraftsmenService: LocalCraftsmenService,
@@ -37,6 +41,10 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     this.loadAllLocalCraftsmen();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
@@ -45,11 +53,13 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.localCraftsmenService.getLocalCraftsmen().subscribe({
         next: (localCraftsmen) => {
-          this.localCraftsmen.data = localCraftsmen || [];
+          this.localCraftsmen = localCraftsmen || [];
+          this.dataSource.data = this.localCraftsmen;
           console.log(localCraftsmen);
         },
         error: (err) => {
-          this.localCraftsmen.data = [];
+          this.localCraftsmen = [];
+          this.dataSource.data = this.localCraftsmen;
           console.error('Failed to load local craftsmen', err);
         }
       })
@@ -63,12 +73,12 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id).subscribe({
           next: (localCraftsmen) => {
-            this.localCraftsmen.data = localCraftsmen ? [localCraftsmen] : [];
-            console.log(this.localCraftsmen.data);
+            this.localCraftsmen = localCraftsmen ? [localCraftsmen] : [];
+            console.log(this.localCraftsmen);
             this.searchAttempted = true;
           },
           error: (err) => {
-            this.localCraftsmen.data = [];
+            this.localCraftsmen = [];
             this.searchAttempted = true;
             console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           }
@@ -94,7 +104,8 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
                 .addLocalCraftsmen(localCraftsmanData)
                 .subscribe({
                   next: (localCraftsmen) => {
-                    this.localCraftsmen.data = localCraftsmen;
+                    this.localCraftsmen = localCraftsmen;
+                    this.dataSource.data = this.localCraftsmen;
                   },
                 });
             }
@@ -120,7 +131,8 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
                 )
                 .subscribe({
                   next: (localCraftsmen) => {
-                    this.localCraftsmen.data = localCraftsmen;
+                    this.localCraftsmen = localCraftsmen;
+                    this.dataSource.data = this.localCraftsmen;
                   },
                 });
             }
@@ -144,7 +156,8 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
             .deleteLocalCraftsmenByID(id.localCraftsmanId)
             .subscribe({
               next: (localCraftsmen) => {
-                this.localCraftsmen.data = localCraftsmen;
+                this.localCraftsmen = localCraftsmen;
+                this.dataSource.data = this.localCraftsmen;
               },
             });
         }

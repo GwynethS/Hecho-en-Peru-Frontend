@@ -16,7 +16,7 @@ td {
   position: relative;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
@@ -35,10 +35,14 @@ td {
   display: flex;
 }
 
-.dots{
+.dots {
   position: absolute;
   bottom: 0.7rem;
   right: 1rem;
   padding-left: 1rem;
   background-color: #fff;
+}
+
+.paginator-border {
+  border-top: rgba(242, 242, 242, 0.052) 0.001rem solid;
 }

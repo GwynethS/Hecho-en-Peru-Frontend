@@ -1,15 +1,22 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Product } from '../../models/product';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
   styleUrl: './product-table.component.scss',
 })
-export class ProductTableComponent {
+export class ProductTableComponent implements AfterViewInit {
   @Input()
-  dataSource!: MatTableDataSource<Product>;
+  set dataSource(data: Product[]) {
+    this._dataSource.data = data;
+  }
+
+  get dataSource(): Product[] {
+    return this._dataSource.data;
+  }
 
   @Output()
   editProduct = new EventEmitter<Product>();
@@ -30,5 +37,13 @@ export class ProductTableComponent {
     'actions',
   ];
 
+  _dataSource = new MatTableDataSource<Product>();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor() {}
+
+  ngAfterViewInit() {
+    this._dataSource.paginator = this.paginator;
+  }
 }

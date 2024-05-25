@@ -1,20 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Customer } from './models/customer';
 import { CustomersService } from './customers.service';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss'],
 })
-export class CustomersComponent implements OnInit, OnDestroy {
-  customers = new MatTableDataSource<Customer>();
+export class CustomersComponent implements OnInit, OnDestroy, AfterViewInit {
+  customers: Customer[] = [];
+  dataSource = new MatTableDataSource<Customer>();
   customerSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private customersService: CustomersService,
@@ -32,19 +36,25 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.loadAllCustomers();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   loadAllCustomers(): void {
     this.subscriptions.push(
       this.customersService.getCustomers().subscribe({
         next: (customers) => {
-          this.customers.data = customers || [];
+          this.customers = customers || [];
+          this.dataSource.data = this.customers;
           console.log(customers);
         },
         error: (err) => {
-          this.customers.data = [];
+          this.customers = [];
+          this.dataSource.data = this.customers;
           console.error('Failed to load customers', err);
         }
       })
@@ -57,13 +67,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.push(
         this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
-          next: (customer) => {
-            this.customers.data = customer ? [customer] : [];
-            console.log(this.customers.data);
+          next: (customers) => {
+            this.customers = customers ? [customers] : [];
+            console.log(this.customers);
             this.searchAttempted = true;
           },
           error: (err) => {
-            this.customers.data = [];
+            this.customers = [];
             this.searchAttempted = true;
             console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           }

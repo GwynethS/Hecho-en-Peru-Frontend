@@ -63,10 +63,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      <mat-paginator
-        [pageSizeOptions]="[4, 8, 12]"
-        showFirstLastButtons
-      ></mat-paginator>
+      <div class="paginator-border">
+        <mat-paginator
+          [pageSizeOptions]="[3, 6, 9]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
     </div>
   </mat-tab>
 </mat-tab-group>

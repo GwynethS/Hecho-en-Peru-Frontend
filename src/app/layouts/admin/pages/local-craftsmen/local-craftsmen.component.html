@@ -10,10 +10,11 @@
       <mat-icon>add</mat-icon> Añadir artesano
     </button>
   </div>
-  <div class="col-7 centered-header">
+  <div class="col-2"></div>
+  <div class="col-4 centered-header">
     <span>ARTESANOS</span>
   </div>
-  <div class="col-3 search-bar">
+  <div class="col-4 search-bar">
     <form
       [formGroup]="localCraftsmanSearchForm"
       class="local-form-search flex justify-content-between"
@@ -50,7 +51,7 @@
     (deleteLocalCraftsman)="onDeleteLocalCraftsman($event)"
   ></app-local-craftsman-table>
 </div>
-<div class="no-results-container" *ngIf="!localCraftsmen.data.length && searchAttempted">
+<div class="no-results-container" *ngIf="!localCraftsmen.length && searchAttempted">
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>
