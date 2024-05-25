@@ -141,6 +141,7 @@ a {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 0.5rem;
     }
   }
   .info-crafstman {
@@ -201,10 +202,7 @@ a {
       border-bottom: 0.1rem solid black;
     }
     p {
-      b {
-        font-weight: 500;
-        color: #2c2c2c;
-      }
+      white-space: pre-line;
       padding: 0 1rem;
       margin-top: 0;
       text-align: justify;
@@ -246,7 +244,7 @@ a {
         width: 100%;
         margin: 1rem 0;
       }
-      p-rating{
+      p-rating {
         width: 100%;
         margin: 1rem 0;
       }
@@ -286,7 +284,7 @@ a {
           }
         }
       }
-      .comment-text{
+      .comment-text {
         margin-left: 2rem;
       }
     }

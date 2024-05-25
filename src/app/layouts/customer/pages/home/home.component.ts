@@ -25,7 +25,6 @@ export class HomeComponent {
       this.productsService.getProducts().subscribe({
         next: (products) => {
           this.length = products.length;
-          console.log(this.length);
         },
       })
     );
@@ -42,7 +41,6 @@ export class HomeComponent {
   previousPage(){
     if(this.pageIndex > 0){
       this.pageIndex--;
-      console.log(this.pageIndex);
 
       this.subscriptions.push(
         this.productsService.getProductsByPageUser(this.pageIndex, this.pageSize).subscribe({
@@ -57,7 +55,6 @@ export class HomeComponent {
   nextPage(){
     if(this.pageIndex < Math.ceil(this.length / 3.0) - 1){
       this.pageIndex++;
-      console.log(this.pageIndex);
 
       this.subscriptions.push(
         this.productsService.getProductsByPageUser(this.pageIndex, this.pageSize).subscribe({
