@@ -11,9 +11,9 @@
   
 <section class="regions-container">
   <div class="cards-container">
-    <div class="card">
-      <img class="img-fluid" src="../../../../../assets/img/banner-regiones.jpg" alt="Fotografía de la región Amazonas">
-      <button mat-flat-button>Áncash</button>
+    <div *ngFor="let region of regions" class="region-card">
+      <img class="img-fluid" src="http://localhost:8080/api/region/{{region.image}}" alt="Fotografía de la región {{region.name}}">
+      <button mat-flat-button>{{region.name}}</button>
     </div>
   </div>
 </section>
