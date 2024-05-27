@@ -24,15 +24,7 @@ export class CatalogComponent {
     private productsService: ProductsService
   ) {}
 
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.productsService.getProducts().subscribe({
-        next: (products) => {
-          this.length = products.length;
-        },
-      })
-    );
-
+  getProductsByPage(){
     this.subscriptions.push(
       this.productsService
         .getProductsByPageUser(this.pageIndex, this.pageSize)
@@ -44,19 +36,23 @@ export class CatalogComponent {
     );
   }
 
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.productsService.getProducts().subscribe({
+        next: (products) => {
+          this.length = products.length;
+        },
+      })
+    );
+
+    this.getProductsByPage();
+  }
+
   previousPage() {
     if (this.pageIndex > 0) {
       this.pageIndex--;
 
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;
     }
   }
@@ -67,16 +63,7 @@ export class CatalogComponent {
       this.inputPageNumber <= Math.ceil(this.length / 12.0)
     ) {
       this.pageIndex = this.inputPageNumber - 1;
-
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
     }
     
     this.inputPageNumber = this.pageIndex + 1;
@@ -85,16 +72,7 @@ export class CatalogComponent {
   nextPage() {
     if (this.pageIndex < Math.ceil(this.length / 12.0) - 1) {
       this.pageIndex++;
-
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;
     }
   }

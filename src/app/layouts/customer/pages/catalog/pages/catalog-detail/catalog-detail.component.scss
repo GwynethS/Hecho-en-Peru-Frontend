@@ -273,20 +273,16 @@ a {
           margin-right: 1rem;
         }
       }
-      .comment-rating {
+      p-rating{
         margin-left: 2rem;
-        i {
-          font-size: 1.2rem;
-          margin-bottom: 1rem;
-          color: #bfbfbf;
-          &.active {
-            color: #f9c846;
-          }
-        }
       }
       .comment-text {
+        margin-top: 1rem;
         margin-left: 2rem;
       }
     }
+  }
+  .no-comments{
+    color: #313030;
   }
 }
