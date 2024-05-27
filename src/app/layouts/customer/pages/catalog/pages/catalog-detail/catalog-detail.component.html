@@ -17,7 +17,7 @@
           {{ productSelected?.averageRating | number : "1.1-1" }}
         </p>
       </div>
-      <a class="number-comments" href="#"> 40 comentarios </a>
+      <p class="number-comments"> {{comments.length}} comentarios </p>
     </div>
     <h2 class="product-title">{{ productSelected?.name }}</h2>
     <h2 class="precio-product">
@@ -89,7 +89,7 @@
 <section class="comments-section">
   <div class="comments-section-header">
     <h2>Comentarios</h2>
-    <p>40 comentarios</p>
+    <p>{{comments.length}} comentarios</p>
   </div>
   <div class="new-comment">
     <div class="user-information">
@@ -117,7 +117,7 @@
     <div class="comment" *ngFor="let comment of comments">
       <div class="comment-user">
         <i class="fa-solid fa-user"></i>
-        <h4>{{ comment.user.name + "" + comment.user.lastName }}</h4>
+        <h4>{{ comment.user.name + " " + comment.user.lastName }}</h4>
       </div>
       <p-rating [(ngModel)]="comment.rating" [readonly]="true" [cancel]="false" />
       <div class="comment-text">{{comment.textCommentary}}</div>

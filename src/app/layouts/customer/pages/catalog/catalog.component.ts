@@ -24,6 +24,18 @@ export class CatalogComponent {
     private productsService: ProductsService
   ) {}
 
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.productsService.getProducts().subscribe({
+        next: (products) => {
+          this.length = products.length;
+        },
+      })
+    );
+    
+    this.getProductsByPage();
+  }
+  
   getProductsByPage(){
     this.subscriptions.push(
       this.productsService
@@ -36,22 +48,9 @@ export class CatalogComponent {
     );
   }
 
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.productsService.getProducts().subscribe({
-        next: (products) => {
-          this.length = products.length;
-        },
-      })
-    );
-
-    this.getProductsByPage();
-  }
-
   previousPage() {
     if (this.pageIndex > 0) {
       this.pageIndex--;
-
       this.getProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;
     }
@@ -79,5 +78,9 @@ export class CatalogComponent {
 
   redirectTo(id: string): void {
     this.router.navigate([`/shop/catalog/${id}`]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

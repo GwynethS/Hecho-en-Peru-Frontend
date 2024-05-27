@@ -37,6 +37,13 @@ export class CatalogDetailComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
+    this.commentForm = this.fb.group({
+      textCommentary: this.fb.control('', Validators.required),
+      rating: this.fb.control('', Validators.required),
+    });
+  }
+
+  ngOnInit(): void {
     this.subscriptions.push(
       this.productsService
         .getSearchProductDetailsByID(this.route.snapshot.params['id'])
@@ -54,11 +61,6 @@ export class CatalogDetailComponent {
           },
         })
     );
-
-    this.commentForm = this.fb.group({
-      textCommentary: this.fb.control('', Validators.required),
-      rating: this.fb.control('', Validators.required),
-    });
   }
 
   onSubmit() {
@@ -69,15 +71,17 @@ export class CatalogDetailComponent {
     }
   }
 
-  getComments(){
+  getComments() {
     if (this.productSelected) {
       this.subscriptions.push(
-        this.CommentsService.getCommentsByProduct(this.productSelected.id).subscribe({
+        this.CommentsService.getCommentsByProduct(
+          this.productSelected.id
+        ).subscribe({
           next: (comments) => {
             if (comments) {
               this.length = comments.length;
             }
-          }
+          },
         })
       );
     }
@@ -86,12 +90,16 @@ export class CatalogDetailComponent {
   getCommentsByPage() {
     if (this.productSelected) {
       this.subscriptions.push(
-        this.CommentsService.getCommentsByPageByProduct(this.productSelected.id, this.pageIndex, this.pageSize).subscribe({
+        this.CommentsService.getCommentsByPageByProduct(
+          this.productSelected.id,
+          this.pageIndex,
+          this.pageSize
+        ).subscribe({
           next: (comments) => {
             if (comments) {
               this.comments = comments;
             }
-          }
+          },
         })
       );
     }
@@ -103,6 +111,10 @@ export class CatalogDetailComponent {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
 
-    this.getCommentsByPage()
+    this.getCommentsByPage();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }
