@@ -1,10 +1,10 @@
 <mat-tab-group #tabGroup class="w-full pt-2">
   <mat-tab>
-    <div class="table-container">
+    <div class="table-container shadow-table">
       <table
         mat-table
-        [dataSource]="dataSource"
-        class="mat-elevation-z8 shadow-table"
+        [dataSource]="_dataSource"
+        class="mat-elevation-z8"
       >
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef class="w-size">ID</th>
@@ -39,7 +39,7 @@
         <ng-container matColumnDef="dateCreated">
           <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
           <td mat-cell *matCellDef="let customer">
-            {{ customer.dateCreated | date: 'short' }}
+            {{ customer.dateCreated | date : "short" }}
           </td>
         </ng-container>
         <ng-container matColumnDef="enabled">
@@ -59,6 +59,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
+      <div class="paginator-border">
+        <mat-paginator
+          [pageSizeOptions]="[7, 14, 21]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
     </div>
   </mat-tab>
 </mat-tab-group>

@@ -1,5 +1,5 @@
 .shadow-table {
-  box-shadow: 0.3rem 0.3rem 0.3rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0.01rem 0.01rem 0.01rem rgba(199, 197, 197, 0.062);
 }
 
 .mdc-data-table__header-cell {
@@ -12,4 +12,8 @@
 
 .w-size {
   width: 3.5rem;
+}
+
+.paginator-border {
+  border-top: rgba(242, 242, 242, 0.052) 0.001rem solid;
 }

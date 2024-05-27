@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { Product } from './models/product';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,18 +9,22 @@ import { CategoryDialogComponent } from './components/category-dialog/category-d
 import { Category } from './models/category';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
-export class ProductsComponent implements OnDestroy {
-  products = new MatTableDataSource<Product>;
+export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
+  products: Product[] = [];
+  dataSource = new MatTableDataSource<Product>;
   categories = new MatTableDataSource<Category>;
   productSearchForm: FormGroup;
   subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private productsService: ProductsService,
@@ -39,6 +43,10 @@ export class ProductsComponent implements OnDestroy {
   ngOnInit(): void {
     this.loadAllProducts();
     this.loadAllCategories();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {
@@ -64,11 +72,13 @@ export class ProductsComponent implements OnDestroy {
     this.subscriptions.push(
       this.productsService.getProducts().subscribe({
         next: (products) => {
-          this.products.data = products || [];
+          this.products = products || [];
+          this.dataSource.data = this.products;
           console.log(products);
         },
         error: (err) => {
-          this.products.data = [];
+          this.products = [];
+          this.dataSource.data = this.products;
           console.error('Failed to load products', err);
         }
       })
@@ -82,12 +92,12 @@ export class ProductsComponent implements OnDestroy {
       this.subscriptions.push(
         this.productsService.getSearchProductDetailsByID(this.productSearchForm.value.id).subscribe({
           next: (products) => {
-            this.products.data = products ? [products] : [];
-            console.log(this.products.data);
+            this.products = products ? [products] : [];
+            console.log(this.products);
             this.searchAttempted = true;
           },
           error: (err) => {
-            this.products.data = [];
+            this.products = [];
             this.searchAttempted = true;
             console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
           }
@@ -111,7 +121,8 @@ export class ProductsComponent implements OnDestroy {
             if (productData) {
               this.productsService.addProducts(productData).subscribe({
                 next: (products) => {
-                  this.products.data = products;
+                  this.products = products;
+                  this.dataSource.data = this.products;
                 },
               });
             }
@@ -134,7 +145,8 @@ export class ProductsComponent implements OnDestroy {
                 .updateProducts(product.id, productData)
                 .subscribe({
                   next: (products) => {
-                    this.products.data = products;
+                    this.products = products;
+                    this.dataSource.data = this.products;
                   },
                 });
             }
@@ -152,7 +164,8 @@ export class ProductsComponent implements OnDestroy {
         if (result.isConfirmed) {
           this.productsService.deleteProductsByID(id).subscribe({
             next: (products) => {
-              this.products.data = products;
+              this.products = products;
+              this.dataSource.data = this.products;
             },
           });
         }
