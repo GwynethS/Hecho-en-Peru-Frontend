@@ -29,16 +29,16 @@ export class AuthService {
     localStorage.setItem('token', user.token);
   }
 
-  logIn(data: LoginData): Observable<UserLogin[]> {
+  logIn(data: LoginData): Observable<any> {
     return this.httpClient
-      .get<UserLogin[]>(
-        `${environment.apiURL}/users?email=${data.email}&password=${data.password}`
+      .post<any>(
+        `${environment.apiURL}auth/login`, data
       )
       .pipe(
         tap((response) => {
-          if (response.length) {
-            this.setAuthUser(response[0]);
-            this.router.navigate(['dashboard']);
+          if (response) {
+            console.log(response);
+            this.router.navigate(['shop']);
           } else {
             console.log("No se pudo iniciar sesión.")
           }
