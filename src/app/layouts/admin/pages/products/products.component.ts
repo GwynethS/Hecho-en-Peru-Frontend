@@ -3,7 +3,7 @@ import { ProductDialogComponent } from './components/product-dialog/product-dial
 import { Product } from './models/product';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductsService } from './products.service';
-import { AlertService } from '../../../../core/alert.service';
+import { AlertService } from '../../../../core/services/alert.service';
 import { Subscription } from 'rxjs';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { Category } from './models/category';

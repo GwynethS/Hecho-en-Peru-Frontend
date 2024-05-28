@@ -3,7 +3,7 @@ import { LocalCraftsman } from './models/local-craftsman';
 import { Subscription } from 'rxjs';
 import { LocalCraftsmenService } from './local-craftsmen.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from '../../../../core/alert.service';
+import { AlertService } from '../../../../core/services/alert.service';
 import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dialog/local-craftsman-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

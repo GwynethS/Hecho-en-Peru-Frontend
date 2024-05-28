@@ -21,7 +21,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.productsService.getProducts().subscribe({
+      this.productsService.getBestSellingProductsUser().subscribe({
         next: (products) => {
           this.length = products.length;
         },
