@@ -17,6 +17,10 @@ export class ProductsService {
     return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeUser?offset=${offSet}&limit=${limit}`);
   }
 
+  getBestSellingProductsByPageUser(offSet: number, limit: number){
+    return this.httpClient.get<Product[]>(`${environment.apiURL}bestSellingProducts?offset=${offSet}&limit=${limit}`);
+  }
+
   getProductDetailsByID(id: string) {
     return this.httpClient.get<Product[]>(
       `${environment.apiURL}productDetails/${id}`

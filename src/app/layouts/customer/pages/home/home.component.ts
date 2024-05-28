@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Product } from '../../../admin/pages/products/models/product';
 import { ProductsService } from '../../../admin/pages/products/products.service';
@@ -35,7 +34,7 @@ export class HomeComponent {
   getProductsByPage(){
     this.subscriptions.push(
       this.productsService
-        .getProductsByPageUser(this.pageIndex, this.pageSize)
+        .getBestSellingProductsByPageUser(this.pageIndex, this.pageSize)
         .subscribe({
           next: (products) => {
             this.products = products;
