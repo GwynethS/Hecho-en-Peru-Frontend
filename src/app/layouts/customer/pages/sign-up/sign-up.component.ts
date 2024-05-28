@@ -30,15 +30,14 @@ export class SignUpComponent {
         Validators.pattern('[a-zA-Z\\s]*'),
       ]),
       email: this.fb.control('', [Validators.required, Validators.email]),
-      password: this.fb.control('', [Validators.required, Validators.min(8)]),
+      password: this.fb.control('', [Validators.required, Validators.minLength(8)]),
     });
   }
 
-  OnSubmit(): void {
+  onSubmit(): void {
     if (this.signUpForm.invalid) {
       this.signUpForm.markAllAsTouched();
     } else {
-      console.log(this.signUpForm.value);
       this.subscriptions.push(
         this.customersService.createUser(this.signUpForm.value).subscribe({
           next: (user) => {
