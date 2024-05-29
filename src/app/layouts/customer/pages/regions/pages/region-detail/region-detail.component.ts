@@ -5,6 +5,8 @@ import { RegionsService } from '../../../../../admin/pages/regions/regions.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalCraftsman } from '../../../../../admin/pages/local-craftsmen/models/localCraftsman';
 import { LocalCraftsmenService } from '../../../../../admin/pages/local-craftsmen/local-craftsmen.service';
+import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/touristSite';
+import { TouristSitesService } from '../../../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';
 
 @Component({
   selector: 'app-region-detail',
@@ -15,10 +17,12 @@ export class RegionDetailComponent {
   regionSelected: Region | null = null;
   subscription: Subscription[] = [];
   localCraftsman: LocalCraftsman[] = [];
+  touristSites: TouristSite[] = [];
 
   constructor(
     private regionsService: RegionsService,
     private localCraftsmenService: LocalCraftsmenService,
+    private touristSitesService: TouristSitesService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -32,6 +36,7 @@ export class RegionDetailComponent {
             if (findedRegion) {
               this.regionSelected = findedRegion;
               this.getLocalCraftsmen();
+              this.getTouristSites();
             }
           },
           error: () => {
@@ -49,6 +54,20 @@ export class RegionDetailComponent {
           .subscribe({
             next: (localCraftsmen) => {
               this.localCraftsman = localCraftsmen;
+            },
+          })
+      );
+    }
+  }
+
+  getTouristSites() {
+    if(this.regionSelected) {
+      this.subscription.push(
+        this.touristSitesService
+          .getTouristSitesByRegion(this.regionSelected.id)
+          .subscribe({
+            next: (touristSites) => {
+              this.touristSites = touristSites;
             },
           })
       );
