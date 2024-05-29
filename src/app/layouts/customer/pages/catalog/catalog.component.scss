@@ -87,7 +87,7 @@ mat-slider {
     width: calc(77% - 2rem);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 2rem;
     .product-card {
       width: calc(100% / 3 - 2rem);
       height: fit-content;
@@ -98,7 +98,6 @@ mat-slider {
       align-items: center;
       border-radius: 0.5rem;
       box-shadow: 0rem 0rem 0.5rem 0.15rem #00000018;
-      margin-bottom: 2.5rem;
       &:hover {
         figure {
           img {

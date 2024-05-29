@@ -1,5 +1,5 @@
 export interface Region {
-  regionId: string;
+  id: string;
   name: string;
   image: File;
   history: string;

@@ -1,4 +1,4 @@
-import { LocalCraftsman } from "../../local-craftsmen/models/local-craftsman";
+import { LocalCraftsman } from "../../local-craftsmen/models/localCraftsman";
 import { Category } from "./category";
 
 export interface Product {

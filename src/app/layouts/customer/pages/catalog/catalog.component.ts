@@ -32,7 +32,11 @@ export class CatalogComponent {
         },
       })
     );
-
+    
+    this.getProductsByPage();
+  }
+  
+  getProductsByPage(){
     this.subscriptions.push(
       this.productsService
         .getProductsByPageUser(this.pageIndex, this.pageSize)
@@ -47,16 +51,7 @@ export class CatalogComponent {
   previousPage() {
     if (this.pageIndex > 0) {
       this.pageIndex--;
-
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;
     }
   }
@@ -67,16 +62,7 @@ export class CatalogComponent {
       this.inputPageNumber <= Math.ceil(this.length / 12.0)
     ) {
       this.pageIndex = this.inputPageNumber - 1;
-
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
     }
     
     this.inputPageNumber = this.pageIndex + 1;
@@ -85,21 +71,16 @@ export class CatalogComponent {
   nextPage() {
     if (this.pageIndex < Math.ceil(this.length / 12.0) - 1) {
       this.pageIndex++;
-
-      this.subscriptions.push(
-        this.productsService
-          .getProductsByPageUser(this.pageIndex, this.pageSize)
-          .subscribe({
-            next: (products) => {
-              this.products = products;
-            },
-          })
-      );
+      this.getProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;
     }
   }
 
   redirectTo(id: string): void {
     this.router.navigate([`/shop/catalog/${id}`]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

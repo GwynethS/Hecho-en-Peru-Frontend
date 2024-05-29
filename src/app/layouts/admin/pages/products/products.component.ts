@@ -1,36 +1,40 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
-import { Product } from './models/product';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from './products.service';
-import { AlertService } from '../../../../core/alert.service';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { Product } from './models/product';
 import { Category } from './models/category';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss',
+  styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
-  products: Product[] = [];
-  dataSource = new MatTableDataSource<Product>;
-  categories = new MatTableDataSource<Category>;
+export class ProductsComponent implements OnInit, OnDestroy {
+  pageSize = 50;
+  pageIndex = 0;
+
   productSearchForm: FormGroup;
+  products: Product[] = [];
+  categories: Category[] = [];
+  dataSource = new MatTableDataSource<Product>();
+  searchAttempted = false;
+
   subscriptions: Subscription[] = [];
-  searchAttempted: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private fb: FormBuilder,
     private productsService: ProductsService,
     private matDialog: MatDialog,
-    private alertService: AlertService,
-    private fb: FormBuilder
+    private alertService: AlertService
   ) {
     this.productSearchForm = this.fb.group({
       id: this.fb.control('', [
@@ -41,153 +45,133 @@ export class ProductsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadAllProducts();
-    this.loadAllCategories();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.loadProductsPage();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  loadAllCategories(): void {
-    this.subscriptions.push(
-      this.productsService.getCategories().subscribe({
-        next: (categories) => {
-          this.categories.data = categories;
-          console.log(categories);
-        },
-        error: (err) => {
-          this.categories.data = [];
-          console.error('Failed to load categories', err);
-        }
-      })
-    );
-  }
-
-  loadAllProducts(): void {
-    this.subscriptions.push(
-      this.productsService.getProducts().subscribe({
-        next: (products) => {
-          this.products = products || [];
-          this.dataSource.data = this.products;
-          console.log(products);
-        },
-        error: (err) => {
-          this.products = [];
-          this.dataSource.data = this.products;
-          console.error('Failed to load products', err);
-        }
-      })
-    );
+  loadProductsPage(): void {
+    const offset = this.pageIndex * this.pageSize;
+    const subscription = this.productsService.getProductsByPageAdmin(offset, this.pageSize).subscribe({
+      next: products => {
+        this.products = products || [];
+        this.dataSource.data = this.products;
+      },
+      error: err => {
+        this.products = [];
+        this.dataSource.data = this.products;
+        console.error('Failed to load products', err);
+      }
+    });
+    this.subscriptions.push(subscription);
   }
 
   onSearch(): void {
     if (this.productSearchForm.invalid) {
       this.productSearchForm.markAllAsTouched();
     } else {
-      this.subscriptions.push(
-        this.productsService.getSearchProductDetailsByID(this.productSearchForm.value.id).subscribe({
-          next: (products) => {
-            this.products = products ? [products] : [];
+      const subscription = this.productsService.getSearchProductDetailsByID(this.productSearchForm.value.id).subscribe({
+        next: product => {
+          if (product) {
+            this.products = [product];
+            this.dataSource.data = this.products;
+            this.searchAttempted = true;
             console.log(this.products);
-            this.searchAttempted = true;
-          },
-          error: (err) => {
-            this.products = [];
-            this.searchAttempted = true;
-            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
           }
-        })
-      );
+        },
+        error: err => {
+          console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
+          this.searchAttempted = true;
+        }
+      });
+      this.subscriptions.push(subscription);
     }
   }
 
   onClean(): void {
     this.productSearchForm.reset();
-    this.loadAllProducts();
+    this.pageIndex = 0;
+    this.loadProductsPage();
   }
 
   onCreateProduct(): void {
-    this.subscriptions.push(
-      this.matDialog
-        .open(ProductDialogComponent)
-        .afterClosed()
-        .subscribe({
-          next: (productData) => {
-            if (productData) {
-              this.productsService.addProducts(productData).subscribe({
-                next: (products) => {
-                  this.products = products;
-                  this.dataSource.data = this.products;
-                },
-              });
-            }
-          },
-        })
-    );
-  }
-
-  onEditProduct(product: Product) {
-    this.subscriptions.push(
-      this.matDialog
-        .open(ProductDialogComponent, {
-          data: { product: product, view: true, edit: true },
-        })
-        .afterClosed()
-        .subscribe({
-          next: (productData) => {
-            if (productData) {
-              this.productsService
-                .updateProducts(product.id, productData)
-                .subscribe({
-                  next: (products) => {
-                    this.products = products;
-                    this.dataSource.data = this.products;
-                  },
-                });
-            }
-          },
-        })
-    );
-  }
-
-  onViewProduct(product: Product) { }
-
-  onDeleteProduct(id: string) {
-    this.alertService
-      .showConfirmDeleteAction('este producto')
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.productsService.deleteProductsByID(id).subscribe({
-            next: (products) => {
-              this.products = products;
-              this.dataSource.data = this.products;
-            },
+    const subscription = this.matDialog.open(ProductDialogComponent).afterClosed().subscribe({
+      next: productData => {
+        if (productData) {
+          const addSubscription = this.productsService.addProducts(productData).subscribe({
+            next: () => this.loadProductsPage(),
+            error: err => console.error('Failed to add product', err)
           });
+          this.subscriptions.push(addSubscription);
         }
-      });
+      },
+      error: err => console.error('Failed to open product dialog', err)
+    });
+    this.subscriptions.push(subscription);
+  }
+
+  onEditProduct(product: Product): void {
+    const subscription = this.productsService.getProductDetailsByID(product.id).subscribe({
+      next: fullProduct => {
+        const editSubscription = this.matDialog.open(ProductDialogComponent, { data: fullProduct }).afterClosed().subscribe({
+          next: productData => {
+            if (productData) {
+              const updateSubscription = this.productsService.updateProducts(product.id, productData).subscribe({
+                next: () => this.loadProductsPage(),
+                error: err => console.error('Failed to update product', err)
+              });
+              this.subscriptions.push(updateSubscription);
+            }
+          },
+          error: err => console.error('Failed to open product dialog', err)
+        });
+        this.subscriptions.push(editSubscription);
+      },
+      error: err => console.error(`Failed to load full product details with ID ${product.id}`, err)
+    });
+    this.subscriptions.push(subscription);
+  }
+
+  onDeleteProduct(id: string): void {
+    this.alertService.showConfirmDeleteAction('este producto').then(result => {
+      if (result.isConfirmed) {
+        const subscription = this.productsService.deleteProductsByID(id).subscribe({
+          next: () => this.loadProductsPage(),
+          error: err => console.error('Failed to delete product', err)
+        });
+        this.subscriptions.push(subscription);
+      }
+    });
   }
 
   onCreateCategory(): void {
-    this.subscriptions.push(
-      this.matDialog
-        .open(CategoryDialogComponent)
-        .afterClosed()
-        .subscribe({
-          next: (categoryData) => {
-            if (categoryData) {
-              this.productsService.addProducts(categoryData).subscribe({
-                next: (categories) => {
-                  this.categories.data = categories;
-                },
-              });
-            }
-          },
-        })
-    );
+    const subscription = this.matDialog.open(CategoryDialogComponent).afterClosed().subscribe({
+      next: categoryData => {
+        if (categoryData) {
+          const addSubscription = this.productsService.addCategories(categoryData).subscribe({
+            next: () => this.loadAllCategories(),
+            error: err => console.error('Failed to add category', err)
+          });
+          this.subscriptions.push(addSubscription);
+        }
+      },
+      error: err => console.error('Failed to open category dialog', err)
+    });
+    this.subscriptions.push(subscription);
+  }
+
+  loadAllCategories(): void {
+    const subscription = this.productsService.getCategories().subscribe({
+      next: categories => {
+        this.categories = categories;
+      },
+      error: err => {
+        this.categories = [];
+        console.error('Failed to load categories', err);
+      }
+    });
+    this.subscriptions.push(subscription);
   }
 }

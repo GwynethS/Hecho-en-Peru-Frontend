@@ -1,96 +1,88 @@
-<mat-tab-group #tabGroup class="w-full pt-2">
-  <mat-tab>
-    <div class="table-container shadow-table">
-      <table
-        mat-table
-        [dataSource]="_dataSource"
-        class="mat-elevation-z8"
-      >
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef class="w-size">ID</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.id }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Nombre</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="name_category">
-          <th mat-header-cell *matHeaderCellDef>Categoría</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.category.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="name_region">
-          <th mat-header-cell *matHeaderCellDef>Región</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.localCraftsman.region.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="fullname_localCraftsman">
-          <th mat-header-cell *matHeaderCellDef>Artesano</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.localCraftsman.fullName }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef>Precio</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.price | number: '1.2-2' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="stock">
-          <th mat-header-cell *matHeaderCellDef>Stock</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.stock }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="averageRating">
-          <th mat-header-cell *matHeaderCellDef>Rating promedio</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.averageRating | number: '1.1-1' }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="enabled">
-          <th mat-header-cell *matHeaderCellDef>Habilitado</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.enabled }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="actions" class="w-2">
-          <th mat-header-cell *matHeaderCellDef>Acciones</th>
-          <td mat-cell *matCellDef="let product">
-            <button
-              (click)="editProduct.emit(product)"
-              mat-icon-button
-              color="accent"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="primary">
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button
-              (click)="deleteProduct.emit(product.id)"
-              mat-icon-button
-              color="warn"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-      <div class="paginator-border">
-        <mat-paginator
-          [pageSizeOptions]="[7, 14, 21]"
-          showFirstLastButtons
-        ></mat-paginator>
-      </div>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+<div class="table-container shadow-table">
+  <table mat-table [dataSource]="_dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef class="w-size">ID</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.id }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.name }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name_category">
+      <th mat-header-cell *matHeaderCellDef>Categoría</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.categoryName }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name_region">
+      <th mat-header-cell *matHeaderCellDef>Región</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.regionName }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fullname_localCraftsman">
+      <th mat-header-cell *matHeaderCellDef>Artesano</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.localCraftsmanName }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Precio</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.price | number : "1.2-2" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef>Stock</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.stock }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="averageRating">
+      <th mat-header-cell *matHeaderCellDef>Rating promedio</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.averageRating | number : "1.1-1" }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="enabled">
+      <th mat-header-cell *matHeaderCellDef>Habilitado</th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.enabled }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="w-2">Acciones</th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          (click)="editProduct.emit(product)"
+          mat-icon-button
+          color="accent"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary">
+          <mat-icon>visibility</mat-icon>
+        </button>
+        <button
+          (click)="deleteProduct.emit(product.id)"
+          mat-icon-button
+          color="warn"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <div class="paginator-border">
+    <mat-paginator
+      [pageSizeOptions]="[7, 14, 21, 28]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

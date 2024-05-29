@@ -24,4 +24,10 @@ export class CustomersService {
       `${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`
     );
   }
+
+  createUser(userData: Customer) {
+    return this.httpClient.post<Customer>(`${environment.apiURL}auth/register`, {
+      ...userData,
+    });
+  }
 }

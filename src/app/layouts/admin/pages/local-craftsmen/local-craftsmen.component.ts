@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LocalCraftsman } from './models/local-craftsman';
+import { LocalCraftsman } from './models/localCraftsman';
 import { Subscription } from 'rxjs';
 import { LocalCraftsmenService } from './local-craftsmen.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertService } from '../../../../core/alert.service';
+import { AlertService } from '../../../../core/services/alert.service';
 import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dialog/local-craftsman-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -126,7 +126,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit
             if (localCraftsmanData) {
               this.localCraftsmenService
                 .updateLocalCraftsmen(
-                  localCraftsman.localCraftsmanId,
+                  localCraftsman.id,
                   localCraftsmanData
                 )
                 .subscribe({
@@ -153,7 +153,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit
       .then((result) => {
         if (result.isConfirmed) {
           this.localCraftsmenService
-            .deleteLocalCraftsmenByID(id.localCraftsmanId)
+            .deleteLocalCraftsmenByID(id.id)
             .subscribe({
               next: (localCraftsmen) => {
                 this.localCraftsmen = localCraftsmen;
