@@ -14,16 +14,28 @@
   </div>
 </div>
 
+<!-- <pre>{{filterForm.value | json}}</pre> -->
+
 <section class="catalog-container">
-  <div class="filter-container">
-    <h3>Filtrar por</h3>
+  <form [formGroup]="filterForm" class="filter-form">
+    <div class="filter-header">
+      <h3>Filtrar por</h3>
+      <button mat-flat-button (click)="onFilterProducts()">Filtrar</button>
+    </div>
     <mat-expansion-panel expanded="true" class="mat-elevation-z0">
       <mat-expansion-panel-header>
         <mat-panel-title>Precio</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-slider discrete min="10" max="1500" step="10" color="accent">
-        <input value="10" matSliderStartThumb />
-        <input value="1500" matSliderEndThumb />
+      <mat-slider
+        formGroupName="price"
+        discrete
+        min="10"
+        max="1500"
+        step="10"
+        color="accent"
+      >
+        <input formControlName="min" value="10" matSliderStartThumb />
+        <input formControlName="max" value="1500" matSliderEndThumb />
       </mat-slider>
     </mat-expansion-panel>
 
@@ -31,7 +43,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>Ordenar por</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-radio-group aria-label="Select an option">
+      <mat-radio-group formControlName="order" aria-label="Select an option">
         <mat-radio-button value="PDSC"
           >Precio de mayor a menor</mat-radio-button
         >
@@ -47,14 +59,13 @@
         <mat-panel-title>Categorías</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div class="checkboxes-container">
-        <mat-checkbox value="1">Accesorios</mat-checkbox>
-        <mat-checkbox value="2">Muebles</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
+      <div formArrayName="categories" class="checkboxes-container">
+        <mat-checkbox
+          *ngFor="let category of categories; let i = index"
+          [value]="category.id"
+          [formControlName]="i"
+          >{{ category.name }}</mat-checkbox
+        >
       </div>
     </mat-expansion-panel>
 
@@ -63,35 +74,44 @@
         <mat-panel-title>Regiones</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div class="checkboxes-container">
-        <mat-checkbox value="1">Amazonas</mat-checkbox>
-        <mat-checkbox value="2">Áncash</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
-        <mat-checkbox value="">Disabled</mat-checkbox>
+      <div formArrayName="regions" class="checkboxes-container">
+        <mat-checkbox
+          *ngFor="let region of regions; let i = index"
+          [value]="region.id"
+          [formControlName]="i"
+          >{{ region.name }}</mat-checkbox
+        >
       </div>
     </mat-expansion-panel>
-  </div>
+  </form>
 
   <div class="products-container">
-    <div *ngFor="let product of products" class="product-card">
+    <button
+      mat-flat-button
+      id="btn-clean-filter"
+      *ngIf="filterActive"
+      (click)="cleanFilters()"
+    >
+      Limpiar filtros<mat-icon>close</mat-icon>
+    </button>
+    <div *ngFor="let product of productsByPage" class="product-card">
       <figure (click)="redirectTo(product.id)">
         <img
-          src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
+          src="http://localhost:8080/api/uploadsLoadImage/{{ product.image }}"
           alt="poncho"
         />
       </figure>
 
       <div class="rating">
         <i class="fa-solid fa-star"></i>
-        <span class="rating-value">{{product.averageRating}}</span>
+        <span class="rating-value">{{
+          product.averageRating | number : "1.1-1"
+        }}</span>
       </div>
 
       <div class="product-info">
-        <h4>{{product.name}}</h4>
-        <p>s/.{{product.price | number: '1.2-2'}}</p>
+        <h4>{{ product.name }}</h4>
+        <p>s/.{{ product.price | number : "1.2-2" }}</p>
       </div>
       <button mat-flat-button class="add-cart">Añadir al carrito</button>
     </div>
@@ -100,7 +120,14 @@
         <mat-icon>arrow_back_ios</mat-icon>
       </button>
       <mat-form-field>
-        <input [(ngModel)]="inputPageNumber" (change)="changeInputPage()" matInput type="number" value="1" min="1">
+        <input
+          [(ngModel)]="inputPageNumber"
+          (change)="changeInputPage()"
+          matInput
+          type="number"
+          value="1"
+          min="1"
+        />
       </mat-form-field>
       <button (click)="nextPage()" mat-icon-button type="button">
         <mat-icon>arrow_forward_ios</mat-icon>
