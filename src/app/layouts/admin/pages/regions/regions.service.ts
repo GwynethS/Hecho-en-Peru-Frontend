@@ -24,6 +24,12 @@ export class RegionsService {
     );
   }
 
+  getRegionDetailsByID(id: string) {
+    return this.httpClient.get<Region>(
+      `${environment.apiURL}regionDetail/${id}`
+    );
+  }
+
   addRegions(data: Region) {
     return this.httpClient
       .post<Region>(`${environment.apiURL}region`, data)

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Region } from '../../../admin/pages/regions/models/region';
 import { Subscription } from 'rxjs';
 import { RegionsService } from '../../../admin/pages/regions/regions.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-regions',
@@ -13,7 +14,8 @@ export class RegionsComponent {
   subscription: Subscription[] = [];
 
   constructor(
-    private regionsService: RegionsService
+    private regionsService: RegionsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -24,5 +26,9 @@ export class RegionsComponent {
         }
       })
     );
+  }
+
+  redirectTo(id: string) : void {
+    this.router.navigate([`/shop/regions/${id}`])
   }
 }
