@@ -1,0 +1,189 @@
+.fondo-inicio-reg-img {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+
+    .background-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        object-fit: cover;
+        z-index: -1; 
+    }
+
+    .inicio-fondo-region {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.inicio-fondo-region {
+    background-color:rgba(0, 0, 0, 0.7607843137);
+    padding: 6rem 18rem;
+    width: 100%;
+
+    .container-image{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .h1-desc-reg {
+        font-size: 5rem;
+        color: rgba(224, 222, 222, 0.8);
+    }
+}
+
+.container-historia {
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+
+    .bg-color {
+        background-color: #F6F6F6;
+        padding: 1.2rem;
+        text-align: justify;
+    }
+}
+
+.container-lugares {
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+
+    .bg-color {
+        background-color: #F6F6F6;
+        padding: 1.2rem;
+        text-align: justify;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 6rem;
+        margin: auto;
+
+        .lug {
+            margin-top: 1rem;
+            padding: 1.2rem;
+
+            .img-lug {
+                margin: 0;
+
+                img {
+                    border-radius: 0.5rem;
+                    display: block;
+                    width: 100%;
+                    height: 17rem;
+                    object-fit: cover;
+                }
+            }
+
+            .info-lug {
+                h3 {
+                    margin-top: 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 1px black solid;
+                }
+                p {
+                    margin-top: 1.2rem;
+                    text-align: justify;
+                }
+            }
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+
+        /* Estilos para pantallas medianas */
+        @media (min-width: 768px) {
+            .col-sm-12 {
+                width: 100%;
+            }
+            .col-md-4 {
+                width: 33.3333%;
+            }
+        }
+
+        /* Estilos para pantallas grandes */
+        @media (min-width: 992px) {
+            .col-lg-4 {
+                width: 33.3333%;
+            }
+        }
+    }
+}
+
+.container-artesanos {
+    width: 90%;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+
+    .bg-color {
+        background-color: #F6F6F6;
+        padding: 1.2rem;
+        text-align: justify;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 6rem;
+        margin: auto;
+
+        
+        .art {
+            margin-top: 1rem;
+            padding: 1.2rem;
+
+            .img-art {
+                margin: 0;
+
+                img {
+                    border-radius: 0.5rem;
+                    display: block;
+                    width: 100%;
+                    height: 22rem;
+                    object-fit: cover;
+                    object-position: top;
+                }
+            }
+
+            .info-art {
+                h3 {
+                    margin-top: 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 1px black solid;
+                }
+                p {
+                    margin-top: 1.2rem;
+                    text-align: justify;
+                }
+            }
+        }
+
+        .col-12 {
+            width: 100%;
+        }
+
+        /* Estilos para pantallas medianas */
+        @media (min-width: 768px) {
+            .col-sm-12 {
+                width: 100%;
+            }
+            .col-md-3 {
+                width: 25%;
+            }
+        }
+
+        /* Estilos para pantallas grandes */
+        @media (min-width: 992px) {
+            .col-lg-3 {
+                width: 25%;
+            }
+        }
+    }
+}
