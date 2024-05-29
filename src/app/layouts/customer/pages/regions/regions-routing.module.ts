@@ -9,9 +9,8 @@ const routes: Routes = [
     component: RegionsComponent
   },
   {
-    path: 'hola',
+    path: ':id',
     component: RegionDetailComponent
-  
   }
 ];
 

@@ -13,7 +13,7 @@
   <div class="cards-container">
     <div *ngFor="let region of regions" class="region-card">
       <img class="img-fluid" src="http://localhost:8080/api/region/{{region.image}}" alt="Fotografía de la región {{region.name}}">
-      <button mat-flat-button>{{region.name}}</button>
+      <button mat-flat-button (click)="redirectTo(region.regionId)">{{region.regionId}}</button>
     </div>
   </div>
 </section>

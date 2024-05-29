@@ -3,7 +3,7 @@
         <div class="inicio-fondo-region">
             <div class="container-image">
                 <div data-aos="fade-up" data-aos-duration="2000">
-                    <h1 class="h1-desc-reg">Cusco</h1>
+                    <h1 class="h1-desc-reg">{{regionSelected?.name}}</h1>
                 </div>
             </div>
         </div>
@@ -13,12 +13,7 @@
     <div>
         <h2>HISTORIA</h2>
         <div class="bg-color">
-            <p>Cusco es una ciudad ubicada en la región sur de Perú y fue la capital del Imperio Inca. Tiene una
-                rica historia que se remonta a miles de años atrás. Según la leyenda, la ciudad fue fundada por
-                el primer gobernante inca, Manco Cápac, quien estableció la ciudad como el centro político,
-                cultural y religioso del imperio. Durante la época de los incas, Cusco fue una ciudad próspera y
-                se construyeron impresionantes estructuras arquitectónicas, muchas de las cuales todavía se
-                pueden ver en la ciudad hoy en día.</p>
+            <p>{{regionSelected?.history}}</p>
         </div>
     </div>
 </section>
@@ -27,7 +22,7 @@
     <div>
         <h2>LUGARES</h2>
         <div class="bg-color">
-            <p>Descubre la belleza y la historia del Cusco, Perú. Desde la enigmática ciudadela de Machu Picchu hasta la encantadora Plaza de Armas y el místico Valle Sagrado, sumérgete en la cultura inca y maravíllate con los impresionantes paisajes de esta región. ¡Explora los lugares emblemáticos y vive una experiencia inolvidable en el Cusco!</p>
+            <p>{{regionSelected?.sitesIntroduction}}</p>
         </div>
         <div class="row">
             <div class="lug col-lg-4 col-md-4 col-sm-12 col-12">
@@ -93,7 +88,7 @@
     <div>
         <h2>ARTESANOS LOCALES</h2>
         <div class="bg-color">
-            <p>En el Cusco, Perú, encontrarás una rica tradición artesanal que ha sido transmitida de generación en generación. Los talentosos artesanos de la región crean hermosas piezas que reflejan la historia y la cultura local. Desde tejidos coloridos y joyería elaborada hasta cerámica finamente detallada, cada artículo es una obra de arte única. Descubre la habilidad y la creatividad de los artesanos cusqueños mientras exploras su legado artesanal. ¡Déjate cautivar por la maestría y la belleza de sus creaciones hechas a mano!</p>
+            <p>{{regionSelected?.craftsmenIntroduction}}</p>
         </div>
         <div class="row">
             <div class="art col-lg-3 col-md-3 col-sm-12 col-12">
