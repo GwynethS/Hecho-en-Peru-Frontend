@@ -73,14 +73,22 @@ mat-slider {
   padding: 3rem 4rem;
   display: flex;
   justify-content: space-between;
-  .filter-container {
+  .filter-form {
     width: calc(23% - 2rem);
     padding: 0 1rem;
     background-color: #f5f5f5;
     border-radius: 0.5rem;
-    h3 {
-      margin-top: 1rem;
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 1rem;
+      button {
+        background-color: transparent;
+        border: solid 1px #242423;
+        transition: all ease 0.5s;
+        padding: 0.5rem;
+      }
     }
   }
   .products-container {
@@ -88,6 +96,20 @@ mat-slider {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
+    position: relative;
+    #btn-clean-filter {
+      position: absolute;
+      top: -3rem;
+      right: 2rem;
+      background-color: transparent;
+      border: solid 1px #242423;
+      transition: all ease 0.5s;
+      flex-direction: row-reverse;
+      mat-icon {
+        margin: 0;
+        margin-left: 0.5rem;
+      }
+    }
     .product-card {
       width: calc(100% / 3 - 2rem);
       height: fit-content;
@@ -168,7 +190,7 @@ mat-slider {
       justify-content: center;
       align-items: center;
       gap: 1rem;
-      mat-form-field{
+      mat-form-field {
         width: 5rem;
         input {
           text-align: center;

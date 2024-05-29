@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { ProductsService } from '../../../admin/pages/products/products.service';
 import { CommentsService } from './pages/catalog-detail/comments.service';
+import { RegionsService } from '../../../admin/pages/regions/regions.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CommentsService } from './pages/catalog-detail/comments.service';
   ],
   providers: [
     ProductsService,
-    CommentsService
+    CommentsService,
+    RegionsService
   ]
 })
 export class CatalogModule { }
