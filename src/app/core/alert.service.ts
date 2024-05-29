@@ -29,23 +29,24 @@ export class AlertService {
       icon: 'error',
       title,
       text: message,
-      confirmButtonColor: '#FD6759',
+      confirmButtonColor: '#FF857A',
     });
   }
 
   showConfirmDeleteAction(feature: string){
     return Swal.fire({
-      title: `¿Estás seguro de que deseas eliminar ${feature}?`,
-      text: 'No podrás revertir esta acción',
+      title: `¿Estás seguro?`,
+      text: `No se podrá revertir la acción de eliminar ${feature}`,
       icon: "warning",
       iconColor: "#EC9892",
       showCancelButton: true,
-      cancelButtonColor: "#242423",
-      confirmButtonColor: "#FD6759",
-      confirmButtonText: 'Confirmar',
+      cancelButtonColor: "#383838",
+      confirmButtonColor: "#FF857A",
       cancelButtonText: "Cancelar",
+      confirmButtonText: 'Confirmar',
       customClass: {
-        cancelButton: "alter-btn-cancel",
+        cancelButton: "alter-cancel-btn",
+        confirmButton: 'custom-confirm-btn',
       },
     });
   }

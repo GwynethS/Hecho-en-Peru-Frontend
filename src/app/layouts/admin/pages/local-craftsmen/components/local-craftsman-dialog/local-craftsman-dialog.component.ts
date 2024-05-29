@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LocalCraftsman } from '../../models/local-craftsman';
+import { LocalCraftsman } from '../../models/localCraftsman';
 
 @Component({
   selector: 'app-local-craftsman-dialog',
@@ -11,6 +11,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 export class LocalCraftsmanDialogComponent {
   hide = true;
   localCraftsmanForm: FormGroup;
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -42,15 +43,41 @@ export class LocalCraftsmanDialogComponent {
     }
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+    const fileNameElement = document.getElementById('file-name');
+    if (fileNameElement) {
+      fileNameElement.textContent = file ? file.name : 'Ningún archivo seleccionado';
+    }
+  }
+
   onCreate(): void {
     if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
     } else {
-      this.matDialogRef.close(this.localCraftsmanForm.value);
+      const productData = this.localCraftsmanForm.value;
+      if (this.selectedFile) {
+        this.uploadFile(this.selectedFile).then((imageUrl) => {
+          productData.image = imageUrl;
+          this.matDialogRef.close(productData);
+        });
+      } else {
+        this.matDialogRef.close(productData);
+      }
     }
+  }
+
+  async uploadFile(file: File): Promise<string> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(`http://localhost:8080/api/uploadsLoadImage/{{$product.image}}`);
+      }, 2000);
+    });
   }
 
   onClearInputs(): void {
     this.localCraftsmanForm.reset();
+    this.selectedFile = null;
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalCraftsman } from './models/local-craftsman';
+import { LocalCraftsman } from './models/localCraftsman';
 import { environment } from '../../../../../environments/environment';
 import { Observable, mergeMap } from 'rxjs';
 

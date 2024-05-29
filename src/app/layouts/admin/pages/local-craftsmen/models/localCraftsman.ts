@@ -1,7 +1,7 @@
 import { Region } from "./region";
 
 export interface LocalCraftsman {
-  localCraftsmanId: string;
+  id: string;
   fullName: string;
   description: string;
   specialty: string;

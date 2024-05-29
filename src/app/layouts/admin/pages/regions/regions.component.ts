@@ -123,7 +123,7 @@ export class RegionsComponent implements OnInit, OnDestroy, AfterViewInit {
           next: (regionData) => {
             if (regionData) {
               this.regionsService
-                .updateRegions(region.regionId, regionData)
+                .updateRegions(region.id, regionData)
                 .subscribe({
                   next: (regions) => {
                     this.regions = regions;

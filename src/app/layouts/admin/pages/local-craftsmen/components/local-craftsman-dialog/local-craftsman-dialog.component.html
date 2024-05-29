@@ -62,6 +62,20 @@
         </mat-form-field>
       </div>
       <div class="col-12 py-2">
+        <div class="w-full file-container">
+          <label>Imagen</label>
+          <div class="input-file-container">
+            <button class="upload-button">Seleccionar imagen</button>
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              (change)="onFileSelected($event)"
+            />
+            <span class="file-name" id="file-name">Ninguna imagen seleccionada</span>
+          </div>
+        </div>
+      </div>   
+      <div class="col-12 py-2">
         <mat-form-field class="w-full">
           <mat-label>Descripción</mat-label>
           <textarea
@@ -69,6 +83,7 @@
             placeholder="Ingrese la descripción del artesano"
             matInput
             type="text"
+            class="description-container"
           ></textarea>
         </mat-form-field>
       </div>
