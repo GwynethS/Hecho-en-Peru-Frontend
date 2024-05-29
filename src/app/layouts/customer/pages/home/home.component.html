@@ -26,7 +26,7 @@
     <ul class="carousel">
       
       <li class="carousel-product" *ngFor="let product of products">
-        <figure>
+        <figure (click)="redirectTo('catalog/' + product.id)">
           <img
             src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
             alt="{{product.name}}"

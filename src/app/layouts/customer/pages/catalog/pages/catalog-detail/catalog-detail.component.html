@@ -2,7 +2,9 @@
   <div class="product-img">
     <figure>
       <img
-        src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.image}}"
+        src="http://localhost:8080/api/uploadsLoadImage/{{
+          productSelected?.image
+        }}"
         class="product-img"
       />
     </figure>
@@ -10,13 +12,17 @@
   <div class="product-description">
     <div class="rating-comments">
       <div class="rating">
-        <p-rating [(ngModel)]= "avgRating" [readonly]="true" [cancel]="false" />
-        <p class="rating-value">{{productSelected?.averageRating | number: '1.1-1'}}</p>
+        <p-rating [(ngModel)]="avgRating" [readonly]="true" [cancel]="false" />
+        <p class="rating-value">
+          {{ productSelected?.averageRating | number : "1.1-1" }}
+        </p>
       </div>
-      <a class="number-comments" href="#"> 40 comentarios </a>
+      <p class="number-comments"> {{comments.length}} comentarios </p>
     </div>
-    <h2 class="product-title">{{productSelected?.name}}</h2>
-    <h2 class="precio-product">s/.{{productSelected?.price | number: '1.2-2'}}</h2>
+    <h2 class="product-title">{{ productSelected?.name }}</h2>
+    <h2 class="precio-product">
+      s/.{{ productSelected?.price | number : "1.2-2" }}
+    </h2>
 
     <div class="quantity-box">
       <h4>Número de unidades</h4>
@@ -25,7 +31,7 @@
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field class="product-quantity">
-          <input matInput type="number" value="1" min="1"/>
+          <input matInput type="number" value="1" min="1" />
         </mat-form-field>
         <button mat-icon-button>
           <mat-icon>add</mat-icon>
@@ -34,7 +40,7 @@
     </div>
     <div class="stock">
       <h4>Stock:</h4>
-      <span>{{productSelected?.stock}} unidades</span>
+      <span>{{ productSelected?.stock }} unidades</span>
     </div>
     <button mat-flat-button class="btn-add-cart">
       <span>Agregar al carrito</span><i class="fa-solid fa-cart-shopping"></i>
@@ -44,40 +50,46 @@
 
 <section class="more-info-product">
   <figure>
-    <img src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.localCraftsman?.image}}" />
+    <img
+      src="http://localhost:8080/api/uploadsLoadImage/{{
+        productSelected?.localCraftsman?.image
+      }}"
+    />
   </figure>
   <div class="info-crafstman">
     <h3>Información del artesano</h3>
-    <p><b>Artesano:</b> {{productSelected?.localCraftsman?.fullName}}</p>
-    <p><b>Ubicación:</b> {{productSelected?.localCraftsman?.region?.name}}, Perú</p>
-    <p><b>Especialidad:</b> {{productSelected?.localCraftsman?.specialty}}</p>
+    <p><b>Artesano:</b> {{ productSelected?.localCraftsman?.fullName }}</p>
     <p>
-      <b>Experiencia:</b> {{productSelected?.localCraftsman?.experience}}
+      <b>Ubicación:</b> {{ productSelected?.localCraftsman?.region?.name }},
+      Perú
     </p>
-    <p>
-      <b>Historia:</b> {{productSelected?.localCraftsman?.description}}
-    </p>
+    <p><b>Especialidad:</b> {{ productSelected?.localCraftsman?.specialty }}</p>
+    <p><b>Experiencia:</b> {{ productSelected?.localCraftsman?.experience }}</p>
+    <p><b>Historia:</b> {{ productSelected?.localCraftsman?.description }}</p>
   </div>
   <div class="history-product">
     <h3>Historia del producto</h3>
     <p>
-      {{productSelected?.history}}
+      {{ productSelected?.history }}
     </p>
     <div class="region">
-      <span>Región:</span><label class="region-name" for="cusco">{{productSelected?.localCraftsman?.region?.name}}</label
+      <span>Región:</span
+      ><label class="region-name" for="cusco">{{
+        productSelected?.localCraftsman?.region?.name
+      }}</label
       ><button mat-flat-button class="btn-region">Conocer más</button>
     </div>
   </div>
   <div class="product-details">
     <h3>Detalles del producto</h3>
-    <p>{{productSelected?.details}}</p>
+    <p>{{ productSelected?.details }}</p>
   </div>
 </section>
 
 <section class="comments-section">
   <div class="comments-section-header">
     <h2>Comentarios</h2>
-    <p>40 comentarios</p>
+    <p>{{comments.length}} comentarios</p>
   </div>
   <div class="new-comment">
     <div class="user-information">
@@ -86,7 +98,8 @@
     </div>
     <form [formGroup]="commentForm" class="comment-form">
       <mat-form-field>
-        <textarea formControlName="textCommentary"
+        <textarea
+          formControlName="textCommentary"
           matInput
           type="text"
           placeholder="Agrega un comentario..."
@@ -94,51 +107,31 @@
       </mat-form-field>
       <p-rating formControlName="rating" [cancel]="false" />
       <div class="btn-comment">
-        <button mat-flat-button type="submit" (click)="onSubmit()">Comentar</button>
+        <button mat-flat-button type="submit" (click)="onSubmit()">
+          Comentar
+        </button>
       </div>
     </form>
   </div>
   <div class="comments-list-container">
-    <div class="comment">
+    <div class="comment" *ngFor="let comment of comments">
       <div class="comment-user">
         <i class="fa-solid fa-user"></i>
-        <h4>Juan Sánchez</h4>
+        <h4>{{ comment.user.name + " " + comment.user.lastName }}</h4>
       </div>
-      <div class="comment-rating">
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star"></i>
-      </div>
-      <div class="comment-text">
-        ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la atención al detalle que se pusieron en cada puntada se reflejan en su hermoso diseño y calidad.
-      </div>
-    </div>
-    <div class="comment">
-      <div class="comment-user">
-        <i class="fa-solid fa-user"></i>
-        <h4>Gabriel Sánchez</h4>
-      </div>
-      <div class="comment-rating">
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star active"></i>
-        <i class="fa-solid fa-star"></i>
-      </div>
-      <div class="comment-text">
-        ¡No puedo expresar lo feliz que estoy con mi nuevo poncho de lana cusqueño! Es una verdadera obra de arte tejida a mano. El cuidado y la atención al detalle que se pusieron en cada puntada se reflejan en su hermoso diseño y calidad.
-      </div>
+      <p-rating [(ngModel)]="comment.rating" [readonly]="true" [cancel]="false" />
+      <div class="comment-text">{{comment.textCommentary}}</div>
     </div>
     <mat-paginator
+      *ngIf="comments.length"
       (page)="handlePageEvent($event)"
       [length]="length"
       [pageSize]="pageSize"
-      hidePageSize=true
+      hidePageSize="true"
       [pageIndex]="pageIndex"
       aria-label="Select page"
     >
     </mat-paginator>
+    <p *ngIf="!comments.length" class="no-comments">Aún no hay comentarios. ¡Sé el primero en comentar!</p>
   </div>
 </section>

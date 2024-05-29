@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Product } from './models/product';
 import { Category } from './models/category';
-import { AlertService } from '../../../../core/alert.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-products',

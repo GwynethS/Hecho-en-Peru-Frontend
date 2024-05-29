@@ -23,6 +23,14 @@ export class ProductsService {
     );
   }
 
+  getBestSellingProductsUser(){
+    return this.httpClient.get<Product[]>(`${environment.apiURL}listBestSellingProducts`);
+  }
+
+  getBestSellingProductsByPageUser(offSet: number, limit: number){
+    return this.httpClient.get<Product[]>(`${environment.apiURL}bestSellingProductsByPage?offset=${offSet}&limit=${limit}`);
+  }
+
   getProductDetailsByID(id: string) {
     return this.httpClient.get<Product[]>(`${environment.apiURL}productDetails/${id}`);
   }

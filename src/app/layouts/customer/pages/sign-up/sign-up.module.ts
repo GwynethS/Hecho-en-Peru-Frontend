@@ -5,6 +5,7 @@ import { SignUpRoutingModule } from './sign-up-routing.module';
 import { SignUpComponent } from './sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
+import { CustomersService } from '../../../admin/pages/customers/customers.service';
 
 
 @NgModule({
@@ -16,6 +17,9 @@ import { SharedModule } from '../../../../shared/shared.module';
     SignUpRoutingModule,
     SharedModule,
     ReactiveFormsModule
+  ],
+  providers:[
+    CustomersService
   ]
 })
 export class SignUpModule { }
