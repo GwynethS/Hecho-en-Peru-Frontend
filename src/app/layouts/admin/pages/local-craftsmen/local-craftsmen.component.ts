@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LocalCraftsman } from './models/localCraftsman';
 import { Subscription } from 'rxjs';
 import { LocalCraftsmenService } from './local-craftsmen.service';
@@ -14,20 +14,24 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './local-craftsmen.component.html',
   styleUrl: './local-craftsmen.component.scss',
 })
-export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LocalCraftsmenComponent implements OnInit, OnDestroy {
+  pageSize = 50;
+  pageIndex = 0;
+
+  localCraftsmanSearchForm: FormGroup;
   localCraftsmen: LocalCraftsman[] = [];
   dataSource = new MatTableDataSource<LocalCraftsman>();
-  localCraftsmanSearchForm: FormGroup;
+  searchAttempted = false;
+
   subscriptions: Subscription[] = [];
-  searchAttempted: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private fb: FormBuilder,
     private localCraftsmenService: LocalCraftsmenService,
     private matDialog: MatDialog,
-    private alertService: AlertService,
-    private fb: FormBuilder
+    private alertService: AlertService
   ) {
     this.localCraftsmanSearchForm = this.fb.group({
       id: this.fb.control('', [
@@ -38,58 +42,55 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit(): void {
-    this.loadAllLocalCraftsmen();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.loadLocalCraftsmenPage();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 
-  loadAllLocalCraftsmen(): void {
-    this.subscriptions.push(
-      this.localCraftsmenService.getLocalCraftsmen().subscribe({
-        next: (localCraftsmen) => {
-          this.localCraftsmen = localCraftsmen || [];
-          this.dataSource.data = this.localCraftsmen;
-          console.log(localCraftsmen);
-        },
-        error: (err) => {
-          this.localCraftsmen = [];
-          this.dataSource.data = this.localCraftsmen;
-          console.error('Failed to load local craftsmen', err);
-        }
-      })
-    );
+  loadLocalCraftsmenPage(): void {
+    const offset = this.pageIndex * this.pageSize;
+    const subscription = this.localCraftsmenService.getLocalCraftsmenByPageAdmin(offset, this.pageSize).subscribe({
+      next: localCraftsmen => {
+        this.localCraftsmen = localCraftsmen || [];
+        this.dataSource.data = this.localCraftsmen;
+      },
+      error: err => {
+        this.localCraftsmen = [];
+        this.dataSource.data = this.localCraftsmen;
+        console.error('Failed to load products', err);
+      }
+    });
+    this.subscriptions.push(subscription);
   }
 
   onSearch(): void {
     if (this.localCraftsmanSearchForm.invalid) {
       this.localCraftsmanSearchForm.markAllAsTouched();
     } else {
-      this.subscriptions.push(
-        this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id).subscribe({
-          next: (localCraftsmen) => {
-            this.localCraftsmen = localCraftsmen ? [localCraftsmen] : [];
+      const subscription = this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id).subscribe({
+        next: localCraftsman => {
+          if (localCraftsman) {
+            this.localCraftsmen = [localCraftsman];
+            this.dataSource.data = this.localCraftsmen;
+            this.searchAttempted = true;
             console.log(this.localCraftsmen);
-            this.searchAttempted = true;
-          },
-          error: (err) => {
-            this.localCraftsmen = [];
-            this.searchAttempted = true;
-            console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           }
-        })
-      );
+        },
+        error: err => {
+          console.error(`Failed to load product with ID ${this.localCraftsmanSearchForm.value.id}`, err);
+          this.searchAttempted = true;
+        }
+      });
+      this.subscriptions.push(subscription);
     }
   }
 
   onClean(): void {
     this.localCraftsmanSearchForm.reset();
-    this.loadAllLocalCraftsmen();
+    this.pageIndex = 0;
+    this.loadLocalCraftsmenPage();
   }
 
   onCreateLocalCraftsman(): void {
@@ -147,20 +148,15 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
 
-  onDeleteLocalCraftsman(id: LocalCraftsman) {
-    this.alertService
-      .showConfirmDeleteAction('este artesano')
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.localCraftsmenService
-            .deleteLocalCraftsmenByID(id.id)
-            .subscribe({
-              next: (localCraftsmen) => {
-                this.localCraftsmen = localCraftsmen;
-                this.dataSource.data = this.localCraftsmen;
-              },
-            });
-        }
-      });
+  onDeleteLocalCraftsman(id: string) {
+    this.alertService.showConfirmDeleteAction('este artesano').then(result => {
+      if (result.isConfirmed) {
+        const subscription = this.localCraftsmenService.deleteLocalCraftsmenByID(id).subscribe({
+          next: () => this.loadLocalCraftsmenPage(),
+          error: err => console.error('Failed to delete product', err)
+        });
+        this.subscriptions.push(subscription);
+      }
+    });
   }
 }

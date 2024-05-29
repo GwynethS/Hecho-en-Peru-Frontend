@@ -8,7 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
-export class ProductTableComponent {
+export class ProductTableComponent implements AfterViewInit {
   @Input()
   set dataSource(dataSource: MatTableDataSource<Product>) {
     this._dataSource = dataSource;
@@ -43,6 +43,8 @@ export class ProductTableComponent {
   _dataSource = new MatTableDataSource<Product>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor() {}
 
   ngAfterViewInit() {
     if (this.paginator) {

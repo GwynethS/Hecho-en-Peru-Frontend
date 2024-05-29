@@ -10,19 +10,22 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class CustomerTableComponent implements AfterViewInit {
   @Input()
-  set dataSource(data: Customer[]) {
-    this._dataSource.data = data;
+  set dataSource(dataSource: MatTableDataSource<Customer>) {
+    this._dataSource = dataSource;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 
-  get dataSource(): Customer[] {
-    return this._dataSource.data;
+  get dataSource(): MatTableDataSource<Customer> {
+    return this._dataSource;
   }
 
   @Output()
   editCustomer = new EventEmitter<Customer>();
 
   @Output()
-  deleteCustomer = new EventEmitter<Customer>();
+  deleteCustomer = new EventEmitter<string>();
 
   displayedColumns: string[] = [
     'id',
@@ -43,6 +46,8 @@ export class CustomerTableComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit() {
-    this._dataSource.paginator = this.paginator;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 }

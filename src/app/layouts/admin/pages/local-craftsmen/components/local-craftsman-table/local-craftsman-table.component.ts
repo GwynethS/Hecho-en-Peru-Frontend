@@ -10,19 +10,22 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class LocalCraftsmanTableComponent implements AfterViewInit {
   @Input()
-  set dataSource(data: LocalCraftsman[]) {
-    this._dataSource.data = data;
+  set dataSource(dataSource: MatTableDataSource<LocalCraftsman>) {
+    this._dataSource = dataSource;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 
-  get dataSource(): LocalCraftsman[] {
-    return this._dataSource.data;
+  get dataSource(): MatTableDataSource<LocalCraftsman> {
+    return this._dataSource;
   }
 
   @Output()
   editLocalCraftsman = new EventEmitter<LocalCraftsman>();
 
   @Output()
-  deleteLocalCraftsman = new EventEmitter<LocalCraftsman>();
+  deleteLocalCraftsman = new EventEmitter<string>();
 
   displayedColumns: string[] = [
     'id',
@@ -41,6 +44,8 @@ export class LocalCraftsmanTableComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit() {
-    this._dataSource.paginator = this.paginator;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 }

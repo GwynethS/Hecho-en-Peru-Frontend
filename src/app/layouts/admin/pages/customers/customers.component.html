@@ -37,7 +37,7 @@
   </div>
   <app-customer-table
     class="w-full"
-    [dataSource]="customers"
+    [dataSource]="dataSource"
   ></app-customer-table>
 </div>
 <div class="no-results-container" *ngIf="!customers.length && searchAttempted">

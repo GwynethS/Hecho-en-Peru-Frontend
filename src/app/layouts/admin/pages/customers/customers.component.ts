@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Customer } from './models/customer';
 import { CustomersService } from './customers.service';
 import { Subscription } from 'rxjs';
@@ -11,18 +11,22 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss'],
 })
-export class CustomersComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CustomersComponent implements OnInit, OnDestroy {
+  pageSize = 50;
+  pageIndex = 0;
+
+  customerSearchForm: FormGroup;
   customers: Customer[] = [];
   dataSource = new MatTableDataSource<Customer>();
-  customerSearchForm: FormGroup;
-  subscriptions: Subscription[] = [];
   searchAttempted: boolean = false;
+
+  subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private customersService: CustomersService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private customersService: CustomersService
   ) {
     this.customerSearchForm = this.fb.group({
       id: this.fb.control('', [
@@ -33,58 +37,55 @@ export class CustomersComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadAllCustomers();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.loadCustomersPage();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  loadAllCustomers(): void {
-    this.subscriptions.push(
-      this.customersService.getCustomers().subscribe({
-        next: (customers) => {
-          this.customers = customers || [];
-          this.dataSource.data = this.customers;
-          console.log(customers);
-        },
-        error: (err) => {
-          this.customers = [];
-          this.dataSource.data = this.customers;
-          console.error('Failed to load customers', err);
-        }
-      })
-    );
+  loadCustomersPage(): void {
+    const offset = this.pageIndex * this.pageSize;
+    const subscription = this.customersService.getCustomersByPageAdmin(offset, this.pageSize).subscribe({
+      next: customers => {
+        this.customers = customers || [];
+        this.dataSource.data = this.customers;
+      },
+      error: err => {
+        this.customers = [];
+        this.dataSource.data = this.customers;
+        console.error('Failed to load customers', err);
+      }
+    });
+    this.subscriptions.push(subscription);
   }
 
   onSearch(): void {
     if (this.customerSearchForm.invalid) {
       this.customerSearchForm.markAllAsTouched();
     } else {
-      this.subscriptions.push(
-        this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
-          next: (customers) => {
-            this.customers = customers ? [customers] : [];
+      const subscription = this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
+        next: customer => {
+          if (customer) {
+            this.customers = [customer];
+            this.dataSource.data = this.customers;
+            this.searchAttempted = true;
             console.log(this.customers);
-            this.searchAttempted = true;
-          },
-          error: (err) => {
-            this.customers = [];
-            this.searchAttempted = true;
-            console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           }
-        })
-      );
+        },
+        error: err => {
+          console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
+          this.searchAttempted = true;
+        }
+      });
+      this.subscriptions.push(subscription);
     }
   }
 
   onClean(): void {
     this.customerSearchForm.reset();
-    this.loadAllCustomers();
+    this.pageIndex = 0;
+    this.loadCustomersPage();
   }
 
   onViewProduct(customer: Customer) { }
