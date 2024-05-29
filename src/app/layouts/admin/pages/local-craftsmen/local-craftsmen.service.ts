@@ -20,6 +20,12 @@ export class LocalCraftsmenService {
     );
   }
 
+  getlocalCraftsmenByRegion(regionId: string) {
+    return this.httpClient.get<LocalCraftsman[]>(
+      `${environment.apiURL}localCraftsmenByRegion/${regionId}`
+    );
+  }
+
   deleteLocalCraftsmenByID(id: string) {
     return this.httpClient
       .delete(`${environment.apiURL}localCraftsmanDelete/${id}`)

@@ -7,13 +7,14 @@ import { SharedModule } from 'primeng/api';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { RegionDetailComponent } from './pages/region-detail/region-detail.component';
+import { LocalCraftsmenService } from '../../../admin/pages/local-craftsmen/local-craftsmen.service';
 
 
 @NgModule({
   declarations: [
     RegionsComponent,
-    RegionDetailComponent
-  ],
+    RegionDetailComponent,
+    ],
   imports: [
     CommonModule,
     RegionsRoutingModule,
@@ -21,7 +22,8 @@ import { RegionDetailComponent } from './pages/region-detail/region-detail.compo
     MaterialModule
   ],
   providers: [
-    RegionsService
+    RegionsService,
+    LocalCraftsmenService
   ]
 })
 export class RegionsModule { }
