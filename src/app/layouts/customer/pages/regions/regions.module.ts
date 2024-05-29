@@ -8,6 +8,7 @@ import { MaterialModule } from '../../../../shared/material/material.module';
 import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { RegionDetailComponent } from './pages/region-detail/region-detail.component';
 import { LocalCraftsmenService } from '../../../admin/pages/local-craftsmen/local-craftsmen.service';
+import { TouristSitesService } from '../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { LocalCraftsmenService } from '../../../admin/pages/local-craftsmen/loca
   ],
   providers: [
     RegionsService,
-    LocalCraftsmenService
+    LocalCraftsmenService,
+    TouristSitesService
   ]
 })
 export class RegionsModule { }

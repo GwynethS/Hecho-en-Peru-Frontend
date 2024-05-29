@@ -24,13 +24,13 @@
             <p>{{regionSelected?.sitesIntroduction}}</p>
         </div>
         <div class="row">
-            <div class="lug col-lg-4 col-md-4 col-sm-12 col-12" >
+            <div class="lug col-lg-4 col-md-4 col-sm-12 col-12" *ngFor="let touristSite of touristSites" >
                 <div class="img-lug">
-                    <img class="img-fluid" src="../../../../../../../assets/img/regions/Cusco.jpg" alt="Fotografía de la región Amazonas">
+                    <img class="img-fluid" src="http://localhost:8080/api/touristSite/{{touristSite.image}}" alt="Fotografía del lugar turistico de {{touristSite.name}}">
                 </div>
                 <div class="info-lug">
-                    <h3>Machu Picchu</h3>
-                    <p>Una de las maravillas del mundo y un sitio arqueológico icónico. Machu Picchu es una antigua ciudadela inca ubicada en lo alto de las montañas, rodeada de paisajes impresionantes.</p>
+                    <h3>{{touristSite.name}}</h3>
+                    <p>{{touristSite.description}}</p>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="art col-lg-3 col-md-3 col-sm-12 col-12" *ngFor="let localCraftsmen of localCraftsman">
                 <div class="img-art">
                     <img class="img-fluid" src="http://localhost:8080/api/localCraftsmanLoadImage/{{localCraftsmen.image}}"
-                        alt="Fotografía de la región Amazonas">
+                        alt="Fotografía del artesano {{localCraftsmen.fullName}}">
                 </div>
                 <div class="info-art">
                     <h3>{{localCraftsmen.fullName}}</h3><small>{{localCraftsmen.specialty}}</small>

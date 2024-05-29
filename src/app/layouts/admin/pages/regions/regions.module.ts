@@ -8,10 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegionTableComponent } from './components/region-table/region-table.component';
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
 import { RegionsService } from './regions.service';
+import { TouristSitesComponent } from './pages/tourist-sites/tourist-sites.component';
 
 
 @NgModule({
-  declarations: [RegionsComponent, RegionTableComponent, RegionDialogComponent],
+  declarations: [RegionsComponent, RegionTableComponent, RegionDialogComponent, TouristSitesComponent],
   imports: [
     CommonModule,
     RegionsRoutingModule,
