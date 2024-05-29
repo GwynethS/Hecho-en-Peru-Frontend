@@ -1,8 +1,21 @@
 .fondo-inicio-reg-img {
-    background-image: url("../../../../../../../assets/img/regions/Cusco.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    position: relative;
+    overflow: hidden;
     text-align: center;
+
+    .background-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        object-fit: cover;
+        z-index: -1; 
+    }
+
+    .inicio-fondo-region {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 .inicio-fondo-region {

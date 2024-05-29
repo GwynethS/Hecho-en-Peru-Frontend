@@ -3,7 +3,7 @@
       <div class="hero-section-content">
         <h1>Regiones</h1>
         <p>
-            Descubre la diversidad ultural a través de nuestras artesanías por regiones. Explora las diferentes tradiciones y técnicas artesanales que se encuentran en cada rincón del mundo. Desde las coloridas artesanías latinoamericanas hasta las elegantes creaciones asiáticas, cada región tiene su propio estilo distintivo. Déjate inspirar por la riqueza cultural y el ingenio de nuestros artesanos de todo el mundo.
+            Descubre la diversidad cultural a través de nuestras artesanías por regiones. Explora las diferentes tradiciones y técnicas artesanales que se encuentran en cada rincón del mundo. Desde las coloridas artesanías latinoamericanas hasta las elegantes creaciones asiáticas, cada región tiene su propio estilo distintivo. Déjate inspirar por la riqueza cultural y el ingenio de nuestros artesanos de todo el mundo.
         </p>
       </div>
     </div>
@@ -13,7 +13,7 @@
   <div class="cards-container">
     <div *ngFor="let region of regions" class="region-card">
       <img class="img-fluid" src="http://localhost:8080/api/region/{{region.image}}" alt="Fotografía de la región {{region.name}}">
-      <button mat-flat-button (click)="redirectTo(region.regionId)">{{region.regionId}}</button>
+      <button mat-flat-button (click)="redirectTo(region.id)">{{region.name}}</button>
     </div>
   </div>
 </section>
