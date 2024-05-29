@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class RegionDialogComponent {
   hide = true;
   regionForm: FormGroup;
+  selectedFile: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,15 +39,41 @@ export class RegionDialogComponent {
     }
   }
 
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    this.selectedFile = file;
+    const fileNameElement = document.getElementById('file-name');
+    if (fileNameElement) {
+      fileNameElement.textContent = file ? file.name : 'Ningún archivo seleccionado';
+    }
+  }
+
   onCreate(): void {
     if (this.regionForm.invalid) {
       this.regionForm.markAllAsTouched();
     } else {
-      this.matDialogRef.close(this.regionForm.value);
+      const productData = this.regionForm.value;
+      if (this.selectedFile) {
+        this.uploadFile(this.selectedFile).then((imageUrl) => {
+          productData.image = imageUrl;
+          this.matDialogRef.close(productData);
+        });
+      } else {
+        this.matDialogRef.close(productData);
+      }
     }
+  }
+
+  async uploadFile(file: File): Promise<string> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(`http://localhost:8080/api/uploadsLoadImage/{{$product.image}}`);
+      }, 2000);
+    });
   }
 
   onClearInputs(): void {
     this.regionForm.reset();
+    this.selectedFile = null;
   }
 }

@@ -28,11 +28,7 @@
       class="product-form-search flex justify-content-between"
     >
       <mat-form-field class="field">
-        <input
-          formControlName="id"
-          matInput
-          placeholder="Ingrese el ID"
-        />
+        <input formControlName="id" matInput placeholder="Ingrese el ID" />
       </mat-form-field>
       <button
         mat-flat-button
@@ -54,7 +50,7 @@
   </div>
   <app-product-table
     class="w-full"
-    [dataSource]="products"
+    [dataSource]="dataSource"
     (editProduct)="onEditProduct($event)"
     (deleteProduct)="onDeleteProduct($event)"
   ></app-product-table>
@@ -63,6 +59,6 @@
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>
-    <p> para su búsqueda</p>
+    <p>para su búsqueda</p>
   </div>
 </div>

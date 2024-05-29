@@ -43,3 +43,18 @@ $Hecho-en-Peru-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.alter-cancel-btn {
+  order: -1;
+  border-radius: 0.6rem !important;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  width: 7rem;
+}
+
+.custom-confirm-btn {
+  border-radius: 0.6rem !important;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  width: 7rem;
+}
