@@ -94,17 +94,17 @@ export class RegionsComponent implements OnInit, OnDestroy {
       this.matDialog
         .open(RegionDialogComponent)
         .afterClosed()
-        .subscribe({
-          next: (regionData) => {
-            if (regionData) {
-              this.regionsService.addRegions(regionData).subscribe({
-                next: (regions) => {
-                  this.regions = regions;
-                  this.dataSource.data = this.regions;
-                },
-              });
-            }
-          },
+        .subscribe((regionData) => {
+          if (regionData) {
+            this.regionsService.addRegions(regionData).subscribe({
+              next: (regions) => {
+                this.regions = regions;
+              },
+              error: (err) => {
+                console.error('Failed to add region', err);
+              },
+            });
+          }
         })
     );
   }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Region } from './models/region';
 import { environment } from '../../../../../environments/environment';
-import { Observable, mergeMap } from 'rxjs';
+import { Observable, mergeMap, switchMap } from 'rxjs';
 
 @Injectable()
 export class RegionsService {
@@ -32,10 +32,18 @@ export class RegionsService {
     );
   }
 
-  addRegions(data: Region) {
-    return this.httpClient
-      .post<Region>(`${environment.apiURL}region`, data)
-      .pipe(mergeMap(() => this.getRegions()));
+  addRegions(data: any): Observable<Region[]> {
+    const formData: FormData = new FormData();
+    formData.append('regionDTO', new Blob([JSON.stringify({
+      name: data.name,
+      history: data.history,
+      sitesIntroduction: data.sitesIntroduction,
+      craftsmenIntroduction: data.craftsmenIntroduction,
+    })], { type: "application/json" }));
+    if (data.image) {
+      formData.append('image', data.image);
+    }
+    return this.httpClient.post<Region[]>(`${environment.apiURL}region`, formData);
   }
 
   updateRegions(id: string, data: Region): Observable<Region[]> {

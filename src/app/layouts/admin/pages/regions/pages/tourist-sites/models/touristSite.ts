@@ -1,6 +1,6 @@
 import { Region } from "../../../models/region";
 
-export interface TouristSite{
+export interface TouristSite {
     id: string;
     description: string;
     image: string;

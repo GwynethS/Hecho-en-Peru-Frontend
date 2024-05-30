@@ -22,13 +22,23 @@
         <div class="w-full file-container">
           <label>Imagen</label>
           <div class="input-file-container">
-            <button class="upload-button">Seleccionar imagen</button>
+            <button
+              type="button"
+              class="upload-button"
+              (click)="fileInput.click()"
+            >
+              Seleccionar imagen
+            </button>
             <input
               type="file"
+              #fileInput
               accept=".png, .jpg, .jpeg"
               (change)="onFileSelected($event)"
+              style="display: none"
             />
-            <span class="file-name" id="file-name">Ninguna imagen seleccionada</span>
+            <span class="file-name" id="file-name"
+              >Ninguna imagen seleccionada</span
+            >
           </div>
         </div>
       </div>

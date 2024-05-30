@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { Region } from '../../models/region';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-region-table',
@@ -37,11 +38,15 @@ export class RegionTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngAfterViewInit() {
     if (this.paginator) {
       this._dataSource.paginator = this.paginator;
     }
+  }
+
+  viewTouristSites(region: Region): void {
+    this.router.navigate(['/tourist-sites', region.id]);
   }
 }
