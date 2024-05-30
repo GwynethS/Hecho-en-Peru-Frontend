@@ -66,16 +66,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
     } else {
       const subscription = this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
         next: customer => {
-          if (customer) {
             this.customers = [customer];
             this.dataSource.data = this.customers;
-            this.searchAttempted = true;
-            console.log(this.customers);
-          }
         },
         error: err => {
           console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           this.searchAttempted = true;
+          this.dataSource.data = [];
         }
       });
       this.subscriptions.push(subscription);

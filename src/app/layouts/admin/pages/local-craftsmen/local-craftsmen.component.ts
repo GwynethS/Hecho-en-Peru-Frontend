@@ -71,16 +71,13 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     } else {
       const subscription = this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id).subscribe({
         next: localCraftsman => {
-          if (localCraftsman) {
             this.localCraftsmen = [localCraftsman];
             this.dataSource.data = this.localCraftsmen;
-            this.searchAttempted = true;
-            console.log(this.localCraftsmen);
-          }
         },
         error: err => {
           console.error(`Failed to load product with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           this.searchAttempted = true;
+          this.dataSource.data = [];
         }
       });
       this.subscriptions.push(subscription);

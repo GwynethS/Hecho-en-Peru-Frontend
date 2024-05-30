@@ -71,12 +71,11 @@ export class RegionsComponent implements OnInit, OnDestroy {
         next: (region: Region[]) => {
           this.regions = region;
           this.dataSource.data = this.regions;
-          this.searchAttempted = true;
-          console.log(this.regions);
         },
         error: err => {
           console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
           this.searchAttempted = true;
+          this.dataSource.data = [];
         }
       });
       this.subscriptions.push(subscription);

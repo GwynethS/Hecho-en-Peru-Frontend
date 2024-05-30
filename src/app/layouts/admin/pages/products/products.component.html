@@ -55,7 +55,7 @@
     (deleteProduct)="onDeleteProduct($event)"
   ></app-product-table>
 </div>
-<div class="no-results-container" *ngIf="!products.length && searchAttempted">
+<div class="no-results-container" *ngIf="!products.length || searchAttempted">
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>

@@ -51,7 +51,7 @@
     (deleteLocalCraftsman)="onDeleteLocalCraftsman($event)"
   ></app-local-craftsman-table>
 </div>
-<div class="no-results-container" *ngIf="!localCraftsmen.length && searchAttempted">
+<div class="no-results-container" *ngIf="!localCraftsmen.length || searchAttempted">
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>

@@ -36,9 +36,7 @@ export class ProductsService {
   }
 
   getSearchProductDetailsByID(id: string) {
-    return this.httpClient.get<Product>(
-      `${environment.apiURL}productDetails/${id}`
-    );
+    return this.httpClient.get<Product>(`${environment.apiURL}productDetails/${id}`);
   }
 
   deleteProductsByID(id: string): Observable<any> {
