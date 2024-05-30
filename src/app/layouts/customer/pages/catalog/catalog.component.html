@@ -115,7 +115,7 @@
       </div>
       <button mat-flat-button class="add-cart">Añadir al carrito</button>
     </div>
-    <div class="paginator">
+    <div class="paginator" *ngIf="filterProducts.length">
       <button (click)="previousPage()" mat-icon-button type="button">
         <mat-icon>arrow_back_ios</mat-icon>
       </button>
@@ -132,6 +132,13 @@
       <button (click)="nextPage()" mat-icon-button type="button">
         <mat-icon>arrow_forward_ios</mat-icon>
       </button>
+    </div>
+    <div class="no-results-container" *ngIf="!filterProducts.length">
+      <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+      <div>
+        <p>No se encontraron resultados</p>
+        <p> para su búsqueda</p>
+      </div>
     </div>
   </div>
 </section>

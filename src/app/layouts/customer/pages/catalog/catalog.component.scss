@@ -207,5 +207,26 @@ mat-slider {
         }
       }
     }
+
+    .no-results-container {
+      margin: 5rem;
+      padding: 1.25rem;
+      text-align: center;
+      width: 100%;
+      opacity: 0.5;
+      .emoji {
+        font-size: 3rem;
+        margin-bottom: 1.25rem;
+      }
+      div {
+        font-size: 1.125rem;
+        color: #333;
+        margin: 1.2rem;
+        p {
+          margin: 0.3rem;
+        }
+      }
+    }
+    
   }
 }
