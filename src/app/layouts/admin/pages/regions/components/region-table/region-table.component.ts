@@ -10,12 +10,15 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class RegionTableComponent implements AfterViewInit {
   @Input()
-  set dataSource(data: Region[]) {
-    this._dataSource.data = data;
+  set dataSource(dataSource: MatTableDataSource<Region>) {
+    this._dataSource = dataSource;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 
-  get dataSource(): Region[] {
-    return this._dataSource.data;
+  get dataSource(): MatTableDataSource<Region> {
+    return this._dataSource;
   }
 
   @Output()
@@ -37,6 +40,8 @@ export class RegionTableComponent implements AfterViewInit {
   constructor() {}
 
   ngAfterViewInit() {
-    this._dataSource.paginator = this.paginator;
+    if (this.paginator) {
+      this._dataSource.paginator = this.paginator;
+    }
   }
 }

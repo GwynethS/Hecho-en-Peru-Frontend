@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Region } from './models/region';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Region } from './models/region';
 import { MatDialog } from '@angular/material/dialog';
 import { RegionsService } from './regions.service';
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
@@ -11,21 +11,25 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
-  styleUrl: './regions.component.scss',
+  styleUrls: ['./regions.component.scss'],
 })
-export class RegionsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RegionsComponent implements OnInit, OnDestroy {
+  pageSize = 50;
+  pageIndex = 0;
+
+  regionSearchForm: FormGroup;
   regions: Region[] = [];
   dataSource = new MatTableDataSource<Region>();
-  regionSearchForm: FormGroup;
+  searchAttempted = false;
+
   subscriptions: Subscription[] = [];
-  searchAttempted: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private fb: FormBuilder,
     private regionsService: RegionsService,
-    private matDialog: MatDialog,
-    private fb: FormBuilder
+    private matDialog: MatDialog
   ) {
     this.regionSearchForm = this.fb.group({
       name: this.fb.control('', [
@@ -36,60 +40,53 @@ export class RegionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.loadAllRegions();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.loadRegionsPage();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  loadAllRegions(): void {
-    this.subscriptions.push(
-      this.regionsService.getRegions().subscribe({
-        next: (regions) => {
-          this.regions = regions || [];
-          this.dataSource.data = this.regions;
-          console.log(regions);
-        },
-        error: (err) => {
-          this.regions = [];
-          this.dataSource.data = this.regions;
-          console.error('Failed to load regions', err);
-        }
-      })
-    );
+  loadRegionsPage(): void {
+    const offset = this.pageIndex * this.pageSize;
+    const subscription = this.regionsService.getRegionsByPageAdmin(offset, this.pageSize).subscribe({
+      next: regions => {
+        this.regions = regions || [];
+        this.dataSource.data = this.regions;
+      },
+      error: err => {
+        this.regions = [];
+        this.dataSource.data = this.regions;
+        console.error('Failed to load regions', err);
+      }
+    });
+    this.subscriptions.push(subscription);
   }
 
   onSearch(): void {
     if (this.regionSearchForm.invalid) {
       this.regionSearchForm.markAllAsTouched();
     } else {
-      this.subscriptions.push(
-        this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
-          next: (regions) => {
-            this.regions = regions;
-            this.dataSource.data = this.regions;
-            console.log(this.regions);
-            this.searchAttempted = true;
-          },
-          error: (err) => {
-            this.regions = [];
-            this.dataSource.data = this.regions;
-            this.searchAttempted = true;
-            console.error(`Failed to load regions with name ${this.regionSearchForm.value.name}`, err);
-          }
-        })
-      );
+      const subscription = this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
+        next: (region: Region[]) => {
+          this.regions = region;
+          this.dataSource.data = this.regions;
+          this.searchAttempted = true;
+          console.log(this.regions);
+        },
+        error: err => {
+          console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
+          this.searchAttempted = true;
+        }
+      });
+      this.subscriptions.push(subscription);
     }
   }
 
   onClean(): void {
     this.regionSearchForm.reset();
-    this.loadAllRegions();
+    this.pageIndex = 0;
+    this.loadRegionsPage();
   }
 
   onCreateRegion(): void {
