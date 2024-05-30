@@ -1,0 +1,208 @@
+[33mcommit 000c6d815b9841821f5bf2600cd75e749462c174[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Wed May 29 19:41:48 2024 -0500
+
+    feat: se implementó el paginator con offset y limit en regions
+
+[33mcommit d2a9c9aaf37fe15e37cfaccd26ea19d873ca0cf1[m
+Merge: a9c6b2c 8bfef73
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Wed May 29 18:10:13 2024 -0500
+
+    Merge branch 'main' of https://github.com/GwynethS/Hecho-en-Peru-Fronted
+
+[33mcommit a9c6b2c50862ea43c10ffb1869a7162aaeb61caf[m
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Wed May 29 18:10:07 2024 -0500
+
+    feat: se implementó el paginator con offset y limit en artesanos y clientes
+
+[33mcommit 8bfef73ccfb091adb2aeaa5373380eead028823a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 62dfb00 e4a43c3
+Author: GonzaloPA23 <116847758+GonzaloPA23@users.noreply.github.com>
+Date:   Wed May 29 18:05:33 2024 -0500
+
+    Merge pull request #1 from GwynethS/gonzalo
+    
+    Gonzalo
+
+[33mcommit e4a43c35c8b42b1d3b0adb05e21778bb1bd10055[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 17:58:26 2024 -0500
+
+    feat: se implementó las cards de los lugares turisticos en las regiones dinamicamente
+
+[33mcommit d4868fc8d994dbe97041708949721d6445780a88[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 16:00:16 2024 -0500
+
+    feat: se implementó las cards de los artesanos en las regiones dinamicamente
+
+[33mcommit 62dfb00c78eff3ca17d4e60d74b94500ae1e1c9e[m
+Merge: 8b154c5 d98be1b
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Wed May 29 14:35:15 2024 -0500
+
+    Merge branch 'main' of https://github.com/GwynethS/Hecho-en-Peru-Fronted
+
+[33mcommit 8b154c5a40f64676cba122514e66fe742cb10544[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Wed May 29 14:33:55 2024 -0500
+
+    feat: se implementaron los filtros del catálogo de productos
+
+[33mcommit baf2ef0cff0b08049b9473a63e3af0144375b6aa[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 14:33:22 2024 -0500
+
+    feat: se arregló el routeo del detalle de las regiones y se modificaron los estilos para la imagen dinamica
+
+[33mcommit 056f15db33748e5c51af920a87a7fa36b2339fed[m
+Merge: 4ddace6 d98be1b
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 13:59:03 2024 -0500
+
+    Merge branch 'main' of https://github.com/GwynethS/Hecho-en-Peru-Fronted into gonzalo
+
+[33mcommit 4ddace65fc39039077afaa3e9a48dbda2c3f25cf[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 13:57:14 2024 -0500
+
+    feat: se implementó el routeo para el detalle de las regiones
+
+[33mcommit b910e28a5e4a344433aa47558e8a6412d88313a0[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Wed May 29 02:00:10 2024 -0500
+
+    feat: se implementó la estructura html y los estilos del detalle de las regiones
+
+[33mcommit d98be1bde901ce8139570bbec380e659dee759e1[m
+Merge: 5f7f2eb 564ffea
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Wed May 29 01:22:18 2024 -0500
+
+    feat: complete merge
+
+[33mcommit 5f7f2eb7d657ab9f4e2c1f86572d11ca7c81ea47[m
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Wed May 29 01:20:15 2024 -0500
+
+    feat: se implementó el paginator con offset y limit en products y el campo de imagen de todos los features
+
+[33mcommit 564ffea81adeea652f5f620c367a355678fd8444[m
+Author: GwynethS <102232553+GwynethS@users.noreply.github.com>
+Date:   Tue May 28 08:17:04 2024 -0500
+
+    feat: se implementó el login de usuario recepcionando el token
+
+[33mcommit 615c867fe10f2fdc920dc0204eb8090a75c48187[m
+Author: GwynethS <102232553+GwynethS@users.noreply.github.com>
+Date:   Tue May 28 07:55:32 2024 -0500
+
+    feat: se eliminaron console.logs en sign-up component
+
+[33mcommit 304ec59b267bb785d22ea427f48684b0ae61561d[m
+Author: GwynethS <102232553+GwynethS@users.noreply.github.com>
+Date:   Tue May 28 07:48:07 2024 -0500
+
+    feat: se implementó el registro de usuario
+
+[33mcommit 41911a781621cc6450f184be2be5d2fee1aac6ac[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Tue May 28 00:31:58 2024 -0500
+
+    feat: se instaló ngrx en el proyecto, se crearon los feature store para la autenticación de usuario, se creó el servicio auth y la interfaz UserLogin, también se movió la ubicación de alert.service a una carpeta services en la carpeta core
+
+[33mcommit f7ec3abacbbeb10af1df199ea52a7a1cd3df66d0[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Mon May 27 22:14:11 2024 -0500
+
+    feat: se agregó la función getBestSellingProductsByPageUser en el product service para el carrusel del home component en la vista customer
+
+[33mcommit 632ccfcc2708615ceb2213b1a8d3b2e27b421a52[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Mon May 27 14:08:25 2024 -0500
+
+    feat: se agruparon por funciones las llamadas a la api en el componente home, catalog y catalog-detail y también se implementó el método OnDestroy para anular las subscripciones
+
+[33mcommit 0b377d58a2ac7d1965405811f27be55a0069e4a3[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Mon May 27 13:17:21 2024 -0500
+
+    feat: se enlazaron los commentarios con la api, se creó el modelo comment y el servicio Comments en el catalog detail
+
+[33mcommit f3083d857f0d3dc5e64abc816dfea8f4e2d7a857[m
+Merge: 39cff71 fc3a36a
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Mon May 27 12:17:41 2024 -0500
+
+    Merge branch 'main' of https://github.com/GwynethS/Hecho-en-Peru-Fronted
+
+[33mcommit 39cff71379e92cc67bf86656556a71a2692dffc8[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Mon May 27 12:17:22 2024 -0500
+
+    feat:se corrgió la alineación de los productos del catálogo en la vista customer
+
+[33mcommit 1b2562a53119a472d5e1c6ca33483c290c2e36d2[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Sun May 26 00:44:13 2024 -0500
+
+    feat: se implementó la visualización de las cards de regiones dinamicamente
+
+[33mcommit 028b37dbd3d0570e4977c70831748cbd611d65ba[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Sat May 25 23:45:46 2024 -0500
+
+    feat: modifiqué los estilos de las cards
+
+[33mcommit fc3a36aedfbec8f25eb637893447d347109b2578[m
+Merge: 8645bc7 2b93b5a
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Sat May 25 01:41:18 2024 -0500
+
+    Merge branch 'main' of https://github.com/GwynethS/Hecho-en-Peru-Fronted
+
+[33mcommit 8645bc75f55597ead64cd6735181d75274cd84f7[m
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Sat May 25 01:41:09 2024 -0500
+
+    feat: se implementó el paginator en local craftsmen, customers y products
+
+[33mcommit 2b93b5abc2b24619376c234ed3fa8c2f93ea42eb[m
+Author: GwynethS <gwynethsegura@gmail.com>
+Date:   Sat May 25 00:50:45 2024 -0500
+
+    feat: se enlazó el componente catalog-detail con el backend y se realizó la paginación del catálogo de productos
+
+[33mcommit aa78cdb16c50a16712042c9aae1d378decaa9998[m
+Author: Alexandra <alexa.dayanna07@gmail.com>
+Date:   Fri May 24 19:35:29 2024 -0500
+
+    feat: se implementó el paginator en el regions
+
+[33mcommit 96eef46915a201bbd4e0182c7640831a18397e71[m
+Author: Alexandra Dayanna Ramirez Diaz <117787019+AlexandraRamirezz@users.noreply.github.com>
+Date:   Thu May 23 10:42:04 2024 -0500
+
+    feat: se actualizó el scroll y se mejoró la vista de las la tabla de las regiones
+
+[33mcommit 43c78d90a37023050294467833ec2545e2b12914[m
+Author: Gwyneth Lyu Gisele Segura Silva <gwynethsegura@gmail.com>
+Date:   Thu May 23 09:03:40 2024 -0500
+
+    feat: se realizó la llamada de los productos desde la api para el catálogo component
+
+[33mcommit ebdf65ca57df67413ee86311d2ec588205afa465[m
+Author: Gwyneth Lyu Gisele Segura Silva <gwynethsegura@gmail.com>
+Date:   Thu May 23 07:39:48 2024 -0500
+
+    feat: se terminaron los estilos de la sección regiones
+
+[33mcommit 6f933aa647bb94330f2c6746d55dca08afb2f089[m
+Author: Gonzalo Pingo Amaya <pingoamayagonzalo@gmail.com>
+Date:   Thu May 23 03:16:33 2024 -0500
+
+    feat: estructura y diseño del componente regions (scss y html)
+
+[33mcommit aa9a423ed9b5976ee2c8e0d9c5e7e
