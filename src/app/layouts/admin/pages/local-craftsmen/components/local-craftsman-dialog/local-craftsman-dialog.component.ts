@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LocalCraftsman } from '../../models/localCraftsman';
+import { LocalCraftsmenService } from '../../local-craftsmen.service';
+import { Region } from '../../models/region';
 
 @Component({
   selector: 'app-local-craftsman-dialog',
@@ -9,75 +11,56 @@ import { LocalCraftsman } from '../../models/localCraftsman';
   styleUrl: './local-craftsman-dialog.component.scss',
 })
 export class LocalCraftsmanDialogComponent {
-  hide = true;
+  regions: Region[] = [];
   localCraftsmanForm: FormGroup;
   selectedFile: File | null = null;
+  imageUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
     private matDialogRef: MatDialogRef<LocalCraftsmanDialogComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    private editinglocalCraftsman?: LocalCraftsman
+    private localCraftsmenService: LocalCraftsmenService, // Inyectamos el servicio
+    @Inject(MAT_DIALOG_DATA) private editinglocalCraftsman?: LocalCraftsman
   ) {
     this.localCraftsmanForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(3)]],
       specialty: ['', Validators.required],
-      image: [Validators.required],
+      image: [null, Validators.required],
       experience: ['', [Validators.required, Validators.minLength(3)]],
       name_region: ['', [Validators.required, Validators.minLength(3)]],
       enabled: ['', Validators.required],
     });
+
     if (this.editinglocalCraftsman) {
       this.localCraftsmanForm.patchValue(this.editinglocalCraftsman);
-    }
-    if (this.editinglocalCraftsman) {
-      this.localCraftsmanForm.patchValue(this.editinglocalCraftsman);
-      this.localCraftsmanForm.get('fullName')?.disable();
-      this.localCraftsmanForm.get('description')?.disable();
-      this.localCraftsmanForm.get('specialty')?.disable();
-      this.localCraftsmanForm.get('image')?.disable();
-      this.localCraftsmanForm.get('experience')?.disable();
-      this.localCraftsmanForm.get('name_region')?.disable();
-      this.localCraftsmanForm.get('enabled')?.disable();
+      this.localCraftsmanForm.get('image')?.clearValidators();
+      this.localCraftsmanForm.updateValueAndValidity();
     }
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     this.selectedFile = file;
-    const fileNameElement = document.getElementById('file-name');
-    if (fileNameElement) {
-      fileNameElement.textContent = file ? file.name : 'Ningún archivo seleccionado';
-    }
-  }
+  
+    // Convertir la imagen a Base64
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imageUrl = e.target?.result || null;
+    };
+    reader.readAsDataURL(file);
+  }  
 
   onCreate(): void {
-    if (this.localCraftsmanForm.invalid) {
+    if (this.localCraftsmanForm.invalid || !this.selectedFile) {
       this.localCraftsmanForm.markAllAsTouched();
-    } else {
-      const productData = this.localCraftsmanForm.value;
-      if (this.selectedFile) {
-        this.uploadFile(this.selectedFile).then((imageUrl) => {
-          productData.image = imageUrl;
-          this.matDialogRef.close(productData);
-        });
-      } else {
-        this.matDialogRef.close(productData);
-      }
+      return;
     }
-  }
-
-  async uploadFile(file: File): Promise<string> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(`http://localhost:8080/api/uploadsLoadImage/{{$product.image}}`);
-      }, 2000);
-    });
   }
 
   onClearInputs(): void {
     this.localCraftsmanForm.reset();
     this.selectedFile = null;
+    this.imageUrl = null;
   }
 }

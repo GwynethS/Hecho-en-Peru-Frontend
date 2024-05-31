@@ -47,8 +47,9 @@
             formControlName="name_region"
             placeholder="Seleccione la región"
           >
-            <mat-option value="true">True</mat-option>
-            <mat-option value="false">False</mat-option>
+            <mat-option *ngFor="let region of regions" [value]="region">
+              {{ region }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -65,16 +66,22 @@
         <div class="w-full file-container">
           <label>Imagen</label>
           <div class="input-file-container">
-            <button class="upload-button">Seleccionar imagen</button>
+            <button class="upload-button" (click)="fileInput.click()">
+              Seleccionar imagen
+            </button>
             <input
               type="file"
               accept=".png, .jpg, .jpeg"
               (change)="onFileSelected($event)"
+              #fileInput
+              style="display: none"
             />
-            <span class="file-name" id="file-name">Ninguna imagen seleccionada</span>
+            <span class="file-name" id="file-name"
+              >Ninguna imagen seleccionada</span
+            >
           </div>
         </div>
-      </div>   
+      </div>
       <div class="col-12 py-2">
         <mat-form-field class="w-full">
           <mat-label>Descripción</mat-label>

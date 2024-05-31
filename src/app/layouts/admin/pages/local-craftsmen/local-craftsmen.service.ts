@@ -2,52 +2,39 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LocalCraftsman } from './models/localCraftsman';
 import { environment } from '../../../../../environments/environment';
-import { Observable, mergeMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LocalCraftsmenService {
+  private apiURL = `${environment.apiURL}`;
+
   constructor(private httpClient: HttpClient) {}
 
-  getLocalCraftsmen() {
-    return this.httpClient.get<LocalCraftsman[]>(
-      `${environment.apiURL}localCraftsmen`
-    );
+  getLocalCraftsmen(): Observable<LocalCraftsman[]> {
+    return this.httpClient.get<LocalCraftsman[]>(`${this.apiURL}localCraftsmen`);
   }
 
-  getLocalCraftsmenByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmenByPageModeAdmin?offset=${offset}&limit=${limit}`);
+  getLocalCraftsmenByPageAdmin(offset: number, limit: number): Observable<LocalCraftsman[]> {
+    return this.httpClient.get<LocalCraftsman[]>(`${this.apiURL}localCraftsmenByPageModeAdmin?offset=${offset}&limit=${limit}`);
   }
 
-  getSearchLocalCraftsmanDetailsByID(id: string) {
-    return this.httpClient.get<LocalCraftsman>(
-      `${environment.apiURL}localCraftsmanDetail/${id}`
-    );
+  getSearchLocalCraftsmanDetailsByID(id: string): Observable<LocalCraftsman> {
+    return this.httpClient.get<LocalCraftsman>(`${this.apiURL}localCraftsmanDetail/${id}`);
   }
 
-  getlocalCraftsmenByRegion(regionId: string) {
-    return this.httpClient.get<LocalCraftsman[]>(
-      `${environment.apiURL}localCraftsmenByRegion/${regionId}`
-    );
+  getlocalCraftsmenByRegion(regionId: string): Observable<LocalCraftsman[]> {
+    return this.httpClient.get<LocalCraftsman[]>(`${this.apiURL}localCraftsmenByRegion/${regionId}`);
   }
 
-  deleteLocalCraftsmenByID(id: string) {
-    return this.httpClient
-      .delete(`${environment.apiURL}localCraftsmanDelete/${id}`)
-      .pipe(mergeMap(() => this.getLocalCraftsmen()));
+  deleteLocalCraftsmenByID(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiURL}localCraftsmanDelete/${id}`);
   }
 
-  addLocalCraftsmen(data: LocalCraftsman) {
-    return this.httpClient
-      .post<LocalCraftsman>(`${environment.apiURL}localCraftsman`, data)
-      .pipe(mergeMap(() => this.getLocalCraftsmen()));
+  addLocalCraftsmen(data: LocalCraftsman): Observable<LocalCraftsman> {
+    return this.httpClient.post<LocalCraftsman>(`${this.apiURL}localCraftsman`, data);
   }
 
-  updateLocalCraftsmen(
-    id: string,
-    data: LocalCraftsman
-  ): Observable<LocalCraftsman[]> {
-    return this.httpClient
-      .put<LocalCraftsman[]>(`${environment.apiURL}localCraftsman/${id}`, data)
-      .pipe(mergeMap(() => this.getLocalCraftsmen()));
+  updateLocalCraftsmen(id: string, data: LocalCraftsman): Observable<LocalCraftsman> {
+    return this.httpClient.put<LocalCraftsman>(`${this.apiURL}localCraftsman/${id}`, data);
   }
 }

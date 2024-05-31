@@ -7,7 +7,7 @@ export interface Product {
   category: Category;
   localCraftsman: LocalCraftsman;
   price: number;
-  image: File;
+  image: string;
   availability: boolean;
   stock: number;
   averageRating: number;

@@ -6,6 +6,7 @@ import { Category } from '../../models/category';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalCraftsman } from '../../../local-craftsmen/models/localCraftsman';
 import { Region } from '../../models/region';
+import { ProductsService } from '../../products.service';
 
 @Component({
   selector: 'app-product-dialog',
@@ -23,8 +24,9 @@ export class ProductDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private matDialogRef: MatDialogRef<ProductDialogComponent>,
+    private productService: ProductsService,
     private http: HttpClient,
+    private matDialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private editingProduct?: Product
   ) {
     this.productForm = this.fb.group({
@@ -34,26 +36,31 @@ export class ProductDialogComponent implements OnInit {
       fullname_localCraftsman: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
-      averageRating: ['', [Validators.required, Validators.min(0), Validators.max(5)]],
+      averageRating: [
+        '',
+        [Validators.required, Validators.min(0), Validators.max(5)],
+      ],
       history: ['', Validators.required],
       details: ['', Validators.required],
-      image: ['', Validators.required],
       enabled: ['', Validators.required],
+      image: [''], // Agrega un campo para la imagen
     });
 
     if (this.editingProduct) {
       this.productForm.patchValue({
-        ...this.editingProduct,
-        name_category: this.editingProduct.category.id,
-        name_region: this.editingProduct.localCraftsman.region.id,
-        fullname_localCraftsman: this.editingProduct.localCraftsman.id,
-        enabled: this.editingProduct.enabled ? 'true' : 'false',
+        name: this.editingProduct.name,
       });
-      if (this.editingProduct && this.editingProduct.image) {
-        const file = this.editingProduct.image;
-        this.imageUrl = file.name;
-      } else {
-        this.imageUrl = null;
+      if (this.editingProduct) {
+        this.productForm.patchValue({
+          ...this.editingProduct,
+          name_category: this.editingProduct.category.id,
+          name_region: this.editingProduct.localCraftsman.region.id,
+          fullname_localCraftsman: this.editingProduct.localCraftsman.id,
+          enabled: this.editingProduct.enabled ? 'true' : 'false',
+        });
+      }
+      if (this.editingProduct.image) {
+        this.imageUrl = this.editingProduct.image;
       }
     }
   }
@@ -65,20 +72,18 @@ export class ProductDialogComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.http
-      .get<Category[]>('http://localhost:8080/api/categories')
-      .subscribe({
-        next: (categories) => {
-          this.categories = categories;
-        },
-        error: (err) => {
-          console.error('Failed to load categories', err);
-        },
-      });
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Failed to load categories', err);
+      },
+    });
   }
 
   loadRegions(): void {
-    this.http.get<Region[]>('http://localhost:8080/api/regions').subscribe({
+    this.productService.getRegions().subscribe({
       next: (regions) => {
         this.regions = regions;
       },
@@ -89,55 +94,77 @@ export class ProductDialogComponent implements OnInit {
   }
 
   loadLocalCraftsmen(): void {
-    this.http
-      .get<LocalCraftsman[]>('http://localhost:8080/api/localCraftsmen')
-      .subscribe({
-        next: (localCraftsmen) => {
-          this.localCraftsmen = localCraftsmen;
-        },
-        error: (err) => {
-          console.error('Failed to load local craftsmen', err);
-        },
-      });
+    this.productService.getLocalCraftsmen().subscribe({
+      next: (localCraftsmen) => {
+        this.localCraftsmen = localCraftsmen;
+      },
+      error: (err) => {
+        console.error('Failed to load local craftsmen', err);
+      },
+    });
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     this.selectedFile = file;
-    const fileNameElement = document.getElementById('file-name');
-    if (fileNameElement) {
-      fileNameElement.textContent = file ? file.name : 'Ningún archivo seleccionado';
+    this.updateImageUrl();
+  }
+  
+  updateImageUrl(): void {
+    if (this.selectedFile) {
+      this.imageUrl = URL.createObjectURL(this.selectedFile);
+    } else {
+      this.imageUrl = null;
     }
   }
-
+  
+  getFileName(): string {
+    if (this.selectedFile) {
+      return this.selectedFile.name;
+    } else {
+      return "Ninguna imagen seleccionada";
+    }
+  }
+  
   onCreate(): void {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
     } else {
       const productData = this.productForm.value;
       if (this.selectedFile) {
-        this.uploadFile(this.selectedFile).then((imageUrl) => {
+        // Si se selecciona un archivo, carga la imagen al servidor y luego crea/actualiza el producto
+        this.uploadFile(this.selectedFile).then(({ imageUrl, filename }) => {
           productData.image = imageUrl;
-          this.matDialogRef.close(productData);
+          productData.imageName = filename; // Agrega el nombre del archivo al objeto de datos del producto
+          this.sendProductData(productData);
         });
       } else {
-        productData.image = this.editingProduct?.image;
-        this.matDialogRef.close(productData);
+        // Si no se selecciona ningún archivo, crea/actualiza el producto sin la imagen
+        this.sendProductData(productData);
       }
     }
   }
 
-  async uploadFile(file: File): Promise<string> {
+  async uploadFile(
+    file: File
+  ): Promise<{ imageUrl: string; filename: string }> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, file.name); // Adjunta el archivo con su nombre
     const uploadUrl = 'http://localhost:8080/api/uploadsLoadImage';
     const headers = new HttpHeaders();
     return this.http
       .post<any>(uploadUrl, formData, { headers })
       .toPromise()
       .then((response) => {
-        return response.imageUrl;
+        return { imageUrl: response.imageUrl, filename: response.filename }; // Retorna tanto la URL como el nombre del archivo
       });
+  }
+
+  sendProductData(productData: any): void {
+    if (this.editingProduct) {
+    } else {
+      // Lógica para crear un nuevo producto
+    }
   }
 
   onClearInputs(): void {

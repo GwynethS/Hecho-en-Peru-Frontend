@@ -73,13 +73,13 @@ export class ProductsService {
       .pipe(mergeMap(() => this.getCategories()));
   }
 
-  getLocalCraftsmen(): Observable<LocalCraftsman[]> {
+  getLocalCraftsmen() {
     return this.httpClient.get<LocalCraftsman[]>(
       `${environment.apiURL}localCraftsmen`
     );
   }
 
-  getRegions(): Observable<any[]> {
+  getRegions() {
     return this.httpClient.get<any[]>(`${environment.apiURL}regions`);
   }
 }
