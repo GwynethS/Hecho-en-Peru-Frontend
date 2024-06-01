@@ -23,10 +23,6 @@
 .file-container {
   margin-bottom: 0.45rem;
 
-  label {
-    margin-left: 1rem;
-  }
-
   img {
     margin-top: 0.5rem;
     width: auto;
@@ -65,8 +61,7 @@
   cursor: pointer;
 
   button {
-    
-  margin: 0;
+    margin: 0;
   }
 }
 
@@ -78,12 +73,18 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.file-name-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 .file-name {
-  margin-left: 1.5rem;
   font-size: 1rem;
   color: #666;
-  white-space: nowrap;
+  word-break: break-all;
+  white-space: pre-wrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: calc(100% - 8.75rem);
+  text-align: center;
+  line-height: 1.2;
 }
