@@ -26,7 +26,7 @@ export class ProductDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
-    private http: HttpClient,
+    private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private editingProduct?: Product
   ) {
     this.productForm = this.fb.group({
@@ -52,7 +52,7 @@ export class ProductDialogComponent implements OnInit {
       });
       if (this.editingProduct.image) {
         this.imageUrl = `http://localhost:8080/api/uploadsLoadImage/${this.editingProduct.image}`;
-        this.imageName = this.extractFileName(this.editingProduct.image); // Extraer y asignar el nombre de la imagen
+        this.imageName = this.extractFileName(this.editingProduct.image);
       }
     }
   }
@@ -105,7 +105,7 @@ export class ProductDialogComponent implements OnInit {
   updateImageUrl(): void {
     if (this.selectedFile) {
       this.imageUrl = URL.createObjectURL(this.selectedFile);
-      this.imageName = this.selectedFile.name; // Actualizar el nombre de la imagen seleccionada
+      this.imageName = this.selectedFile.name;
     } else {
       this.imageUrl = null;
       this.imageName = null;
@@ -126,14 +126,12 @@ export class ProductDialogComponent implements OnInit {
     } else {
       const productData = this.productForm.value;
       if (this.selectedFile) {
-        // Si se selecciona un archivo, carga la imagen al servidor y luego crea/actualiza el producto
         this.uploadFile(this.selectedFile).then(({ imageUrl, filename }) => {
           productData.image = imageUrl;
-          productData.imageName = filename; // Agrega el nombre del archivo al objeto de datos del producto
+          productData.imageName = filename;
           this.sendProductData(productData);
         });
       } else {
-        // Si no se selecciona ningún archivo, crea/actualiza el producto sin la imagen
         this.sendProductData(productData);
       }
     }
@@ -143,16 +141,36 @@ export class ProductDialogComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', file, file.name);
     const uploadUrl = 'http://localhost:8080/api/uploadsLoadImage';
-    const headers = new HttpHeaders();
-    const response = await firstValueFrom(this.http.post<any>(uploadUrl, formData, { headers }));
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
+    const response = await firstValueFrom(this.httpClient.post<any>(uploadUrl, formData, { headers }));
     return { imageUrl: `http://localhost:8080/api/uploadsLoadImage/${response.filename}`, filename: response.filename };
   }
 
   sendProductData(productData: any): void {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(productData));
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile, this.selectedFile.name);
+    }
+
     if (this.editingProduct) {
-      // Lógica para actualizar el producto
+      this.productService.updateProducts(this.editingProduct.id, formData).subscribe({
+        next: () => {
+          console.log('Product updated successfully');
+        },
+        error: (err) => {
+          console.error('Failed to update product', err);
+        },
+      });
     } else {
-      // Lógica para crear un nuevo producto
+      this.productService.addProducts(formData).subscribe({
+        next: () => {
+          console.log('Product created successfully');
+        },
+        error: (err) => {
+          console.error('Failed to create product', err);
+        },
+      });
     }
   }
 
