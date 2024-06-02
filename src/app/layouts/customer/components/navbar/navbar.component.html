@@ -53,19 +53,6 @@
       </a>
     </div>
   </mat-nav-list>
-  <div class="search-bar">
-    <form [formGroup]="categorySearchForm" class="category-form-search">
-      <mat-form-field class="field">
-        <input
-          formControlName="category"
-          matInput
-          placeholder="Ingresa tu categoría aquí"
-          value=""
-        />
-      </mat-form-field>
-      <button (click)="onCreate()" mat-flat-button type="submit">Buscar</button>
-    </form>
-  </div>
   <div class="nav-icons">
     <div>
       <button mat-icon-button type="button">
@@ -73,7 +60,7 @@
       </button>
     </div>
     <div>
-      <button mat-icon-button type="button">
+      <button mat-icon-button type="button" (click)="onUserIcon()">
         <mat-icon>person</mat-icon>
       </button>
     </div>

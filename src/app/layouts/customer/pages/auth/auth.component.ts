@@ -22,8 +22,11 @@ export class AuthComponent {
     if(this.authForm.invalid){
       this.authForm.markAllAsTouched();
     }else{
-      console.log(this.authForm.value);
-      this.authService.logIn(this.authForm.value).subscribe();
+      this.authService.logIn(this.authForm.value).subscribe({
+        error: () => {
+          console.log("No se pudo iniciar sesión.");
+        }
+      })
     }
   }
 }
