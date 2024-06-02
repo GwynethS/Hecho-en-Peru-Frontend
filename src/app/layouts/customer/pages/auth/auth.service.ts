@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { UserLogin } from './models/user-login';
 import { AuthAction } from '../../../../core/store/auth/auth.actions';
 import { environment } from '../../../../../environments/environment';
+import { LoginResponse } from './models/login-response';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 interface LoginData {
   email: null | string;
@@ -16,31 +17,32 @@ interface LoginData {
   providedIn: 'root',
 })
 export class AuthService {
-  authUser: UserLogin | null = null;
+  authUser: LoginResponse | null = null;
 
   constructor(
     private router: Router,
     private httpClient: HttpClient,
     private store: Store,
+    private jwtHelper: JwtHelperService
   ) {}
 
-  private setAuthUser(user: UserLogin): void {
+  private setAuthUser(user: LoginResponse): void {
     this.store.dispatch(AuthAction.setAuthUser({ user }));
-    localStorage.setItem('token', user.token);
+    sessionStorage.setItem('userData', JSON.stringify(user));
   }
 
-  logIn(data: LoginData): Observable<any> {
+  logIn(data: LoginData): Observable<LoginResponse> {
     return this.httpClient
-      .post<any>(
-        `${environment.apiURL}auth/login`, data
-      )
+      .post<LoginResponse>(`${environment.apiURL}auth/login`, data)
       .pipe(
         tap((response) => {
           if (response) {
-            console.log(response);
-            this.router.navigate(['shop']);
-          } else {
-            console.log("No se pudo iniciar sesión.")
+            this.setAuthUser(response);
+            if (response.user.roles[0].nameRole === 'ADMIN') {
+              this.router.navigate(['admin']);
+            } else {
+              this.router.navigate(['shop']);
+            }
           }
         })
       );
@@ -48,27 +50,29 @@ export class AuthService {
 
   logOut(): void {
     this.store.dispatch(AuthAction.logout());
-    this.router.navigate(['auth', 'login']);
-    localStorage.removeItem('token');
+    this.router.navigate(['shop', 'auth']);
+    sessionStorage.removeItem('userData');
   }
 
   verifyToken() {
-    return this.httpClient
-      .get<UserLogin[]>(
-        `${environment.apiURL}/users?token=${localStorage.getItem('token')}`
-      )
-      .pipe(
-        map((response) => {
-          if (response.length) {
-            this.setAuthUser(response[0]);
-            return true;
-          } else {
-            this.store.dispatch(AuthAction.logout());
-            localStorage.removeItem('token');
-            return false;
-          }
-        }),
-        catchError(() => of(false))
-      );
+    const userDataString = sessionStorage.getItem('userData');
+
+    if (userDataString) {
+      const userData: LoginResponse = JSON.parse(userDataString);
+
+      if (!this.jwtHelper.isTokenExpired(userData.jwtResponse.jwttoken)) {
+        this.setAuthUser(userData);
+        console.log("token válido");
+        return true;
+      } else {
+        this.store.dispatch(AuthAction.logout());
+        sessionStorage.removeItem('userData');
+        console.log("token inválido");
+        return false;
+      }
+    } else {
+      console.log("sin token");
+      return false;
+    }
   }
 }
