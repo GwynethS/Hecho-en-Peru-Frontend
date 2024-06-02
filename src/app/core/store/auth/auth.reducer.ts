@@ -1,11 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { AuthAction } from "./auth.actions";
-import { UserLogin } from "../../../layouts/customer/pages/auth/models/user-login";
+import { LoginResponse } from "../../../layouts/customer/pages/auth/models/login-response";
 
 export const authFeatureKey = 'auth';
 
 export interface State {
-  user: UserLogin | null;
+  user: LoginResponse | null;
 }
 
 export const initialState: State = {
