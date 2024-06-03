@@ -89,12 +89,13 @@
 <section class="comments-section">
   <div class="comments-section-header">
     <h2>Comentarios</h2>
-    <p>{{comments.length}} comentarios</p>
+    <p>{{length}} comentarios</p>
   </div>
   <div class="new-comment">
     <div class="user-information">
       <i class="fa-solid fa-user"></i>
-      <h4>Jean Sánchez</h4>
+      <h4 *ngIf="(authUser$ | async)">{{(authUser$ | async)?.user?.name + " " + (authUser$ | async)?.user?.lastName}}</h4>
+      <h4 *ngIf="!(authUser$ | async)">Usuario</h4>
     </div>
     <form [formGroup]="commentForm" class="comment-form">
       <mat-form-field>

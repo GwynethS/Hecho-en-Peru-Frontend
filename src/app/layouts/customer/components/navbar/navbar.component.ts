@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginResponse } from '../../pages/auth/models/login-response';
-import { Observable, take } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { Router } from '@angular/router';
 import { AuthService } from '../../pages/auth/auth.service';
 
@@ -17,7 +13,6 @@ export class NavbarComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store,
     private router: Router,
     private authService: AuthService
   ) {
