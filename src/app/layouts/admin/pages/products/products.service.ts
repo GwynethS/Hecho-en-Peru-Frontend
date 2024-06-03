@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from './models/product';
 import { Observable, catchError, mergeMap, of } from 'rxjs';
@@ -19,11 +19,10 @@ export class ProductsService {
   }
 
   getProductsByPageUser(offSet: number, limit: number) {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeUser?offset=${offSet}&limit=${limit}`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeUser?offset=${offSet}&limit=${limit}`);
   }
 
-  getBestSellingProductsUser(){
+  getBestSellingProductsUser() {
     return this.httpClient.get<Product[]>(`${environment.apiURL}listBestSellingProducts`);
   }
 
@@ -40,26 +39,27 @@ export class ProductsService {
   }
 
   deleteProductsByID(id: string): Observable<any> {
-    return this.httpClient
-      .delete(`${environment.apiURL}productDelete/${id}`, {
-        responseType: 'text',
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Failed to delete product', error);
-          return of([]);
-        })
-      );
+    return this.httpClient.delete(`${environment.apiURL}productDelete/${id}`, { responseType: 'text' })
+      .pipe(catchError((error) => {console.error('Failed to delete product', error); return of([])}));
   }
 
-  addProducts(data: Product) {
-    return this.httpClient.post<Product>(`${environment.apiURL}product`, data)
+  addProducts(data: any, file?: File) {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data));
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+    return this.httpClient.post<Product>(`${environment.apiURL}product`, formData)
       .pipe(mergeMap(() => this.getProducts()));
   }
 
-  updateProducts(id: string, data: Product): Observable<Product[]> {
-    return this.httpClient
-      .put<Product>(`${environment.apiURL}product/${id}`, data)
+  updateProducts(id: string, data: any, file?: File) {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data));
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+    return this.httpClient.put<Product>(`${environment.apiURL}product/${id}`, formData)
       .pipe(mergeMap(() => this.getProducts()));
   }
 
@@ -67,16 +67,13 @@ export class ProductsService {
     return this.httpClient.get<Category[]>(`${environment.apiURL}categories`);
   }
 
-  addCategories(data: Category) {
-    return this.httpClient
-      .post<Category>(`${environment.apiURL}category`, data)
+  addCategories(data: Category, file?: File) {
+    return this.httpClient.post<Category>(`${environment.apiURL}category`, data)
       .pipe(mergeMap(() => this.getCategories()));
   }
 
   getLocalCraftsmen() {
-    return this.httpClient.get<LocalCraftsman[]>(
-      `${environment.apiURL}localCraftsmen`
-    );
+    return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmen`);
   }
 
   getRegions() {

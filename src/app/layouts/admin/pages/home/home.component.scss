@@ -1,0 +1,33 @@
+.div-add-container {
+  margin: 0.4rem;
+  padding: 1.9rem;
+  background-color: #f5f5f5;
+  .centered-header {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+  }
+  .container-total {
+    margin-top: 1rem;
+    .graphic-container {
+      border: solid #f5f5f5 0.6rem;
+      background-color: #ffffff;
+      padding: 1.5rem;
+      text-align: center;
+      span {
+        font-weight: 400;
+      }
+      canvas {
+        margin-top: 0.8rem;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+        background-color: #f5f5f5;
+      }
+      #productsByRegionChart {
+        height: calc(100vh - 30rem);
+      }
+    }
+  }
+}
