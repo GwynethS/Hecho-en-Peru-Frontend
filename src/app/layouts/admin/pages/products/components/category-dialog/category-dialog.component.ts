@@ -27,7 +27,7 @@ export class CategoryDialogComponent {
         id: this.categoryForm.value.categoryId,
         name: this.categoryForm.value.name
       };
-      this.matDialogRef.close(newCategory);
+      this.matDialogRef.close(this.categoryForm.value);
     }
   }
 

@@ -171,7 +171,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onCreateCategory(): void {
     const subscription = this.matDialog
-      .open(CategoryDialogComponent)
+      .open(CategoryDialogComponent, {
+        data: this.categories,
+      })
       .afterClosed()
       .subscribe({
         next: (categoryData) => {
