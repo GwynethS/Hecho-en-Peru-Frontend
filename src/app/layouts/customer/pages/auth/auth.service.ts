@@ -88,4 +88,8 @@ export class AuthService {
     const user = this.authUserSubject.getValue();
     return user ? user.jwtResponse.jwttoken : null;
   }
+
+  getAuthUser(): LoginResponse | null {
+    return this.authUserSubject.getValue();
+  }
 }

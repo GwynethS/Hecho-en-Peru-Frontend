@@ -5,6 +5,7 @@ import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { Router } from '@angular/router';
+import { AuthService } from '../../pages/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,12 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   categorySearchForm: FormGroup;
-  authUser$: Observable<LoginResponse | null>;
 
   constructor(
     private fb: FormBuilder,
     private store: Store,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.categorySearchForm = this.fb.group({
       category: this.fb.control('', [
@@ -26,20 +27,16 @@ export class NavbarComponent {
         Validators.pattern('[a-zA-Z]*'),
       ]),
     });
-    this.authUser$ = this.store.select(selectAuthUser);
   }
 
   onUserIcon() {
-    this.authUser$.pipe(take(1)).subscribe({
-      next: (data) => {
-        if (data) {
-          if (data.user.roles[0].nameRole === 'USER') {
-            this.router.navigate(['/shop/user/profile']);
-          }
-        } else {
-          this.router.navigate(['/shop/auth']);
-        }
-      },
-    });
+    const user = this.authService.getAuthUser();
+    if (user) {
+      if (user.user.roles[0].nameRole === 'USER') {
+        this.router.navigate(['/shop/user/profile']);
+      }
+    } else {
+      this.router.navigate(['/shop/auth']);
+    }
   }
 }
