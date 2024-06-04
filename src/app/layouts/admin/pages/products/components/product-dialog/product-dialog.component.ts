@@ -174,7 +174,7 @@ export class ProductDialogComponent implements OnInit {
     }
   }
 
-  onClearInputs(): void {
+  onCancel(): void {
     this.productForm.reset();
     this.selectedFile = null;
     this.imageUrl = null;

@@ -67,7 +67,7 @@ export class ProductsService {
     return this.httpClient.get<Category[]>(`${environment.apiURL}categories`);
   }
 
-  addCategories(data: Category, file?: File) {
+  addCategories(data: Category) {
     return this.httpClient.post<Category>(`${environment.apiURL}category`, data)
       .pipe(mergeMap(() => this.getCategories()));
   }

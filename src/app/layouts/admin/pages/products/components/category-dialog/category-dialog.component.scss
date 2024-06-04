@@ -1,5 +1,6 @@
-.full-width {
-  width: 100%;
+.modal-container {
+  padding: 1rem;
+  width: 44rem;
 }
 
 .category-table {
@@ -11,8 +12,8 @@ table {
   width: 100%;
 }
 
-.modal-container {
-  padding: 1rem;
+.full-width {
+  width: 100%;
 }
 
 .modal-container {
@@ -21,12 +22,37 @@ table {
   }
 }
 
+.id-container {
+  width: 1rem;
+}
+
+.name-container {
+  width: 3.2rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  button {
+    width: 10rem
+  }
+}
+
 .btn-save-color {
   background-color: #e9806e;
   color: white;
 }
 
-.btn-clean-color {
+.btn-cancel-color {
   background-color: #242423;
   color: white;
 }

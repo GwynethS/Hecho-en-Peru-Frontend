@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js/auto';
 import { HomeService } from './home.service';
+import { Chart } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   constructor(private homeService: HomeService) {}
@@ -18,110 +21,174 @@ export class HomeComponent implements OnInit {
   }
 
   loadProductsByRatingChart(): void {
-    this.homeService.getProductsByAverageRating().subscribe(products => {
-      const labels = products.map(product => product.name);
-      const data = products.map(product => product.averageRating);
+    this.homeService.getProductsByAverageRating().subscribe((products) => {
+      const labels = products.map((product) => product.rangeAverageRating);
+      const data = products.map((product) => product.quantity);
       new Chart('productsByRatingChart', {
         type: 'bar',
         data: {
           labels: labels,
-          datasets: [{
-            label: 'Rating promedio',
-            data: data,
-            backgroundColor: '#EDBA90',
-            borderWidth: 1
-          }]
+          datasets: [
+            {
+              data: data,
+              backgroundColor: [
+                '#EEB8B8',
+                '#FAE2A3',
+                '#F0CAAA',
+                '#CDE9B2',
+                '#DBCAED',
+                '#C2E4F0',
+                '#D9D9D9',
+              ],
+              borderWidth: 1,
+            },
+          ],
         },
         options: {
-          indexAxis: 'y',
           scales: {
             x: {
-              beginAtZero: true
+              beginAtZero: true,
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 5,
+              },
             }
-          }
-        }
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
       });
     });
   }
 
   loadProductsByCategoryChart(): void {
-    this.homeService.getProductsByCategory().subscribe(products => {
-      const categories = [...new Set(products.map(product => product.category.name))];
-      const data = categories.map(category => {
-        return products.filter(product => product.category.name === category).length;
-      });
+    this.homeService.getProductsQuantityByCategory().subscribe((products) => {
+      const categories = products.map((product) => product.categoryName);
+      const data = products.map((product) => product.quantityProductsSold);
       new Chart('productsByCategoryChart', {
         type: 'bar',
         data: {
           labels: categories,
-          datasets: [{
-            label: 'Cantidad de productos',
-            data: data,
-            backgroundColor: '#FBDB87',
-            borderWidth: 1
-          }]
+          datasets: [
+            {
+              data: data,
+              backgroundColor: [
+                '#EEB8B8',
+                '#FAE2A3',
+                '#F0CAAA',
+                '#CDE9B2',
+                '#DBCAED',
+                '#C2E4F0',
+                '#D9D9D9',
+              ],
+              borderWidth: 1,
+            },
+          ],
         },
         options: {
+          indexAxis: 'y',
           scales: {
+            x: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+              },
+            },
             y: {
-              beginAtZero: true
-            }
-          }
-        }
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
       });
     });
   }
 
   loadCommentsByRegionChart(): void {
-    this.homeService.getCommentsQuantityByRegion().subscribe(comments => {
-      const labels = comments.map(comment => comment.region.name);
-      const data = comments.map(comment => comment.quantity);
+    this.homeService.getCommentsQuantityByRegion().subscribe((comments) => {
+      const labels = comments.map((comment) => comment.regionName);
+      const data = comments.map((comment) => comment.percentage);
       new Chart('commentsByRegionChart', {
         type: 'doughnut',
         data: {
           labels: labels,
-          datasets: [{
-            label: 'Cantidad de comentarios',
-            data: data,
-            backgroundColor: [
-              '#E09898',
-              '#DBCAED',
-              '#EDBA90',
-              '#FBDB87',
-              '#BFE49A',
-              '#C2E4F0'
-            ],
-            borderWidth: 1
-          }]
-        }
+          datasets: [
+            {
+              data: data,
+              backgroundColor: [
+                '#EEB8B8',
+                '#FAE2A3',
+                '#F0CAAA',
+                '#CDE9B2',
+                '#DBCAED',
+                '#C2E4F0',
+                '#D9D9D9',
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            datalabels: {
+              formatter: (value) => {
+                return value.toFixed(2) + '%';
+              },
+            },
+          },
+        },
       });
     });
   }
 
   loadProductsByRegionChart(): void {
-    this.homeService.getProductsByRegion().subscribe(products => {
-      const regions = [...new Set(products.map(product => product.localCraftsman.region.name))];
-      const data = regions.map(region => {
-        return products.filter(product => product.localCraftsman.region.name === region).length;
-      });
+    this.homeService.getProductsQuantityByRegion().subscribe((products) => {
+      const regions = products.map((product) => product.regionName);
+      const data = products.map((product) => product.quantityProductsSold);
       new Chart('productsByRegionChart', {
         type: 'bar',
         data: {
           labels: regions,
-          datasets: [{
-            label: 'Cantidad de productos',
-            data: data,
-            backgroundColor: '#BFE49A',
-            borderWidth: 1
-          }]
+          datasets: [
+            {
+              data: data,
+              backgroundColor: [
+                '#EEB8B8',
+                '#FAE2A3',
+                '#F0CAAA',
+                '#CDE9B2',
+                '#DBCAED',
+                '#C2E4F0',
+                '#D9D9D9',
+              ],
+              borderWidth: 1,
+            },
+          ],
         },
         options: {
           scales: {
             y: {
-              beginAtZero: true
-            }
-          }
-        }
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+        },
       });
     });
   }

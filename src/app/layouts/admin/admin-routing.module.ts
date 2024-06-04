@@ -38,7 +38,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./pages/regions/regions.module').then((m) => m.RegionsModule),
       },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
     ],
   },
 ];

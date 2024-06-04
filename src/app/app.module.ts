@@ -11,10 +11,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { appReducers } from './core/store/index';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import { TouristSiteDialogComponent } from './layouts/admin/pages/regions/pages/tourist-sites/components/tourist-site-dialog/tourist-site-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TouristSiteDialogComponent
   ],
   imports: [
     BrowserModule,

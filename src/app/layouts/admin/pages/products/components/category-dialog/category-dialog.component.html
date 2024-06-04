@@ -7,31 +7,34 @@
   </h1>
   <div mat-dialog-content>
     <form [formGroup]="categoryForm" class="grid formgrid">
-      <div class="category-table col-6">
+      <div
+        class="category-table col-6"
+        *ngIf="data?.categories?.length; else noCategories"
+      >
         <table
           mat-table
           [dataSource]="data.categories"
           class="mat-elevation-z8"
         >
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <th mat-header-cell *matHeaderCellDef class="id-container">ID</th>
             <td mat-cell *matCellDef="let category">
               {{ category.id }}
             </td>
           </ng-container>
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <th mat-header-cell *matHeaderCellDef class="name-container">Nombre</th>
             <td mat-cell *matCellDef="let category">{{ category.name }}</td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: ['id', 'name']"
-          ></tr>
+          <tr mat-row *matRowDef="let row; columns: ['id', 'name']"></tr>
         </table>
       </div>
-      <div class="col-6 py-2">
-        <mat-form-field class="full-width">
+      <ng-template #noCategories>
+        <p>No hay categorías disponibles.</p>
+      </ng-template>
+      <div class="form-input col-6 py-2 px-3">
+        <mat-form-field class="w-full">
           <mat-label>Nombre</mat-label>
           <input
             matInput
@@ -39,11 +42,23 @@
             placeholder="Ingrese el nombre de la categoría"
           />
         </mat-form-field>
+        <div mat-dialog-actions class="button-container">
+            <button
+              mat-raised-button
+              (click)="onSave()"
+              class="btn-save-color"
+            >
+              Guardar
+            </button>
+            <button
+              mat-raised-button
+              (click)="onCancel()"
+              class="btn-cancel-color"
+            >
+              Cancelar
+            </button>
+        </div>
       </div>
     </form>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onConfirm()">Confirmar</button>
-    <button mat-button (click)="onCancel()">Cancelar</button>
   </div>
 </div>

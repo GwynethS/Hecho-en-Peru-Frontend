@@ -15,11 +15,15 @@
   </div>
   <div class="position-center">
     <div class="name-admin-custom">
-      <span>Jean Carlos Achamizo</span>
+      <span *ngIf="(authUser$ | async) as authUser">
+        {{ authUser.user.name + ' ' + authUser.user.lastName }}
+      </span>
       <i class="fa-regular fa-user space-left-icon"></i>
     </div>
     <div class="space-left-btn">
-      <button mat-flat-button type="submit">Cerrar sesión</button>
+      <button mat-flat-button type="submit" (click)="onLogOut()">
+        Cerrar sesión
+      </button>
     </div>
   </div>
 </mat-toolbar>

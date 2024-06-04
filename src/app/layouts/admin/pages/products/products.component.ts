@@ -22,8 +22,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   productSearchForm: FormGroup;
   products: Product[] = [];
-  categories: Category[] = [];
   dataSource = new MatTableDataSource<Product>();
+
+  categories: Category[] = [];
+  dataSourceCategory = new MatTableDataSource<Category>();
+
   searchAttempted = false;
 
   subscriptions: Subscription[] = [];
@@ -46,6 +49,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadProductsPage();
+    this.loadAllCategories();
   }
 
   ngOnDestroy(): void {
@@ -171,7 +175,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onCreateCategory(): void {
     const subscription = this.matDialog
-      .open(CategoryDialogComponent)
+      .open(CategoryDialogComponent, {
+        data: { categories: this.categories }
+      })
       .afterClosed()
       .subscribe({
         next: (categoryData) => {
@@ -193,10 +199,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
   loadAllCategories(): void {
     const subscription = this.productsService.getCategories().subscribe({
       next: (categories) => {
-        this.categories = categories;
+        this.categories = categories || [];
+        this.dataSourceCategory.data = this.categories;
       },
       error: (err) => {
         this.categories = [];
+        this.dataSourceCategory.data = this.categories;
         console.error('Failed to load categories', err);
       },
     });

@@ -3,6 +3,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
 import { Product } from '../products/models/product';
 import { Observable } from 'rxjs';
+import { QuantityProductsByCategory } from './models/quantityProductsByCategory';
+import { QuantityProductsByRegion } from './models/quantityProductsByRegion';
+import { QuantityProductsByAverageRating } from './models/QuantityProductsByAverageRating';
+import { PercentageCommentsByRegion } from './models/percentageCommentsByRegion';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +14,19 @@ import { Observable } from 'rxjs';
 export class HomeService {
   constructor(private httpClient: HttpClient) { }
 
-  getProductsByAverageRating(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByAverageRating`);
+  getProductsByAverageRating(): Observable<QuantityProductsByAverageRating[]> {
+    return this.httpClient.get<QuantityProductsByAverageRating[]>(`${environment.apiURL}productsByAverageRating`);
   }
 
-  getProductsByCategory(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByCategory`);
+  getProductsQuantityByCategory(): Observable<QuantityProductsByCategory[]> {
+    return this.httpClient.get<QuantityProductsByCategory[]>(`${environment.apiURL}productsQuantityByCategory`);
   }
 
-  getCommentsQuantityByRegion(): Observable<{ region: { name: string }, quantity: number }[]> {
-    return this.httpClient.get<{ region: { name: string }, quantity: number }[]>(`${environment.apiURL}commentsQuantityByRegion`);
+  getCommentsQuantityByRegion(): Observable<PercentageCommentsByRegion[]> {
+    return this.httpClient.get<PercentageCommentsByRegion[]>(`${environment.apiURL}commentsQuantityByRegion`);
   }
 
-  getProductsByRegion(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByRegion`);
+  getProductsQuantityByRegion(): Observable<QuantityProductsByRegion[]> {
+    return this.httpClient.get<QuantityProductsByRegion[]>(`${environment.apiURL}productsQuantityByRegion`);
   }
 }

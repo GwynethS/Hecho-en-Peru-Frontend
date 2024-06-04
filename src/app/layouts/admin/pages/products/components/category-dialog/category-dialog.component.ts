@@ -16,18 +16,18 @@ export class CategoryDialogComponent {
     private matDialogRef: MatDialogRef<CategoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { categories: Category[] }
   ) {
+    this.data = this.data || { categories: [] };
     this.categoryForm = this.fb.group({
-      name: ['', Validators.required]
+      name: this.fb.control('', [
+        Validators.required,
+        Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*'),
+      ]),
     });
   }
 
-  onConfirm(): void {
+  onSave(): void {
     if (this.categoryForm.valid) {
-      const newCategory: Category = {
-        id: this.categoryForm.value.categoryId,
-        name: this.categoryForm.value.name
-      };
-      this.matDialogRef.close(newCategory);
+      this.matDialogRef.close(this.categoryForm.value);
     }
   }
 

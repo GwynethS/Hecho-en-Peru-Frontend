@@ -1,10 +1,9 @@
 import { Region } from "../../../models/region";
 
 export interface TouristSite {
-    id: string;
-    description: string;
-    image: string;
-    name: string;
-    region: Region;
-  }
-  
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  region: Region;
+}

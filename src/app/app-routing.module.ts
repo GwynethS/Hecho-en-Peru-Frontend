@@ -6,7 +6,7 @@ import { shopGuard } from './core/guards/shop.guard';
 const routes: Routes = [
   {
     path: 'admin',
-    canActivate: [adminGuard],
+    //canActivate: [adminGuard],
     loadChildren: () =>
       import('./layouts/admin/admin.module').then(
         (m) => m.AdminModule

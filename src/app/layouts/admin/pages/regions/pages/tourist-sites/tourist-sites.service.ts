@@ -14,7 +14,7 @@ export class TouristSitesService {
     );
   }
 
-  createTouristSite(touristSite: TouristSite) {
+  addTouristSites(touristSite: TouristSite) {
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(touristSite)], { type: "application/json" }));
     if (touristSite.image) {
