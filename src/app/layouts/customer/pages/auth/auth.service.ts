@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthAction } from '../../../../core/store/auth/auth.actions';
 import { environment } from '../../../../../environments/environment';
 import { LoginResponse } from './models/login-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 
 interface LoginData {
   email: null | string;
@@ -17,18 +18,24 @@ interface LoginData {
   providedIn: 'root',
 })
 export class AuthService {
-  authUser: LoginResponse | null = null;
+  private authUserSubject = new BehaviorSubject<LoginResponse | null>(null);
+  authUser$ = this.authUserSubject.asObservable();
 
   constructor(
     private router: Router,
     private httpClient: HttpClient,
     private store: Store,
     private jwtHelper: JwtHelperService
-  ) {}
+  ) {
+    this.store.select(selectAuthUser).subscribe(user => {
+      this.authUserSubject.next(user);
+    });
+  }
 
   private setAuthUser(user: LoginResponse): void {
     this.store.dispatch(AuthAction.setAuthUser({ user }));
     sessionStorage.setItem('userData', JSON.stringify(user));
+    this.authUserSubject.next(user);
   }
 
   logIn(data: LoginData): Observable<LoginResponse> {
@@ -52,6 +59,7 @@ export class AuthService {
     this.store.dispatch(AuthAction.logout());
     this.router.navigate(['shop', 'auth']);
     sessionStorage.removeItem('userData');
+    this.authUserSubject.next(null);
   }
 
   verifyToken() {
@@ -74,5 +82,14 @@ export class AuthService {
       console.log("sin token");
       return false;
     }
+  }
+
+  getAuthToken(): string | null {
+    const user = this.authUserSubject.getValue();
+    return user ? user.jwtResponse.jwttoken : null;
+  }
+
+  getAuthUser(): LoginResponse | null {
+    return this.authUserSubject.getValue();
   }
 }

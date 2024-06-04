@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductsService } from '../../../../../admin/pages/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Product } from '../../../../../admin/pages/products/models/product';
 import { Comment } from './models/Comment';
 import { CommentsService } from './comments.service';
+import { LoginResponse } from '../../../auth/models/login-response';
+import { AuthService } from '../../../auth/auth.service';
+import { Store } from '@ngrx/store';
+import { selectAuthUser } from '../../../../../../core/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -30,10 +34,17 @@ export class CatalogDetailComponent {
 
   subscriptions: Subscription[] = [];
 
+  authUser$: Observable<LoginResponse | null>;
+
+  @ViewChild(FormGroupDirective)
+  private commentFormDir!: FormGroupDirective;
+
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
     private productsService: ProductsService,
-    private CommentsService: CommentsService,
+    private commentsService: CommentsService,
+    private store: Store,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -41,6 +52,8 @@ export class CatalogDetailComponent {
       textCommentary: this.fb.control('', Validators.required),
       rating: this.fb.control('', Validators.required),
     });
+
+    this.authUser$ = this.store.select(selectAuthUser);
   }
 
   ngOnInit(): void {
@@ -67,22 +80,41 @@ export class CatalogDetailComponent {
     if (this.commentForm.invalid) {
       this.commentForm.markAllAsTouched();
     } else {
-      console.log(this.commentForm.value);
+      const user = this.authService.getAuthUser();
+      if (user) {
+        this.commentsService.addComment(
+          {
+            ...this.commentForm.value,
+            user: user.user,
+            product: this.productSelected,
+          },
+          this.pageIndex,
+          this.pageSize
+        ).subscribe({
+          next: (data) => {
+            this.comments = data;
+            this.length++;
+            this.commentFormDir.resetForm();
+          }
+        })
+      }else{
+        console.log("Necesita iniciar sesión");
+      }
     }
   }
 
   getComments() {
     if (this.productSelected) {
       this.subscriptions.push(
-        this.CommentsService.getCommentsByProduct(
-          this.productSelected.id
-        ).subscribe({
-          next: (comments) => {
-            if (comments) {
-              this.length = comments.length;
-            }
-          },
-        })
+        this.commentsService
+          .getCommentsByProduct(this.productSelected.id)
+          .subscribe({
+            next: (comments) => {
+              if (comments) {
+                this.length = comments.length;
+              }
+            },
+          })
       );
     }
   }
@@ -90,17 +122,19 @@ export class CatalogDetailComponent {
   getCommentsByPage() {
     if (this.productSelected) {
       this.subscriptions.push(
-        this.CommentsService.getCommentsByPageByProduct(
-          this.productSelected.id,
-          this.pageIndex,
-          this.pageSize
-        ).subscribe({
-          next: (comments) => {
-            if (comments) {
-              this.comments = comments;
-            }
-          },
-        })
+        this.commentsService
+          .getCommentsByPageByProduct(
+            this.productSelected.id,
+            this.pageIndex,
+            this.pageSize
+          )
+          .subscribe({
+            next: (comments) => {
+              if (comments) {
+                this.comments = comments;
+              }
+            },
+          })
       );
     }
   }
