@@ -3,7 +3,8 @@
     <a routerLink="home">
       <img
         src="../../../../../assets/img/logo-navbar.png"
-        alt="Logo de Hecho en Perú"/>
+        alt="Logo de Hecho en Perú"
+      />
     </a>
   </div>
 
@@ -54,15 +55,23 @@
     </div>
   </mat-nav-list>
   <div class="nav-icons">
-    <div>
-      <button mat-icon-button type="button">
-        <mat-icon>shopping_cart_add</mat-icon>
-      </button>
-    </div>
-    <div>
-      <button mat-icon-button type="button" (click)="onUserIcon()">
-        <mat-icon>person</mat-icon>
-      </button>
+    <button mat-icon-button type="button">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+    <button mat-icon-button type="button" (click)="onUserIcon()">
+      <mat-icon>person</mat-icon>
+    </button>
+
+    <div class="login-data" *ngIf="authUser$ | async">
+      <p id="login-user">
+        {{
+          (authUser$ | async)?.user?.name +
+            " " +
+            (authUser$ | async)?.user?.lastName
+        }}
+      </p>
+      <p id="logout" (click)="onLogOut()">Cerrar sesión</p>
     </div>
   </div>
 </nav>
