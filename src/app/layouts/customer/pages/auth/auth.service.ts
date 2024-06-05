@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthAction } from '../../../../core/store/auth/auth.actions';
 import { environment } from '../../../../../environments/environment';
