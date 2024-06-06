@@ -37,7 +37,25 @@
       </mat-form-field>
 
       <mat-form-field class="field" appearance="outline">
-        <mat-label>Contraseña</mat-label>
+        <mat-label>Contraseña nueva</mat-label>
+        <input
+          formControlName="newPassword"
+          matInput
+          [type]="revealPassword ? 'text' : 'password'"
+          (keyup)="onChangePasswordInput($event)"
+        />
+        <button
+          (click)="revealPassword = !revealPassword"
+          matSuffix
+          mat-icon-button
+          type="button"
+        >
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field class="field" appearance="outline" *ngIf="changePassword">
+        <mat-label>Contraseña actual</mat-label>
         <input
           formControlName="password"
           matInput
@@ -52,11 +70,11 @@
           <mat-icon>visibility</mat-icon>
         </button>
       </mat-form-field>
-      <button class="btn-submit" (click)="OnSubmit()" mat-flat-button type="submit">
+      <button class="btn-submit" (click)="onSubmit()" mat-flat-button type="submit">
         Guardar cambios
       </button>
     </form>
-    <button class="btn-delete" (click)="OnDelete()" mat-flat-button type="button">
+    <button class="btn-delete" (click)="onDelete()" mat-flat-button type="button">
       Eliminar cuenta
     </button>
   </div>

@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, take } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LoginResponse } from './models/login-response';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { AuthService } from './auth.service';
