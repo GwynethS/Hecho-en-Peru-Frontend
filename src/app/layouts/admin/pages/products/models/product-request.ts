@@ -1,17 +1,13 @@
 import { LocalCraftsman } from "../../local-craftsmen/models/local-craftsman";
 import { Category } from "./category";
 
-export interface Product {
+export interface ProductRequest {
   id: string;
   name: string;
-  category: Category;
-  localCraftsman: LocalCraftsman;
+  category_id: Category;
+  localCraftsman_id: LocalCraftsman;
   price: number;
-  image: string;
-  availability: boolean;
   stock: number;
-  averageRating: number;
   history: string;
   details: string;
-  enabled: boolean;
 }

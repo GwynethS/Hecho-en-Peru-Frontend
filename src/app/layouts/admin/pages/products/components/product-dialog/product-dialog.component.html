@@ -7,7 +7,7 @@
   </h1>
   <div mat-dialog-content>
     <form [formGroup]="productForm" class="grid formgrid" enctype="multipart/form-data">
-      <div class="col-6 py-2">
+      <div class="col-5 py-2">
         <mat-form-field class="w-full">
           <mat-label>Nombre</mat-label>
           <input
@@ -18,7 +18,7 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-3 py-2">
+      <div class="col-2 py-2">
         <mat-form-field class="w-full">
           <mat-label>Precio</mat-label>
           <input
@@ -29,7 +29,7 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-3 py-2">
+      <div class="col-2 py-2">
         <mat-form-field class="w-full">
           <mat-label>Stock</mat-label>
           <input
@@ -44,7 +44,7 @@
         <mat-form-field class="w-full">
           <mat-label>Categoría</mat-label>
           <mat-select
-            formControlName="name_category"
+            formControlName="category_id"
             placeholder="Seleccione la categoría"
           >
             <mat-option
@@ -56,45 +56,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-3 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Región</mat-label>
-          <mat-select
-            formControlName="name_region"
-            placeholder="Seleccione la región"
-          >
-            <mat-option *ngFor="let region of regions" [value]="region.id">
-              {{ region.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-4 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Artesano</mat-label>
-          <mat-select
-            formControlName="fullname_localCraftsman"
-            placeholder="Seleccione el artesano"
-          >
-            <mat-option
-              *ngFor="let localCraftsman of localCraftsmen"
-              [value]="localCraftsman.id"
-            >
-              {{ localCraftsman.fullName }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-2 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Habilitado</mat-label>
-          <mat-select formControlName="enabled" placeholder="Estado">
-            <mat-option value="true">True</mat-option>
-            <mat-option value="false">False</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-6 py-2">
+      <div class="col-5 py-2">
         <div class="w-full file-container">
           <div class="input-file-container">
             <div class="col-4">
@@ -114,8 +76,25 @@
           </div>
         </div>
       </div>
-      <div class="col-6 px-0">
-        <div class="col-12 py-2 w-full">
+      <div class="col-7 py-2">
+        <mat-form-field class="w-full">
+          <mat-label>Artesano</mat-label>
+          <mat-select
+            formControlName="localCraftsman_id"
+            placeholder="Seleccione el artesano"
+          >
+            <mat-option
+              *ngFor="let localCraftsman of localCraftsmen"
+              [value]="localCraftsman.id"
+            >
+              {{ localCraftsman.fullName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-5"></div>
+      <div class="col-7 px-0">
+        <div class="col-12 w-full">
           <mat-form-field class="w-full">
             <mat-label>Detalles</mat-label>
             <textarea
@@ -144,6 +123,7 @@
     <button
       (click)="onCreate()"
       mat-raised-button
+      type="submit"
       class="col-2 btn-save-color"
     >
       Guardar
@@ -152,6 +132,7 @@
       (click)="onCancel()"
       [mat-dialog-close]="false"
       mat-raised-button
+      type="button"
       class="col-2 btn-cancel-color"
     >
       Cancelar

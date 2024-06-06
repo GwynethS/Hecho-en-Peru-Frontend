@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LocalCraftsman } from './models/localCraftsman';
+import { LocalCraftsman } from './models/local-craftsman';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,7 @@ export class LocalCraftsmenService {
   }
 
   getSearchLocalCraftsmanDetailsByID(id: string): Observable<LocalCraftsman> {
+    console.log(id);
     return this.httpClient.get<LocalCraftsman>(`${this.apiURL}localCraftsmanDetail/${id}`);
   }
 

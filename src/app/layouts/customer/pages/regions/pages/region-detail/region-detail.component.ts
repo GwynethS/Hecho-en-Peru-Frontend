@@ -3,7 +3,7 @@ import { Region } from '../../../../../admin/pages/regions/models/region';
 import { Subscription } from 'rxjs';
 import { RegionsService } from '../../../../../admin/pages/regions/regions.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LocalCraftsman } from '../../../../../admin/pages/local-craftsmen/models/localCraftsman';
+import { LocalCraftsman } from '../../../../../admin/pages/local-craftsmen/models/local-craftsman';
 import { LocalCraftsmenService } from '../../../../../admin/pages/local-craftsmen/local-craftsmen.service';
 import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/touristSite';
 import { TouristSitesService } from '../../../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';

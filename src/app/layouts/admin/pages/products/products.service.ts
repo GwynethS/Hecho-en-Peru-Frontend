@@ -4,7 +4,8 @@ import { Product } from './models/product';
 import { Observable, catchError, mergeMap, of } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Category } from './models/category';
-import { LocalCraftsman } from '../local-craftsmen/models/localCraftsman';
+import { LocalCraftsman } from '../local-craftsmen/models/local-craftsman';
+import { ProductRequest } from './models/product-request';
 
 @Injectable()
 export class ProductsService {
@@ -43,40 +44,43 @@ export class ProductsService {
       .pipe(catchError((error) => {console.error('Failed to delete product', error); return of([])}));
   }
 
-  addProducts(data: any, file?: File) {
+  addProducts(data: ProductRequest, file: File): Observable<any> {
     const formData = new FormData();
-    formData.append('data', JSON.stringify(data));
+    formData.append('productDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
       formData.append('file', file, file.name);
     }
-    return this.httpClient.post<Product>(`${environment.apiURL}product`, formData)
-      .pipe(mergeMap(() => this.getProducts()));
+    return this.httpClient.post(`${environment.apiURL}product`, formData)
+      .pipe(
+        catchError((error) => {
+          console.error('Failed to add product', error);
+          return of({ error });
+        })
+      );
   }
 
-  updateProducts(id: string, data: any, file?: File) {
+  updateProducts(id: string, data: any, file?: File): Observable<Product> {
     const formData = new FormData();
     formData.append('data', JSON.stringify(data));
     if (file) {
       formData.append('file', file, file.name);
+    } else {
+      formData.append('file', new Blob(), ''); 
     }
-    return this.httpClient.put<Product>(`${environment.apiURL}product/${id}`, formData)
-      .pipe(mergeMap(() => this.getProducts()));
+    return this.httpClient.put<Product>(`${environment.apiURL}product/${id}`, formData);
   }
 
   getCategories() {
     return this.httpClient.get<Category[]>(`${environment.apiURL}categories`);
   }
 
+  getCategoriesByID(id: string) {
+    console.log(id);
+    return this.httpClient.get<Category>(`${environment.apiURL}category/${id}`);
+  }
+
   addCategories(data: Category) {
     return this.httpClient.post<Category>(`${environment.apiURL}category`, data)
       .pipe(mergeMap(() => this.getCategories()));
-  }
-
-  getLocalCraftsmen() {
-    return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmen`);
-  }
-
-  getRegions() {
-    return this.httpClient.get<any[]>(`${environment.apiURL}regions`);
   }
 }

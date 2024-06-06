@@ -30,12 +30,12 @@ export class ProductTableComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'name',
-    'name_category',
-    'name_region',
-    'fullname_localCraftsman',
+    'category',
+    'localCraftsman',
     'price',
     'stock',
     'averageRating',
+    'availability',
     'enabled',
     'actions',
   ];

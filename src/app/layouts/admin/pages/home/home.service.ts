@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment';
-import { Product } from '../products/models/product';
 import { Observable } from 'rxjs';
-import { QuantityProductsByCategory } from './models/quantityProductsByCategory';
-import { QuantityProductsByRegion } from './models/quantityProductsByRegion';
-import { QuantityProductsByAverageRating } from './models/QuantityProductsByAverageRating';
-import { PercentageCommentsByRegion } from './models/percentageCommentsByRegion';
+import { QuantityProductsByCategory } from './models/quantity-products-by-category';
+import { QuantityProductsByRegion } from './models/quantity-products-by-region';
+import { QuantityProductsByAverageRating } from './models/quantity-products-by-average-rating';
+import { PercentageCommentsByRegion } from './models/percentage-comments-by-region';
 
 @Injectable({
   providedIn: 'root'

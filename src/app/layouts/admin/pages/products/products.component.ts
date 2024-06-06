@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { AlertService } from '../../../../core/services/alert.service';
+import { LocalCraftsmenService } from '../local-craftsmen/local-craftsmen.service';
 
 @Component({
   selector: 'app-products',
@@ -37,7 +38,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private productsService: ProductsService,
     private matDialog: MatDialog,
-    private alertService: AlertService
+    private alertService: AlertService,
   ) {
     this.productSearchForm = this.fb.group({
       id: this.fb.control('', [
@@ -105,21 +106,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const subscription = this.matDialog
       .open(ProductDialogComponent)
       .afterClosed()
-      .subscribe({
-        next: (productData) => {
-          if (productData) {
-            const addSubscription = this.productsService
-              .addProducts(productData)
-              .subscribe({
-                next: () => this.loadProductsPage(),
-                error: (err) => console.error('Failed to add product', err),
-              });
-            this.subscriptions.push(addSubscription);
-          }
-        },
-        error: (err) => console.error('Failed to open product dialog', err),
+      .subscribe(result => {
+        if (result) {
+          const { productData, image } = result;
+          this.productsService.addProducts(productData, image).subscribe(response => {
+            this.loadProductsPage();
+            console.log('Product added successfully', response);
+          }, error => {
+            console.error('Error adding product', error);
+          });
+        }
       });
-    this.subscriptions.push(subscription);
   }
 
   onEditProduct(product: Product): void {

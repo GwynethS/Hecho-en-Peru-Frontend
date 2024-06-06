@@ -18,19 +18,13 @@
             {{ product.name }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="name_category">
+        <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef>Categoría</th>
           <td mat-cell *matCellDef="let product">
             {{ product.category.name }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="name_region">
-          <th mat-header-cell *matHeaderCellDef>Región</th>
-          <td mat-cell *matCellDef="let product">
-            {{ product.localCraftsman.region.name }}
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="fullname_localCraftsman">
+        <ng-container matColumnDef="localCraftsman">
           <th mat-header-cell *matHeaderCellDef>Artesano</th>
           <td mat-cell *matCellDef="let product">
             {{ product.localCraftsman.fullName }}
@@ -52,6 +46,12 @@
           <th mat-header-cell *matHeaderCellDef>Rating promedio</th>
           <td mat-cell *matCellDef="let product">
             {{ product.averageRating | number : "1.1-1" }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="availability">
+          <th mat-header-cell *matHeaderCellDef>Disponibilidad</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.availability }}
           </td>
         </ng-container>
         <ng-container matColumnDef="enabled">

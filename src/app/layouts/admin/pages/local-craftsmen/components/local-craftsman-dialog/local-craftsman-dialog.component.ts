@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LocalCraftsman } from '../../models/localCraftsman';
+import { LocalCraftsman } from '../../models/local-craftsman';
 import { LocalCraftsmenService } from '../../local-craftsmen.service';
 import { Region } from '../../models/region';
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LocalCraftsman } from './models/localCraftsman';
+import { LocalCraftsman } from './models/local-craftsman';
 import { Subscription } from 'rxjs';
 import { LocalCraftsmenService } from './local-craftsmen.service';
 import { MatDialog } from '@angular/material/dialog';
