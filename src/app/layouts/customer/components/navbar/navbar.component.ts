@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../pages/auth/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LoginResponse } from '../../pages/auth/models/login-response';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
+import { MatDialog } from '@angular/material/dialog';
+import { ShoppingCartComponent } from '../shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,13 @@ import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 })
 export class NavbarComponent {
   authUser$: Observable<LoginResponse | null>;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private store: Store,
+    public dialog: MatDialog,
   ) {
     this.authUser$ = this.store.select(selectAuthUser);
   }
@@ -32,6 +35,25 @@ export class NavbarComponent {
     } else {
       this.router.navigate(['/shop/auth']);
     }
+  }
+
+  onShoppingCart(){
+    this.subscriptions.push(
+      this.dialog
+        .open(ShoppingCartComponent)
+        .afterClosed()
+        .subscribe({
+          // next: (courseData) => {
+          //   if (courseData) {
+          //     this.courseService.createCourse(courseData).subscribe({
+          //       next: (courses) => {
+          //         this.courses = courses;
+          //       },
+          //     });
+          //   }
+          // },
+        })
+    );
   }
 
   onLogOut(){
