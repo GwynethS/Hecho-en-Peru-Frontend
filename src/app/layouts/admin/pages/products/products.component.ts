@@ -120,6 +120,27 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onEditProduct(product: Product): void {
+    const subscription = this.matDialog
+            .open(ProductDialogComponent, { data: product })
+            .afterClosed()
+            .subscribe({
+              next: (result) => {
+                if (result) {
+                  const { id, productData, image } = result;
+                  this.productsService.updateProducts(productData, image).subscribe(response => {
+                    this.loadProductsPage();
+                    console.log('Product updated successfully', response);
+                  }, error => {
+                    console.error('Error updating product', error);
+                  });
+                }
+              },
+              error: (err) =>
+                console.error('Failed to open product dialog', err),
+            });
+  }
+
+/*   onEditProduct(product: Product): void {
     const subscription = this.productsService
       .getProductDetailsByID(product.id)
       .subscribe({
@@ -153,7 +174,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       });
     this.subscriptions.push(subscription);
   }
-
+ */
   onDeleteProduct(id: string): void {
     this.alertService
       .showConfirmDeleteAction('este producto')

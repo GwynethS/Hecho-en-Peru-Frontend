@@ -1,10 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from './models/product';
 import { Observable, catchError, mergeMap, of } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Category } from './models/category';
-import { LocalCraftsman } from '../local-craftsmen/models/local-craftsman';
 import { ProductRequest } from './models/product-request';
 
 @Injectable()
@@ -59,15 +58,20 @@ export class ProductsService {
       );
   }
 
-  updateProducts(id: string, data: any, file?: File): Observable<Product> {
+  updateProducts(data: ProductRequest, file: File): Observable<any> {
+    console.log(data);
     const formData = new FormData();
-    formData.append('data', JSON.stringify(data));
+    formData.append('productDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
       formData.append('file', file, file.name);
-    } else {
-      formData.append('file', new Blob(), ''); 
     }
-    return this.httpClient.put<Product>(`${environment.apiURL}product/${id}`, formData);
+    return this.httpClient.put(`${environment.apiURL}product/${data.id}`, formData)
+      .pipe(
+        catchError((error) => {
+          console.error('Failed to update product', error);
+          return of({ error });
+        })
+      );
   }
 
   getCategories() {

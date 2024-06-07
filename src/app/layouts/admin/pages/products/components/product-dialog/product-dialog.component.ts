@@ -9,6 +9,7 @@ import { Region } from '../../models/region';
 import { ProductsService } from '../../products.service';
 import { firstValueFrom, forkJoin } from 'rxjs';
 import { LocalCraftsmenService } from '../../../local-craftsmen/local-craftsmen.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-dialog',
@@ -36,8 +37,8 @@ export class ProductDialogComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
       category_id: ['', Validators.required],
       localCraftsman_id: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
-      stock: ['', [Validators.required, Validators.min(0)]],
+      price: ['', [Validators.required, Validators.min(1)]],
+      stock: ['', [Validators.required, Validators.min(1)]],
       history: ['', Validators.required],
       details: ['', Validators.required],
     });
@@ -49,7 +50,7 @@ export class ProductDialogComponent implements OnInit {
         enabled: this.editingProduct.enabled ? 'true' : 'false',
       });
       if (this.editingProduct.image) {
-        this.imageUrl = `http://localhost:8080/api/uploadsLoadImage/${this.editingProduct.image}`;
+        this.imageUrl = `${environment.apiURL}uploadsLoadImage/${this.editingProduct.image}`;
         this.imageName = this.extractFileName(this.editingProduct.image);
       }
     }
@@ -135,10 +136,10 @@ export class ProductDialogComponent implements OnInit {
   async uploadFile(file: File): Promise<{ imageUrl: string; filename: string }> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    const uploadUrl = 'http://localhost:8080/api/uploadsLoadImage';
+    const uploadUrl = `${environment.apiURL}uploadsLoadImage`;
     const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
     const response = await firstValueFrom(this.httpClient.post<any>(uploadUrl, formData, { headers }));
-    return { imageUrl: `http://localhost:8080/api/uploadsLoadImage/${response.filename}`, filename: response.filename };
+    return { imageUrl: `${environment.apiURL}uploadsLoadImage/${response.filename}`, filename: response.filename };
   }
 
   onCancel(): void {
