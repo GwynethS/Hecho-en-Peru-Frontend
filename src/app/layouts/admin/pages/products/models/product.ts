@@ -1,6 +1,5 @@
 import { LocalCraftsman } from "../../local-craftsmen/models/localCraftsman";
 import { Category } from "./category";
-import { Region } from '../../regions/models/region';
 
 export interface Product {
   id: string;

@@ -21,7 +21,7 @@ export class NavbarComponent {
     private router: Router,
     private authService: AuthService,
     private store: Store,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.authUser$ = this.store.select(selectAuthUser);
   }
@@ -37,26 +37,11 @@ export class NavbarComponent {
     }
   }
 
-  onShoppingCart(){
-    this.subscriptions.push(
-      this.dialog
-        .open(ShoppingCartComponent)
-        .afterClosed()
-        .subscribe({
-          // next: (courseData) => {
-          //   if (courseData) {
-          //     this.courseService.createCourse(courseData).subscribe({
-          //       next: (courses) => {
-          //         this.courses = courses;
-          //       },
-          //     });
-          //   }
-          // },
-        })
-    );
+  onShoppingCart() {
+    this.dialog.open(ShoppingCartComponent);
   }
 
-  onLogOut(){
+  onLogOut() {
     this.authService.logOut();
   }
 }

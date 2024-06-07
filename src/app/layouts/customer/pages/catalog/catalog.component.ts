@@ -7,6 +7,11 @@ import { Category } from '../../../admin/pages/products/models/category';
 import { Region } from '../../../admin/pages/regions/models/region';
 import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
+import { OrderDetailRequest } from '../../models/order-detail-request';
+import { MatDialog } from '@angular/material/dialog';
+import { ShoppingCartComponent } from '../../components/shopping-cart/shopping-cart.component';
 
 @Component({
   selector: 'app-catalog',
@@ -35,7 +40,9 @@ export class CatalogComponent {
     private router: Router,
     private productsService: ProductsService,
     private regionService: RegionsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store,
+    public dialog: MatDialog
   ) {
     this.filterForm = this.fb.group({
       price: this.fb.group({
@@ -203,6 +210,16 @@ export class CatalogComponent {
       }
     });
     this.showProductsByPage();
+  }
+
+  onAddProduct(product: Product){
+    const orderDetail: OrderDetailRequest = {
+      product,
+      quantity: 1
+    };
+    
+    this.store.dispatch(ShoppingCartAction.addProduct({product: orderDetail}));
+    this.dialog.open(ShoppingCartComponent);
   }
   
   ngOnDestroy(): void {

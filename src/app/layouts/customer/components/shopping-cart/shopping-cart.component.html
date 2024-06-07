@@ -4,31 +4,32 @@
     <button mat-icon-button type="button" (click)="onCloseCart()"><mat-icon>close</mat-icon></button>
   </div>
   <div class="cart-items-container">
-    <div class="cart-item">
-      <figure><img src="../../../../../assets/img/catalog/poncho-lana-main.jpg" /></figure>
+    <div  *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
+      <figure><img src="http://localhost:8080/api/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
       <div class="product-info">
-        <p>Product name</p>
-        <p>S/. price</p>
+        <p>{{orderDetail.product.name}}</p>
+        <p>S/. {{orderDetail.product.price | number: '1.2-2'}}</p>
       </div>
       <div class="product-quantity">
-        <button mat-icon-button>
+        <button mat-icon-button type="button" (click)="onDecrementQuantity(orderDetail)">
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field>
           <input matInput
+            (change)="onChangeInputProductQuantity(orderDetail, $event)"
             type="number"
-            value="1"
+            [value]="orderDetail.quantity"
           />
         </mat-form-field>
-        <button mat-icon-button>
+        <button mat-icon-button type="button" (click)="onIncrementQuantity(orderDetail)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
       <div class="product-subtotal">
-        <p>S/. subtotal</p>
+        <p>S/. {{orderDetail.subTotal| number: '1.2-2'}}</p>
       </div>
       <div class="product-remove">
-        <button mat-icon-button type="button">
+        <button mat-icon-button type="button" (click)="onRemoveProduct(orderDetail.product.id)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -36,7 +37,7 @@
   </div>
   <div class="cart-total">
     <p>Total</p>
-    <p id="cart-total-price">S/. 1000.00</p>
+    <p id="cart-total-price">S/. {{ cartTotal$ | async | number: '1.2-2'}}</p>
   </div>
   <div class="cart-button">
     <button mat-flat-button>Comprar ahora</button>

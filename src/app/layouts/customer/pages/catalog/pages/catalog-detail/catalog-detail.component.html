@@ -27,13 +27,13 @@
     <div class="quantity-box">
       <h4>Número de unidades</h4>
       <div class="quantity-form">
-        <button mat-icon-button>
+        <button mat-icon-button type="button" (click)="updateQuantityProduct(-1)">
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field class="product-quantity">
-          <input matInput type="number" value="1" min="1" />
+          <input matInput [(ngModel)]="inputProductQuantity" (change)="onChangeInputProductQuantity()" type="number" value="1" min="1" />
         </mat-form-field>
-        <button mat-icon-button>
+        <button mat-icon-button type="button" (click)="updateQuantityProduct(1)">
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -42,7 +42,7 @@
       <h4>Stock:</h4>
       <span>{{ productSelected?.stock }} unidades</span>
     </div>
-    <button mat-flat-button class="btn-add-cart">
+    <button mat-flat-button class="btn-add-cart" type="button" (click)="onAddProduct(productSelected)">
       <span>Agregar al carrito</span><i class="fa-solid fa-cart-shopping"></i>
     </button>
   </div>
