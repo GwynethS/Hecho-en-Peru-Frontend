@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from './models/product';
-import { Observable, catchError, mergeMap, of } from 'rxjs';
+import { catchError, mergeMap, of } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Category } from './models/category';
 import { ProductRequest } from './models/product-request';
@@ -50,11 +50,9 @@ export class ProductsService {
     );
   }
 
-  deleteProductsByID(id: string): Observable<any> {
+  deleteProductsByID(id: string) {
     return this.httpClient
-      .delete(`${environment.apiURL}productDelete/${id}`, {
-        responseType: 'text',
-      })
+      .delete(`${environment.apiURL}productDelete/${id}`, { responseType: 'text' })
       .pipe(
         catchError((err) => {
           console.error('Failed to delete product', err);
@@ -63,7 +61,7 @@ export class ProductsService {
       );
   }
 
-  addProducts(data: ProductRequest, file: File): Observable<any> {
+  addProducts(data: ProductRequest, file: File) {
     const formData = new FormData();
     formData.append('productDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
@@ -78,14 +76,13 @@ export class ProductsService {
     );
   }
 
-  updateProducts(id: string, data: ProductRequest, file: File): Observable<any> {
+  updateProducts(id: string, data: ProductRequest, file: File) {
     const formData = new FormData();
     formData.append('productDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
       formData.append('file', file, file.name);
     }
-    return this.httpClient
-      .put(`${environment.apiURL}product/${id}`, formData)
+    return this.httpClient.put(`${environment.apiURL}product/${id}`, formData)
       .pipe(
         catchError((err) => {
           console.error('Failed to update product', err);

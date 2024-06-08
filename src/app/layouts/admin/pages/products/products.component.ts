@@ -40,7 +40,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.productSearchForm = this.fb.group({
-      id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+      id: this.fb.control('', [
+        Validators.required,
+        Validators.pattern('^[0-9]+$'),
+      ]),
     });
   }
 
@@ -83,7 +86,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.dataSource.data = this.products;
           },
           error: (err) => {
-            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
+            console.error(
+              `Failed to load product with ID ${this.productSearchForm.value.id}`,
+              err
+            );
             this.searchAttempted = true;
             this.dataSource.data = [];
           },
@@ -100,18 +106,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onCreateProduct(): void {
     this.matDialog
-    .open(ProductDialogComponent)
+      .open(ProductDialogComponent)
       .afterClosed()
-      .subscribe((result) => {
+      .subscribe(
+        (result) => {
         if (result) {
           const { productData, image } = result;
           this.productsService.addProducts(productData, image)
-          .subscribe({
-            next: () => this.loadProductsPage(),
-            error: (err) => console.error('Error adding product', err)
-          });
-        }
-      });
+            .subscribe({
+              next: () => this.loadProductsPage(),
+              error: (err) => console.error('Error adding product', err),
+            });
+        }}
+      );
   }
 
   onEditProduct(product: Product): void {
@@ -122,11 +129,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         next: (result) => {
           if (result) {
             const { productData, image } = result;
-            this.productsService
-              .updateProducts(product.id, productData, image)
+            this.productsService.updateProducts(product.id, productData, image)
               .subscribe({
                 next: () => this.loadProductsPage(),
-                error: (err) => console.error('Error updating product', err)
+                error: (err) => console.error('Error updating product', err),
               });
           }
         },
@@ -135,15 +141,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteProduct(id: string): void {
-    this.alertService
-      .showConfirmDeleteAction('este producto')
+    this.alertService.showConfirmDeleteAction('este producto')
       .then((result) => {
         if (result.isConfirmed) {
-          const deleteSubscription = this.productsService
-            .deleteProductsByID(id)
+          const deleteSubscription = this.productsService.deleteProductsByID(id)
             .subscribe({
               next: () => this.loadProductsPage(),
-              error: (err) => console.error('Failed to delete product', err)
+              error: (err) => console.error('Failed to delete product', err),
             });
           this.subscriptions.push(deleteSubscription);
         }

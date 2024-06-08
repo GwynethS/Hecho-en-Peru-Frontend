@@ -27,8 +27,8 @@ export class ProductDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
-    private localCraftsmenService: LocalCraftsmenService,
-    private dialogRef: MatDialogRef<ProductDialogComponent>,
+    private localCraftsmanService: LocalCraftsmenService,
+    private matDialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private editingProduct?: Product
   ) {
     this.productForm = this.fb.group({
@@ -67,7 +67,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   loadLocalCraftsmen(): void {
-    this.localCraftsmenService.getLocalCraftsmen().subscribe({
+    this.localCraftsmanService.getLocalCraftsmen().subscribe({
       next: (localCraftsmen) => this.localCraftsmen = localCraftsmen,
       error: (err) => console.error('Failed to load local craftsmen', err)
     });
@@ -101,8 +101,10 @@ export class ProductDialogComponent implements OnInit {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
     } else {
+      if (!this.editingProduct && !this.selectedFile) { return }
+
       forkJoin({
-        localCraftsman: this.localCraftsmenService.getSearchLocalCraftsmanDetailsByID(
+        localCraftsman: this.localCraftsmanService.getSearchLocalCraftsmanDetailsByID(
             this.productForm.get('localCraftsman_id')?.value
           ),
         category: this.productService.getCategoriesByID(
@@ -120,7 +122,7 @@ export class ProductDialogComponent implements OnInit {
           } else {
             imageToSend = this.productForm.get('image')?.value || new Blob();
           }
-          this.dialogRef.close({ productData, image: imageToSend });
+          this.matDialogRef.close({ productData, image: imageToSend });
         },
         error: (err) => {
           console.error('Error in one of the requests', err);
@@ -130,7 +132,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.matDialogRef.close();
     this.selectedFile = null;
     this.imageUrl = null;
     this.imageName = null;

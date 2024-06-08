@@ -32,7 +32,7 @@ export class LocalCraftsmanTableComponent implements AfterViewInit {
     'fullName',
     'specialty',
     'experience',
-    'name_region',
+    'region',
     'enabled',
     'actions',
   ];
