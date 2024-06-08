@@ -16,7 +16,7 @@
         <p id="cart-total-price">S/. {{ cartTotal$ | async | number: '1.2-2'}}</p>
       </div>
   </div>
-  <div class="pago-info">
+  <div class="payment-info">
       <div class="background-image">
         <div class="blur"></div>
       </div>
@@ -34,7 +34,6 @@
         </mat-form-field>
       </form>
       <button mat-flat-button type="submit" id="btn-submit" (click)="onSubmit()">Realizar pago</button>
-      <button mat-flat-button type="button" id="btn-cancel">Cancelar</button>
+      <button mat-flat-button type="button" id="btn-cancel" (click)="onCancel()">Cancelar</button>
   </div>
-
 </div>

@@ -51,7 +51,7 @@ export class CheckoutComponent {
 
   onSubmit() {
     const user: LoginResponse | null = this.authService.getAuthUser();
-    user?.user
+
     if (this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
     } else {
@@ -68,5 +68,9 @@ export class CheckoutComponent {
         })
       }
     }
+  }
+
+  onCancel(){
+    this.router.navigate(["/shop"]);
   }
 }

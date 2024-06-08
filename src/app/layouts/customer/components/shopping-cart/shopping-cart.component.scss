@@ -2,6 +2,7 @@
   width: 60vw;
   height: 90vh;
   padding: 0 2rem;
+  position: relative;
   .cart-header {
     display: flex;
     justify-content: space-between;
@@ -163,6 +164,25 @@
       cursor: pointer;
       &:hover {
         background-color: #0e0e0e;
+      }
+    }
+  }
+  .no-results-container {
+    position: absolute;
+    top: 40%;
+    left: 39%;
+    text-align: center;
+    opacity: 0.5;
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 1.25rem;
+    }
+    div {
+      font-size: 1.125rem;
+      color: #333;
+      margin: 1.2rem;
+      p {
+        margin: 0.3rem;
       }
     }
   }

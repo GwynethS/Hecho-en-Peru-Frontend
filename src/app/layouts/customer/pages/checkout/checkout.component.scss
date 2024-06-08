@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .cart-products {
@@ -19,6 +19,25 @@
     max-height: 70vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
+
+    &::-moz-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-moz-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
     .cart-item {
       display: flex;
       gap: 1.5rem;
@@ -45,24 +64,6 @@
         }
       }
     }
-    &::-webkit-scrollbar {
-      width: 0.7rem;
-      background: #cfc9c9;
-      border-radius: 0.5rem;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #acde7b;
-      border-radius: 0.5rem;
-    }
-    &::-moz-scrollbar {
-      width: 0.7rem;
-      background: #cfc9c9;
-      border-radius: 0.5rem;
-    }
-    &::-moz-scrollbar-thumb {
-      background-color: #acde7b;
-      border-radius: 0.5rem;
-    }
   }
   .cart-total {
     width: 85%;
@@ -82,7 +83,7 @@
   }
 }
 
-.pago-info {
+.payment-info {
   width: 60%;
   height: 100vh;
   display: flex;
@@ -105,9 +106,6 @@
       height: 100%;
     }
   }
-}
-
-.pago-info {
   form {
     width: 60%;
     border-radius: 0.5rem 0.5rem 0 0;
@@ -129,6 +127,7 @@
   }
   button{
     width: 60%;
+    height: 3rem;
   }
   #btn-submit {
     background: #242423;

@@ -3,7 +3,7 @@
     <h2>Mi carrito</h2>
     <button mat-icon-button type="button" (click)="onCloseCart()"><mat-icon>close</mat-icon></button>
   </div>
-  <div class="cart-items-container">
+  <div class="cart-items-container" *ngIf="(cartProducts$ | async)?.length">
     <div  *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
       <figure><img src="http://localhost:8080/api/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
       <div class="product-info">
@@ -35,11 +35,18 @@
       </div>
     </div>
   </div>
-  <div class="cart-total">
+  <div class="cart-total" *ngIf="(cartProducts$ | async)?.length">
     <p>Total</p>
     <p id="cart-total-price">S/. {{ cartTotal$ | async | number: '1.2-2'}}</p>
   </div>
-  <div class="cart-button">
+  <div class="cart-button" *ngIf="(cartProducts$ | async)?.length">
     <button mat-flat-button type="button" (click)="onCheckout()">Comprar ahora</button>
+  </div>
+
+  <div class="no-results-container" *ngIf="!((cartProducts$ | async)?.length)">
+    <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+    <div>
+      <p>Su carrito está vacío</p>
+    </div>
   </div>
 </div>

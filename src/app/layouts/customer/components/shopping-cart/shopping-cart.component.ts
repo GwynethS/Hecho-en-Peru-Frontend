@@ -2,29 +2,47 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectShoppingCartProducts, selectShoppingCartTotal } from '../../../../core/store/shopping-cart/shopping-cart.selector';
+import {
+  selectShoppingCartProducts,
+  selectShoppingCartTotal,
+} from '../../../../core/store/shopping-cart/shopping-cart.selector';
 import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
 import { Router } from '@angular/router';
 import { OrderDetailRequest } from '../../pages/checkout/models/order-detail-request';
+import { LoginResponse } from '../../pages/auth/models/login-response';
+import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
+import { AuthService } from '../../pages/auth/auth.service';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
-  styleUrl: './shopping-cart.component.scss'
+  styleUrl: './shopping-cart.component.scss',
 })
 export class ShoppingCartComponent {
+  authUser$: Observable<LoginResponse | null>;
   cartProducts$: Observable<OrderDetailRequest[]>;
   cartTotal$: Observable<number>;
-  
-  constructor(private dialogRef: MatDialogRef<ShoppingCartComponent>, private store: Store, private router : Router){
+
+  constructor(
+    private dialogRef: MatDialogRef<ShoppingCartComponent>,
+    private store: Store,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.authUser$ = this.store.select(selectAuthUser);
     this.cartProducts$ = this.store.select(selectShoppingCartProducts);
     this.cartTotal$ = this.store.select(selectShoppingCartTotal);
   }
 
-  onDecrementQuantity(orderDetail: OrderDetailRequest){
+  onDecrementQuantity(orderDetail: OrderDetailRequest) {
     const newQuantity = orderDetail.quantity - 1;
-    if(newQuantity > 0){
-      this.store.dispatch(ShoppingCartAction.updateProductQuantity({productId: orderDetail.product.id, quantity: newQuantity}))
+    if (newQuantity > 0) {
+      this.store.dispatch(
+        ShoppingCartAction.updateProductQuantity({
+          productId: orderDetail.product.id,
+          quantity: newQuantity,
+        })
+      );
     }
   }
 
@@ -32,29 +50,50 @@ export class ShoppingCartComponent {
     const newQuantity = e.target.value;
 
     if (newQuantity > 0 && newQuantity <= orderDetail.product.stock) {
-      this.store.dispatch(ShoppingCartAction.updateProductQuantity({ productId: orderDetail.product.id, quantity: newQuantity }));
+      this.store.dispatch(
+        ShoppingCartAction.updateProductQuantity({
+          productId: orderDetail.product.id,
+          quantity: newQuantity,
+        })
+      );
     } else {
-      this.store.dispatch(ShoppingCartAction.updateProductQuantity({ productId: orderDetail.product.id, quantity: orderDetail.quantity }));
+      this.store.dispatch(
+        ShoppingCartAction.updateProductQuantity({
+          productId: orderDetail.product.id,
+          quantity: orderDetail.quantity,
+        })
+      );
     }
   }
 
-  onIncrementQuantity(orderDetail: OrderDetailRequest){
+  onIncrementQuantity(orderDetail: OrderDetailRequest) {
     const newQuantity = orderDetail.quantity + 1;
-    if(newQuantity <= orderDetail.product.stock){
-      this.store.dispatch(ShoppingCartAction.updateProductQuantity({productId: orderDetail.product.id, quantity: newQuantity}))
+    if (newQuantity <= orderDetail.product.stock) {
+      this.store.dispatch(
+        ShoppingCartAction.updateProductQuantity({
+          productId: orderDetail.product.id,
+          quantity: newQuantity,
+        })
+      );
     }
   }
 
-  onRemoveProduct(productId: string){
-    this.store.dispatch(ShoppingCartAction.removeProduct({productId}));
+  onRemoveProduct(productId: string) {
+    this.store.dispatch(ShoppingCartAction.removeProduct({ productId }));
   }
 
-  onCloseCart(){
+  onCloseCart() {
     this.dialogRef.close();
   }
 
-  onCheckout(){
-    this.router.navigate(["/shop/checkout"]);
-    this.dialogRef.close();
+  onCheckout() {
+    const user: LoginResponse | null = this.authService.getAuthUser();
+    if (user) {
+      this.router.navigate(['/shop/checkout']);
+      this.dialogRef.close();
+    }else{
+      this.router.navigate(['/shop/auth']);
+      this.dialogRef.close();
+    }
   }
 }
