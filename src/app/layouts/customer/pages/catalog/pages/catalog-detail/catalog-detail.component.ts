@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductsService } from '../../../../../admin/pages/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +16,10 @@ import { LoginResponse } from '../../../auth/models/login-response';
 import { AuthService } from '../../../auth/auth.service';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../../../core/store/auth/auth.selectors';
+import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/shopping-cart.actions';
+import { MatDialog } from '@angular/material/dialog';
+import { ShoppingCartComponent } from '../../../../components/shopping-cart/shopping-cart.component';
+import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -21,19 +30,17 @@ export class CatalogDetailComponent {
   length = 0;
   pageSize = 5;
   pageIndex = 0;
-
   pageEvent!: PageEvent;
 
-  commentForm: FormGroup;
-
+  inputProductQuantity: number = 1;
   avgRating = 4.5;
 
   productSelected: Product | null = null;
 
+  commentForm: FormGroup;
   comments: Comment[] = [];
 
   subscriptions: Subscription[] = [];
-
   authUser$: Observable<LoginResponse | null>;
 
   @ViewChild(FormGroupDirective)
@@ -45,6 +52,7 @@ export class CatalogDetailComponent {
     private productsService: ProductsService,
     private commentsService: CommentsService,
     private store: Store,
+    public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -82,23 +90,25 @@ export class CatalogDetailComponent {
     } else {
       const user = this.authService.getAuthUser();
       if (user) {
-        this.commentsService.addComment(
-          {
-            ...this.commentForm.value,
-            user: user.user,
-            product: this.productSelected,
-          },
-          this.pageIndex,
-          this.pageSize
-        ).subscribe({
-          next: (data) => {
-            this.comments = data;
-            this.length++;
-            this.commentFormDir.resetForm();
-          }
-        })
-      }else{
-        console.log("Necesita iniciar sesión");
+        this.commentsService
+          .addComment(
+            {
+              ...this.commentForm.value,
+              user: user.user,
+              product: this.productSelected,
+            },
+            this.pageIndex,
+            this.pageSize
+          )
+          .subscribe({
+            next: (data) => {
+              this.comments = data;
+              this.length++;
+              this.commentFormDir.resetForm();
+            },
+          });
+      } else {
+        console.log('Necesita iniciar sesión');
       }
     }
   }
@@ -146,6 +156,43 @@ export class CatalogDetailComponent {
     this.pageIndex = e.pageIndex;
 
     this.getCommentsByPage();
+  }
+
+  onChangeInputProductQuantity() {
+    if (this.productSelected) {
+      if (this.productSelected.stock < this.inputProductQuantity)
+        this.inputProductQuantity = this.productSelected.stock;
+      else if (this.inputProductQuantity <= 0) this.inputProductQuantity = 1;
+    }
+  }
+
+  updateQuantityProduct(quantity: number) {
+    if (this.productSelected) {
+      if (
+        this.productSelected.stock >= this.inputProductQuantity + quantity &&
+        this.inputProductQuantity + quantity > 0
+      ) {
+        this.inputProductQuantity += quantity;
+      }
+    }
+  }
+
+  onAddProduct(product: Product | null) {
+    if (product) {
+      const orderDetail: OrderDetailRequest = {
+        product,
+        quantity: this.inputProductQuantity,
+      };
+
+      this.store.dispatch(ShoppingCartAction.addProduct({ orderDetail }));
+      this.dialog.open(ShoppingCartComponent);
+    }
+  }
+
+  redirectToRegion(regionId?: string ) {
+    if (regionId) {
+      this.router.navigate([`/shop/regions/${regionId}`]);
+    }
   }
 
   ngOnDestroy(): void {

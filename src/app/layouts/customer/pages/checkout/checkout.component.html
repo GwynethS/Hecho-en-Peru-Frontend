@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="cart-products">
+      <h2>Mis productos</h2>
+      <div class="cart-items-container">
+        <div  *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
+          <figure><img src="http://localhost:8080/api/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
+          <div class="product-info">
+            <h4>{{orderDetail.product.name}}</h4>
+            <p>Cantidad: {{orderDetail.quantity}}</p>
+            <p>S/. {{orderDetail.subTotal| number: '1.2-2'}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="cart-total">
+        <p>Total</p>
+        <p id="cart-total-price">S/. {{ cartTotal$ | async | number: '1.2-2'}}</p>
+      </div>
+  </div>
+  <div class="payment-info">
+      <div class="background-image">
+        <div class="blur"></div>
+      </div>
+      <form [formGroup]="paymentForm">
+        <h2>Pagar a través de Yape</h2>
+
+        <mat-form-field>
+          <mat-label>Número de celular</mat-label>
+          <input matInput formControlName="telefono" type="text">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Código de aprobación</mat-label>
+          <input matInput formControlName="codigo" type="text">
+        </mat-form-field>
+      </form>
+      <button mat-flat-button type="submit" id="btn-submit" (click)="onSubmit()">Realizar pago</button>
+      <button mat-flat-button type="button" id="btn-cancel" (click)="onCancel()">Cancelar</button>
+  </div>
+</div>

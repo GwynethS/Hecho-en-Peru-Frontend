@@ -1,0 +1,149 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.cart-products {
+  width: 40%;
+  align-self: start;
+  margin: 3rem;
+  h2 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+  .cart-items-container {
+    width: 85%;
+    max-height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
+
+    &::-moz-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-moz-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      figure {
+        width: 8rem;
+        height: 9rem;
+        border-radius: 0.5rem;
+        margin: 0;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 0.5rem;
+          object-fit: cover;
+        }
+      }
+      .product-info {
+        h4 {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  .cart-total {
+    width: 85%;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: solid #4f4f4f 1px;
+    p {
+      font-weight: 500;
+    }
+    #cart-total-price {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.payment-info {
+  width: 60%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .background-image {
+    background-image: url("../../../../../assets/img/fondo-pago.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    opacity: 0.7;
+    .blur {
+      backdrop-filter: blur(5px);
+      width: 100%;
+      height: 100%;
+    }
+  }
+  form {
+    width: 60%;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 3rem;
+    background: #fff;
+    box-shadow: 0 0 10px 5px #0000001f;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    h2 {
+      text-align: center;
+      margin: 0;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    mat-form-field{
+      margin-bottom: 1rem;
+    }
+  }
+  button{
+    width: 60%;
+    height: 3rem;
+  }
+  #btn-submit {
+    background: #242423;
+    color: #fff;
+    border-radius:  0;
+    &:hover {
+      background: #0e0e0e;
+    }
+  }
+  #btn-cancel {
+    background: #e2e4e4;
+    color: #737373;
+    border-radius:  0 0 0.5rem 0.5rem;
+    &:hover {
+      background: #c8c8c8;
+    }
+  }
+}
+

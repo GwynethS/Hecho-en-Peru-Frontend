@@ -1,0 +1,189 @@
+.cart-container {
+  width: 60vw;
+  height: 90vh;
+  padding: 0 2rem;
+  position: relative;
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+    h2{
+      font-weight: 500;
+    }
+    button {
+      color: #bcbcbc;
+      transition: transform 0.2s ease;
+      &:hover {
+        color: #858585;
+        transform: scale(1.1);
+      }
+    }
+  }
+  .cart-items-container {
+    margin: 0 1rem;
+    padding-right: 2rem;
+    overflow-y: scroll;
+    height: 70%;
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
+
+    &::-moz-scrollbar {
+      width: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    &::-moz-scrollbar-thumb {
+      border-radius: 0.5rem;
+      background-color: #dfdfdfbc;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      &:last-child{
+        margin-bottom: 0;
+      }
+      figure {
+        width: 7rem;
+        height: 9rem;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        margin: 0;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+      .product-info {
+        width: 15rem;
+      }
+      .product-quantity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        mat-form-field{
+          width: 4rem;
+          input {
+            border: none;
+            text-align: center;
+            font-weight: 500;
+            &[type="number"] {
+              appearance: none;
+              -moz-appearance: none;
+              &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+              &::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            }
+          }
+        }
+        button {
+          width: 2.5rem;
+          height: 2.5rem;
+          transition: transform 0.2s ease;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #a6a6a623;
+          &:hover {
+            transform: scale(1.1);
+            color: #e09898;
+            font-weight: bold;
+          }
+          mat-icon{
+            width: fit-content;
+            height: fit-content;
+            font-size: 1rem;
+            font-weight: 500;
+          }
+        }
+      }
+      .product-subtotal {
+        text-align: end;
+        width: 7rem;
+      }
+      .product-remove {
+        button {
+          color: #bcbcbc;
+          text-align: center;
+          transition: transform 0.2s ease;
+          &:hover {
+            color: #e09898;
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
+  .cart-total {
+    height: 10%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 2rem;
+    text-align: end;
+    padding: 0 4rem 0 1rem;
+    margin-right: 3.5rem;
+    border-top: 1px solid #9c9c9c;
+    p{
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+    #cart-total-price {
+      width: 7rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+  .cart-button {
+    height: 10%;
+    text-align: end;
+    margin-right: 6.25rem;
+    button {
+      color: #fff;
+      font-weight: 400;
+      background-color: #242423;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+      &:hover {
+        background-color: #0e0e0e;
+      }
+    }
+  }
+  .no-results-container {
+    position: absolute;
+    top: 40%;
+    left: 39%;
+    text-align: center;
+    opacity: 0.5;
+    .emoji {
+      font-size: 3rem;
+      margin-bottom: 1.25rem;
+    }
+    div {
+      font-size: 1.125rem;
+      color: #333;
+      margin: 1.2rem;
+      p {
+        margin: 0.3rem;
+      }
+    }
+  }
+}

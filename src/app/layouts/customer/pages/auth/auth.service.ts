@@ -59,6 +59,8 @@ export class AuthService {
     this.store.dispatch(AuthAction.logout());
     this.router.navigate(['shop', 'auth']);
     sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('cartState');
+    sessionStorage.removeItem('cartTotal');
     this.authUserSubject.next(null);
   }
 
@@ -91,5 +93,9 @@ export class AuthService {
 
   getAuthUser(): LoginResponse | null {
     return this.authUserSubject.getValue();
+  }
+
+  updateAuthUser(user: LoginResponse){
+    this.setAuthUser(user);
   }
 }

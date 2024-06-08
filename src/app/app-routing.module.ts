@@ -8,9 +8,7 @@ const routes: Routes = [
     path: 'admin',
     canActivate: [adminGuard],
     loadChildren: () =>
-      import('./layouts/admin/admin.module').then(
-        (m) => m.AdminModule
-      ),
+      import('./layouts/admin/admin.module').then((m) => m.AdminModule),
   },
   {
     path: 'shop',
@@ -21,21 +19,28 @@ const routes: Routes = [
       ),
   },
   {
-    path: '',
-    redirectTo: 'shop',
-    pathMatch: 'full'
+    path: 'shop/checkout',
+    loadChildren: () =>
+      import('./layouts/customer/pages/checkout/checkout.module').then(
+        (m) => m.CheckoutModule
+      ),
   },
   {
-    path:'**',
+    path: '',
+    redirectTo: 'shop',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
     loadChildren: () =>
       import('./layouts/not-found/not-found.module').then(
         (m) => m.NotFoundModule
       ),
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

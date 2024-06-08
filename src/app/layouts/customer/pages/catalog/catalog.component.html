@@ -113,7 +113,7 @@
         <h4>{{ product.name }}</h4>
         <p>s/.{{ product.price | number : "1.2-2" }}</p>
       </div>
-      <button mat-flat-button class="add-cart">Añadir al carrito</button>
+      <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
     </div>
     <div class="paginator" *ngIf="filterProducts.length">
       <button (click)="previousPage()" mat-icon-button type="button">

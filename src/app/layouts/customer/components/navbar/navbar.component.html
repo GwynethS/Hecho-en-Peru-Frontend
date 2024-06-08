@@ -55,7 +55,7 @@
     </div>
   </mat-nav-list>
   <div class="nav-icons">
-    <button mat-icon-button type="button">
+    <button mat-icon-button type="button" (click)="onShoppingCart()">
       <mat-icon>shopping_cart</mat-icon>
     </button>
 
@@ -64,7 +64,7 @@
     </button>
 
     <div class="login-data" *ngIf="authUser$ | async">
-      <p id="login-user">
+      <p id="login-user" (click)="onUserIcon()">
         {{
           (authUser$ | async)?.user?.name +
             " " +

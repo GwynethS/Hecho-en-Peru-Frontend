@@ -58,6 +58,11 @@ nav {
       #login-user {
         margin-bottom: 0.5rem;
         color: #000000de;
+        &:hover{
+          cursor: pointer;
+          
+          color: #4f4f4f;
+        }
       }
       #logout {
         color: #de7474;

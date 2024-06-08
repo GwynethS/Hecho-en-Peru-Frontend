@@ -4,6 +4,7 @@ import { Customer } from './models/customer';
 import { environment } from '../../../../../environments/environment';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../customer/pages/auth/auth.service';
+import { UserProfile } from '../../../customer/pages/user/pages/profile/models/user-profile';
 
 @Injectable()
 export class CustomersService {
@@ -43,6 +44,10 @@ export class CustomersService {
         ...userData,
       }
     );
+  }
+
+  updateUser(userProfile: UserProfile, id: string) {
+    return this.httpClient.put<Customer>(`${environment.apiURL}userUpdate/${id}`, userProfile);
   }
 
   deleteUser(id: string) {
