@@ -64,7 +64,7 @@
     </button>
 
     <div class="login-data" *ngIf="authUser$ | async">
-      <p id="login-user">
+      <p id="login-user" (click)="onUserIcon()">
         {{
           (authUser$ | async)?.user?.name +
             " " +

@@ -1,16 +1,11 @@
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  RequiredValidator,
-  Validators,
-} from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../auth/auth.service';
 import { LoginResponse } from '../../../auth/models/login-response';
 import { UserProfile } from './models/user-profile';
-import { Customer } from '../../../../../admin/pages/customers/models/customer';
 import { CustomersService } from '../../../../../admin/pages/customers/customers.service';
+import { Store } from '@ngrx/store';
+import { AuthAction } from '../../../../../../core/store/auth/auth.actions';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +22,8 @@ export class ProfileComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private customersService: CustomersService
+    private customersService: CustomersService,
+    private store: Store
   ) {
     this.editProfileForm = this.fb.group({
       name: this.fb.control('', [
@@ -58,11 +54,26 @@ export class ProfileComponent {
       this.editProfileForm.markAllAsTouched();
     } else {
       const editUserData: UserProfile = {
-        ...this.authUserData?.user,
         ...this.editProfileForm.value,
       };
       if (!editUserData.newPassword) editUserData.password = '';
       console.log(editUserData);
+      if (this.authUserData) {
+        this.customersService
+          .updateUser(editUserData, this.authUserData.user.id)
+          .subscribe({
+            next: (user) => {
+              if (this.authUserData) {
+                const updatedUser = {
+                  user: { ...this.authUserData.user, ...user },
+                  jwtResponse: this.authUserData.jwtResponse,
+                };
+                this.authService.updateAuthUser(updatedUser);
+                console.log('Usuario actualizado');
+              }
+            },
+          });
+      }
     }
   }
 
