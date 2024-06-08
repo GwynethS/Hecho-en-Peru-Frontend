@@ -36,7 +36,7 @@ export class CatalogDetailComponent {
   avgRating = 4.5;
 
   productSelected: Product | null = null;
-  
+
   commentForm: FormGroup;
   comments: Comment[] = [];
 
@@ -160,7 +160,8 @@ export class CatalogDetailComponent {
 
   onChangeInputProductQuantity() {
     if (this.productSelected) {
-      if (this.productSelected.stock < this.inputProductQuantity) this.inputProductQuantity = this.productSelected.stock;
+      if (this.productSelected.stock < this.inputProductQuantity)
+        this.inputProductQuantity = this.productSelected.stock;
       else if (this.inputProductQuantity <= 0) this.inputProductQuantity = 1;
     }
   }
@@ -183,10 +184,14 @@ export class CatalogDetailComponent {
         quantity: this.inputProductQuantity,
       };
 
-      this.store.dispatch(
-        ShoppingCartAction.addProduct({ orderDetail })
-      );
+      this.store.dispatch(ShoppingCartAction.addProduct({ orderDetail }));
       this.dialog.open(ShoppingCartComponent);
+    }
+  }
+
+  redirectToRegion(regionId?: string ) {
+    if (regionId) {
+      this.router.navigate([`/shop/regions/${regionId}`]);
     }
   }
 

@@ -77,7 +77,7 @@
       ><label class="region-name" for="cusco">{{
         productSelected?.localCraftsman?.region?.name
       }}</label
-      ><button mat-flat-button class="btn-region">Conocer más</button>
+      ><button mat-flat-button class="btn-region" (click)="redirectToRegion(productSelected?.localCraftsman?.region?.id)">Conocer más</button>
     </div>
   </div>
   <div class="product-details">
