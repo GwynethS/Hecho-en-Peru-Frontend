@@ -1,65 +1,87 @@
 import { createReducer, on } from "@ngrx/store";
-import { OrderDetailRequest } from "../../../layouts/customer/models/order-detail-request";
 import { ShoppingCartAction } from "./shopping-cart.actions";
+import { OrderDetailRequest } from "../../../layouts/customer/pages/checkout/models/order-detail-request";
 
 export const shoppingCartFeatureKey = 'cart';
 
 export interface State {
-  products: OrderDetailRequest[],
+  orderDetails: OrderDetailRequest[],
   total: number
 }
 
 export const initialState: State = {
-  products: [],
-  total: 0
+  orderDetails: JSON.parse(sessionStorage.getItem('cartState') || '[]'),
+  total: JSON.parse(sessionStorage.getItem('cartTotal') || '0'),
 }
+
+const updateSessionStorage = (state: State) => {
+  sessionStorage.setItem('cartState', JSON.stringify(state.orderDetails));
+  sessionStorage.setItem('cartTotal', JSON.stringify(state.total));
+};
 
 export const ShoppingCartReducer = createReducer(
   initialState,
   on(ShoppingCartAction.addProduct, (state, action) => {
-    const existingProduct = state.products.find(p => p.product.id === action.product.product.id);
-    
+    const existingProduct = state.orderDetails.find(od => od.product.id === action.orderDetail.product.id);
+    let newState: State;
+
     if (existingProduct) {
-      const updatedProducts = state.products.map(p =>
-        p.product.id === action.product.product.id ? { ...p, quantity: p.quantity + action.product.quantity, subTotal: (p.quantity + action.product.quantity) * p.product.price } : p
+      const updatedOrderDetails = state.orderDetails.map(od =>
+        od.product.id === action.orderDetail.product.id ? { ...od, quantity: od.quantity + action.orderDetail.quantity, subTotal: (od.quantity + action.orderDetail.quantity) * od.product.price } : od
       );
-      return {
+      newState= {
         ...state,
-        products: updatedProducts,
-        total: state.total + (action.product.product.price * action.product.quantity)
+        orderDetails: updatedOrderDetails,
+        total: state.total + (action.orderDetail.product.price * action.orderDetail.quantity)
       };
     } else {
-      return {
+      newState = {
         ...state,
-        products: [...state.products, { ...action.product, quantity: action.product.quantity, subTotal: (action.product.product.price * action.product.quantity) }],
-        total: state.total + (action.product.product.price * action.product.quantity)
+        orderDetails: [...state.orderDetails, { ...action.orderDetail, quantity: action.orderDetail.quantity, subTotal: (action.orderDetail.product.price * action.orderDetail.quantity) }],
+        total: state.total + (action.orderDetail.product.price * action.orderDetail.quantity)
       };
     }
+
+    updateSessionStorage(newState);
+    return newState;
   }),
   on(ShoppingCartAction.removeProduct, (state, action) => {
-    const productToRemove = state.products.find(p => p.product.id === action.productId);
+    const productToRemove = state.orderDetails.find(od => od.product.id === action.productId);
     
     if (!productToRemove) return state;
 
-    const updatedProducts = state.products.filter(p => p.product.id !== action.productId);
+    const updatedOrderDetails = state.orderDetails.filter(od => od.product.id !== action.productId);
     
-    return {
+    const newState =  {
       ...state,
-      products: updatedProducts,
+      orderDetails: updatedOrderDetails,
       total: state.total - (productToRemove.subTotal || 0)
     };
+
+    updateSessionStorage(newState);
+    return newState;
   }),
   on(ShoppingCartAction.updateProductQuantity, (state, action) => {
-    const updatedProducts = state.products.map(p =>
-      p.product.id === action.productId ? { ...p, quantity: action.quantity , subTotal: action.quantity * p.product.price } : p
+    const updatedOrderDetails = state.orderDetails.map(od =>
+      od.product.id === action.productId ? { ...od, quantity: action.quantity , subTotal: action.quantity * od.product.price } : od
     );
 
-    const newTotal = updatedProducts.reduce((acc, curr) => acc + (curr.subTotal || 0), 0);
-    return {
+    const newTotal = updatedOrderDetails.reduce((acc, curr) => acc + (curr.subTotal || 0), 0);
+    const newState = {
       ...state,
-      products: updatedProducts,
+      orderDetails: updatedOrderDetails,
       total: newTotal
     };
+
+    updateSessionStorage(newState);
+    return newState;
   }),
-  on(ShoppingCartAction.clearCart, () => initialState)
+  on(ShoppingCartAction.clearCart, () => {
+    const newState = {
+      orderDetails: [],
+      total: 0
+    }
+    updateSessionStorage(newState);
+    return newState;
+  })
 );

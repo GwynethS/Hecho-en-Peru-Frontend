@@ -1,4 +1,4 @@
-import { Customer } from "../../admin/pages/customers/models/customer";
+import { Customer } from "../../../../admin/pages/customers/models/customer";
 import { OrderDetailRequest } from "./order-detail-request";
 
 export interface OrderRequest{

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { OrderDetailRequest } from '../../models/order-detail-request';
 import { Store } from '@ngrx/store';
 import { selectShoppingCartProducts, selectShoppingCartTotal } from '../../../../core/store/shopping-cart/shopping-cart.selector';
 import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
+import { Router } from '@angular/router';
+import { OrderDetailRequest } from '../../pages/checkout/models/order-detail-request';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,7 +16,7 @@ export class ShoppingCartComponent {
   cartProducts$: Observable<OrderDetailRequest[]>;
   cartTotal$: Observable<number>;
   
-  constructor(private dialogRef: MatDialogRef<ShoppingCartComponent>, private store: Store){
+  constructor(private dialogRef: MatDialogRef<ShoppingCartComponent>, private store: Store, private router : Router){
     this.cartProducts$ = this.store.select(selectShoppingCartProducts);
     this.cartTotal$ = this.store.select(selectShoppingCartTotal);
   }
@@ -49,6 +50,11 @@ export class ShoppingCartComponent {
   }
 
   onCloseCart(){
+    this.dialogRef.close();
+  }
+
+  onCheckout(){
+    this.router.navigate(["/shop/checkout"]);
     this.dialogRef.close();
   }
 }

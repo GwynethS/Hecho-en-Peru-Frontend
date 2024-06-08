@@ -1,4 +1,4 @@
-import { Product } from "../../admin/pages/products/models/product";
+import { Product } from "../../../../admin/pages/products/models/product";
 
 export interface OrderDetailRequest{
   product: Product,

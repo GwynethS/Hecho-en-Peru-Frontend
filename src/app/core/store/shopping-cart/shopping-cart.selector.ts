@@ -7,7 +7,7 @@ export const selectShoppingCartState = createFeatureSelector<fromShoppingCart.St
 
 export const selectShoppingCartProducts = createSelector(
   selectShoppingCartState,
-  (state) => state.products
+  (state) => state.orderDetails
 );
 
 export const selectShoppingCartTotal = createSelector(

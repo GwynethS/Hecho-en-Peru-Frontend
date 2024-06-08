@@ -55,6 +55,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'checkout',
+        loadChildren: () =>
+          import('./pages/checkout/checkout.module').then(
+            (m) => m.CheckoutModule
+          ),
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

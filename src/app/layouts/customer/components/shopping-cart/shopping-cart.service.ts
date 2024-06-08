@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { OrderDetailRequest } from '../models/order-detail-request';
-import { State } from '../../../core/store/shopping-cart/shopping-cart.reducer';
-import { ShoppingCartAction } from '../../../core/store/shopping-cart/shopping-cart.actions';
+import { Observable, first } from 'rxjs';
+import { State } from '../../../../core/store/shopping-cart/shopping-cart.reducer';
+import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
+import { OrderDetailRequest } from '../../pages/checkout/models/order-detail-request';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class ShoppingCartService {
 
   ngOnInit(): void {}
 
-  onAddProduct(product: OrderDetailRequest) {
-    this.store.dispatch(ShoppingCartAction.addProduct({product}));
+  onAddProduct(orderDetail: OrderDetailRequest) {
+    this.store.dispatch(ShoppingCartAction.addProduct({orderDetail}));
   }
 
   onRemoveProduct(productId: string) {
@@ -31,5 +31,9 @@ export class ShoppingCartService {
 
   onClearCart() {
     this.store.dispatch(ShoppingCartAction.clearCart());
+  }
+
+  getCartState(): Observable<State> {
+    return this.cart$.pipe(first());
   }
 }

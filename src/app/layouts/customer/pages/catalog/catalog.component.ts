@@ -9,9 +9,9 @@ import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
-import { OrderDetailRequest } from '../../models/order-detail-request';
 import { MatDialog } from '@angular/material/dialog';
 import { ShoppingCartComponent } from '../../components/shopping-cart/shopping-cart.component';
+import { OrderDetailRequest } from '../checkout/models/order-detail-request';
 
 @Component({
   selector: 'app-catalog',
@@ -218,7 +218,7 @@ export class CatalogComponent {
       quantity: 1
     };
     
-    this.store.dispatch(ShoppingCartAction.addProduct({product: orderDetail}));
+    this.store.dispatch(ShoppingCartAction.addProduct({orderDetail}));
     this.dialog.open(ShoppingCartComponent);
   }
   

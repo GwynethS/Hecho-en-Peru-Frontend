@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,9 +17,9 @@ import { AuthService } from '../../../auth/auth.service';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../../../core/store/auth/auth.selectors';
 import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/shopping-cart.actions';
-import { OrderDetailRequest } from '../../../../models/order-detail-request';
 import { MatDialog } from '@angular/material/dialog';
 import { ShoppingCartComponent } from '../../../../components/shopping-cart/shopping-cart.component';
+import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -184,7 +184,7 @@ export class CatalogDetailComponent {
       };
 
       this.store.dispatch(
-        ShoppingCartAction.addProduct({ product: orderDetail })
+        ShoppingCartAction.addProduct({ orderDetail })
       );
       this.dialog.open(ShoppingCartComponent);
     }
