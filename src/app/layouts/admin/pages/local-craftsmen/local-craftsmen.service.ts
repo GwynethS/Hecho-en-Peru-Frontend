@@ -19,7 +19,6 @@ export class LocalCraftsmenService {
   }
 
   getSearchLocalCraftsmanDetailsByID(id: string): Observable<LocalCraftsman> {
-    console.log(id);
     return this.httpClient.get<LocalCraftsman>(`${this.apiURL}localCraftsmanDetail/${id}`);
   }
 

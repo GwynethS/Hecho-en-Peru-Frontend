@@ -24,6 +24,12 @@
             {{ product.category.name }}
           </td>
         </ng-container>
+        <ng-container matColumnDef="region">
+          <th mat-header-cell *matHeaderCellDef>Región</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.localCraftsman.region.name }}
+          </td>
+        </ng-container>
         <ng-container matColumnDef="localCraftsman">
           <th mat-header-cell *matHeaderCellDef>Artesano</th>
           <td mat-cell *matCellDef="let product">
