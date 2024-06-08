@@ -6,8 +6,8 @@
     DATOS DEL REGION
   </h1>
   <div mat-dialog-content>
-    <form [formGroup]="regionForm" class="grid formgrid">
-      <div class="col-12 py-2">
+    <form [formGroup]="regionForm" class="grid formgrid w-full" enctype="multipart/form-data">
+      <div class="col-6 py-2">
         <mat-form-field class="w-full">
           <mat-label>Nombre</mat-label>
           <input
@@ -18,33 +18,69 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-12 py-2">
+      <div class="col-6 py-2">
         <div class="w-full file-container">
-          <label>Imagen</label>
           <div class="input-file-container">
-            <button
-              type="button"
-              class="upload-button"
-              (click)="fileInput.click()"
-            >
-              Seleccionar imagen
-            </button>
-            <input
-              type="file"
-              #fileInput
-              accept=".png, .jpg, .jpeg"
-              (change)="onFileSelected($event)"
-              style="display: none"
-            />
-            <span class="file-name" id="file-name"
-              >Ninguna imagen seleccionada</span
-            >
+            <div class="col-4">
+              <button
+                class="upload-button"
+                type="button"
+                (click)="fileInput.click()"
+              >
+                Seleccionar imagen
+              </button>
+            </div>
+            <div class="col-8">
+              <input
+                #fileInput
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                (change)="onFileSelected($event)"
+                style="display: none"
+              />
+              <div class="file-name-container">
+                <span class="file-name" id="file-name">{{
+                  getFileName()
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 w-full">
+            <div *ngIf="imageUrl" class="image-preview">
+              <img [src]="imageUrl" alt="Imagen del producto" />
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-12 py-2">
+      <div class="col-6 px-0">
+        <div class="col-12 py-1">
+          <mat-form-field class="w-full">
+            <mat-label>Introducción de los lugares turísticos de la región</mat-label>
+            <textarea
+              formControlName="sitesIntroduction"
+              placeholder="Ingrese la introducción de los lugares turísticos de la región"
+              matInput
+              type="text"
+              class="sitesIntroduction-container"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-12 py-3">
+          <mat-form-field class="w-full">
+            <mat-label>Introducción de los artesanos de la región</mat-label>
+            <textarea
+              formControlName="craftsmenIntroduction"
+              placeholder="Ingrese la introducción de los artesanos de la región"
+              matInput
+              type="text"
+              class="craftsmenIntroduction-container"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-12 py-1">
         <mat-form-field class="w-full">
-          <mat-label>Historia</mat-label>
+          <mat-label>Historia de la región</mat-label>
           <textarea
             formControlName="history"
             placeholder="Ingrese la historia de la región"
@@ -54,49 +90,25 @@
           ></textarea>
         </mat-form-field>
       </div>
-      <div class="col-12 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Introducción de los lugares turísticos</mat-label>
-          <textarea
-            formControlName="sitesIntroduction"
-            placeholder="Ingrese la historia de la región"
-            matInput
-            type="text"
-            class="sitesIntroduction-container"
-          ></textarea>
-        </mat-form-field>
-      </div>
-      <div class="col-12 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Introducción de los artesanos</mat-label>
-          <textarea
-            formControlName="craftsmenIntroduction"
-            placeholder="Ingrese la historia de la región"
-            matInput
-            type="text"
-            class="craftsmenIntroduction-container"
-          ></textarea>
-        </mat-form-field>
-      </div>
     </form>
   </div>
   <div mat-dialog-actions class="flex justify-content-center gap-2">
     <button
-      (click)="onCreate()"
+      (click)="onSave()"
       mat-raised-button
       type="submit"
       class="col-2 btn-save-color"
     >
-      Confirmar
+      Guardar
     </button>
     <button
-      (click)="onClearInputs()"
+      (click)="onCancel()"
       [mat-dialog-close]="false"
       mat-raised-button
       type="button"
       class="col-2 btn-clean-color"
     >
-      Limpiar
+      Cancelar
     </button>
   </div>
 </div>

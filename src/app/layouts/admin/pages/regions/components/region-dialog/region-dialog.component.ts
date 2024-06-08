@@ -2,15 +2,18 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Region } from '../../models/region';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-region-dialog',
   templateUrl: './region-dialog.component.html',
-  styleUrls: ['./region-dialog.component.scss'],
+  styleUrl: './region-dialog.component.scss',
 })
 export class RegionDialogComponent {
   regionForm: FormGroup;
   selectedFile: File | null = null;
+  imageUrl: string | null = null;
+  imageName: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -19,41 +22,68 @@ export class RegionDialogComponent {
   ) {
     this.regionForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      image: [null, Validators.required],
       history: ['', [Validators.required, Validators.minLength(3)]],
       sitesIntroduction: ['', [Validators.required, Validators.minLength(3)]],
-      craftsmenIntroduction: ['', [Validators.required, Validators.minLength(3)]],
+      craftsmenIntroduction: [
+        '',
+        [Validators.required, Validators.minLength(3)],
+      ],
     });
-
     if (this.editingRegion) {
       this.regionForm.patchValue(this.editingRegion);
+      if (this.editingRegion.image) {
+        this.imageUrl = `${environment.apiURL}uploadsLoadImage/${this.editingRegion.image}`;
+        this.imageName = this.extractFileName(this.editingRegion.image);
+      }
     }
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     this.selectedFile = file;
-    const fileNameElement = document.getElementById('file-name');
-    if (fileNameElement) {
-      fileNameElement.textContent = file ? file.name : 'Ninguna imagen seleccionada';
+    this.updateImageUrl();
+  }
+
+  updateImageUrl(): void {
+    if (this.selectedFile) {
+      this.imageUrl = URL.createObjectURL(this.selectedFile);
+      this.imageName = this.selectedFile.name;
+    } else {
+      this.imageUrl = null;
+      this.imageName = null;
     }
   }
 
-  onCreate(): void {
+  extractFileName(url: string): string {
+    return url.substring(url.lastIndexOf('/') + 1);
+  }
+
+  getFileName(): string {
+    return this.imageName ? this.imageName : 'Ninguna imagen seleccionada';
+  }
+
+  onSave(): void {
     if (this.regionForm.invalid) {
       this.regionForm.markAllAsTouched();
     } else {
-      const regionData = { ...this.regionForm.value, image: this.selectedFile };
-      this.matDialogRef.close(regionData);
+      if (!this.editingRegion && !this.selectedFile) { return }
+      
+      const regionData = this.regionForm.value;
+      let imageToSend;
+      
+      if (this.selectedFile) {
+        imageToSend = this.selectedFile;
+      } else {
+        imageToSend = this.regionForm.get('image')?.value || new Blob();
+      }
+      this.matDialogRef.close({ regionData, image: imageToSend });
     }
   }
 
-  onClearInputs(): void {
-    this.regionForm.reset();
+  onCancel(): void {
+    this.matDialogRef.close();
     this.selectedFile = null;
-    const fileNameElement = document.getElementById('file-name');
-    if (fileNameElement) {
-      fileNameElement.textContent = 'Ninguna imagen seleccionada';
-    }
+    this.imageUrl = null;
+    this.imageName = null;
   }
 }

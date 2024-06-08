@@ -40,10 +40,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private alertService: AlertService
   ) {
     this.productSearchForm = this.fb.group({
-      id: this.fb.control('', [
-        Validators.required,
-        Validators.pattern('^[0-9]+$'),
-      ]),
+      id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
     });
   }
 
@@ -86,10 +83,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.dataSource.data = this.products;
           },
           error: (err) => {
-            console.error(
-              `Failed to load product with ID ${this.productSearchForm.value.id}`,
-              err
-            );
+            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
             this.searchAttempted = true;
             this.dataSource.data = [];
           },

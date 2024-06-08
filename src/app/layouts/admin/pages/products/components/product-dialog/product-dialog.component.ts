@@ -102,7 +102,7 @@ export class ProductDialogComponent implements OnInit {
       this.productForm.markAllAsTouched();
     } else {
       if (!this.editingProduct && !this.selectedFile) { return }
-
+      
       forkJoin({
         localCraftsman: this.localCraftsmanService.getSearchLocalCraftsmanDetailsByID(
             this.productForm.get('localCraftsman_id')?.value
@@ -115,8 +115,8 @@ export class ProductDialogComponent implements OnInit {
           const localCraftsman = results.localCraftsman;
           const category = results.category;
           const productData = { ...this.productForm.value, localCraftsman, category };
-          
           let imageToSend;
+          
           if (this.selectedFile) {
             imageToSend = this.selectedFile;
           } else {

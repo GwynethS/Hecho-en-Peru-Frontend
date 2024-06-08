@@ -85,7 +85,7 @@ export class LocalCraftsmanDialogComponent implements OnInit {
       this.localCraftsmanForm.markAllAsTouched();
     } else {
       if (!this.editinglocalCraftsman && !this.selectedFile) { return }
-
+      
       forkJoin({
         region: this.regionService.getSearchRegionDetailsByID(
           this.localCraftsmanForm.get('region_id')?.value
@@ -94,8 +94,8 @@ export class LocalCraftsmanDialogComponent implements OnInit {
         next: (results) => {
           const region = results.region;
           const localCraftsmanData = { ...this.localCraftsmanForm.value, region };
-          
           let imageToSend;
+          
           if (this.selectedFile) {
             imageToSend = this.selectedFile;
           } else {

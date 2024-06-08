@@ -6,7 +6,7 @@
     DATOS DEL ARTESANO
   </h1>
   <div mat-dialog-content>
-    <form [formGroup]="localCraftsmanForm" class="grid formgrid">
+    <form [formGroup]="localCraftsmanForm" class="grid formgrid w-full" enctype="multipart/form-data">
       <div class="col-5 py-2">
         <mat-form-field class="w-full">
           <mat-label>Nombre completo</mat-label>
@@ -18,43 +18,30 @@
           />
         </mat-form-field>
       </div>
-      <div class="col-5 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Especialidad</mat-label>
-          <input
-            formControlName="specialty"
-            placeholder="Ingrese la especialidad"
-            matInput
-            type="text"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col-2 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Región</mat-label>
-          <mat-select
-            formControlName="region_id"
-            placeholder="Seleccione la región"
-          >
-            <mat-option
-              *ngFor="let region of regions"
-              [value]="region.id"
-            >
-              {{ region.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-5 py-2">
+      <div class="col-7 py-2">
         <div class="w-full file-container">
           <div class="input-file-container">
             <div class="col-4">
-              <button class="upload-button" type="button" (click)="fileInput.click()">Seleccionar imagen</button>
+              <button
+                class="upload-button"
+                type="button"
+                (click)="fileInput.click()"
+              >
+                Seleccionar imagen
+              </button>
             </div>
             <div class="col-8">
-              <input #fileInput type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)" style="display: none" />
+              <input
+                #fileInput
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                (change)="onFileSelected($event)"
+                style="display: none"
+              />
               <div class="file-name-container">
-                <span class="file-name" id="file-name">{{ getFileName() }}</span>
+                <span class="file-name" id="file-name">{{
+                  getFileName()
+                }}</span>
               </div>
             </div>
           </div>
@@ -65,20 +52,43 @@
           </div>
         </div>
       </div>
-      <div class="col-7 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Experiencia</mat-label>
-          <input
-            formControlName="experience"
-            placeholder="Ingrese la experiencia"
-            matInput
-            type="text"
-          />
-        </mat-form-field>
-      </div>
-      <div class="col-5"></div>
-      <div class="col-7 px-0">
-        <div class="col-12 w-full">
+      <div class="col-5 px-0">
+        <div class="col-12 py-1 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Especialidad</mat-label>
+            <input
+              formControlName="specialty"
+              placeholder="Ingrese la especialidad"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 py-3 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Región</mat-label>
+            <mat-select
+              formControlName="region_id"
+              placeholder="Seleccione la región"
+            >
+              <mat-option *ngFor="let region of regions" [value]="region.id">
+                {{ region.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 py-1 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Experiencia</mat-label>
+            <input
+              formControlName="experience"
+              placeholder="Ingrese la experiencia"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 py-3 w-full">
           <mat-form-field class="w-full">
             <mat-label>Descripción</mat-label>
             <textarea

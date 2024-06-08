@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Region } from './models/region';
 import { environment } from '../../../../../environments/environment';
-import { Observable, mergeMap, switchMap } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 @Injectable()
 export class RegionsService {
@@ -32,23 +32,33 @@ export class RegionsService {
     );
   }
 
-  addRegions(data: any): Observable<Region[]> {
-    const formData: FormData = new FormData();
-    formData.append('regionDTO', new Blob([JSON.stringify({
-      name: data.name,
-      history: data.history,
-      sitesIntroduction: data.sitesIntroduction,
-      craftsmenIntroduction: data.craftsmenIntroduction,
-    })], { type: "application/json" }));
-    if (data.image) {
-      formData.append('image', data.image);
+  addRegions(data: Region, file: File) {
+    const formData = new FormData();
+    formData.append('regionDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    if (file) {
+      formData.append('file', file, file.name);
     }
-    return this.httpClient.post<Region[]>(`${environment.apiURL}region`, formData);
+    return this.httpClient.post(`${environment.apiURL}region`, formData)
+    .pipe(
+      catchError((err) => {
+        console.error('Failed to add region', err);
+        return of({ err });
+      })
+    );
   }
 
-  updateRegions(id: string, data: Region): Observable<Region[]> {
-    return this.httpClient
-      .put<Region[]>(`${environment.apiURL}region/${id}`, data)
-      .pipe(mergeMap(() => this.getRegions()));
+  updateRegions(id: string, data: Region, file: File) {
+    const formData = new FormData();
+    formData.append('regionDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+    return this.httpClient.put(`${environment.apiURL}region/${id}`, formData)
+    .pipe(
+      catchError((err) => {
+        console.error('Failed to update region', err);
+        return of({ err });
+      })
+    );
   }
 }

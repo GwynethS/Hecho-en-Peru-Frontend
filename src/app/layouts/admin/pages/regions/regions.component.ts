@@ -11,7 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-regions',
   templateUrl: './regions.component.html',
-  styleUrls: ['./regions.component.scss'],
+  styleUrl: './regions.component.scss',
 })
 export class RegionsComponent implements OnInit, OnDestroy {
   pageSize = 50;
@@ -20,6 +20,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
   regionSearchForm: FormGroup;
   regions: Region[] = [];
   dataSource = new MatTableDataSource<Region>();
+
   searchAttempted = false;
 
   subscriptions: Subscription[] = [];
@@ -32,10 +33,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog
   ) {
     this.regionSearchForm = this.fb.group({
-      name: this.fb.control('', [
-        Validators.required,
-        Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*'),
-      ]),
+      name: this.fb.control('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*')]),
     });
   }
 
@@ -67,17 +65,19 @@ export class RegionsComponent implements OnInit, OnDestroy {
     if (this.regionSearchForm.invalid) {
       this.regionSearchForm.markAllAsTouched();
     } else {
-      const subscription = this.regionsService.getSearchRegionByName(this.regionSearchForm.value.name).subscribe({
-        next: (region: Region[]) => {
-          this.regions = region;
-          this.dataSource.data = this.regions;
-        },
-        error: err => {
-          console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
-          this.searchAttempted = true;
-          this.dataSource.data = [];
-        }
-      });
+      const subscription = this.regionsService
+        .getSearchRegionByName(this.regionSearchForm.value.name)
+        .subscribe({
+          next: (region: Region[]) => {
+            this.regions = region;
+            this.dataSource.data = this.regions;
+          },
+          error: (err) => {
+            console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
+            this.searchAttempted = true;
+            this.dataSource.data = [];
+          }
+        });
       this.subscriptions.push(subscription);
     }
   }
@@ -89,50 +89,42 @@ export class RegionsComponent implements OnInit, OnDestroy {
   }
 
   onCreateRegion(): void {
-    this.subscriptions.push(
-      this.matDialog
-        .open(RegionDialogComponent)
-        .afterClosed()
-        .subscribe((regionData) => {
-          if (regionData) {
-            this.regionsService.addRegions(regionData).subscribe({
-              next: (regions) => {
-                this.regions = regions;
-              },
-              error: (err) => {
-                console.error('Failed to add region', err);
-              },
+    this.matDialog
+      .open(RegionDialogComponent)
+      .afterClosed()
+      .subscribe(
+        (result) => {
+        if (result) {
+          const { regionData, image } = result;
+          this.regionsService.addRegions(regionData, image)
+            .subscribe({
+              next: () => this.loadRegionsPage(),
+              error: (err) => console.error('Error adding region', err),
             });
+        }}
+      );
+  }
+
+  onEditRegion(region: Region): void {
+    this.matDialog
+      .open(RegionDialogComponent, { data: region })
+      .afterClosed()
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            const { regionData, image } = result;
+            this.regionsService.updateRegions(region.id, regionData, image)
+              .subscribe({
+                next: () => this.loadRegionsPage(),
+                error: (err) => console.error('Error updating region', err),
+              });
           }
-        })
-    );
+        },
+        error: (err) => console.error('Failed to open region dialog', err),
+      });
   }
 
-  onEditRegion(region: Region) {
-    this.subscriptions.push(
-      this.matDialog
-        .open(RegionDialogComponent, {
-          data: { region: region, view: false, edit: true },
-        })
-        .afterClosed()
-        .subscribe({
-          next: (regionData) => {
-            if (regionData) {
-              this.regionsService
-                .updateRegions(region.id, regionData)
-                .subscribe({
-                  next: (regions) => {
-                    this.regions = regions;
-                    this.dataSource.data = this.regions;
-                  },
-                });
-            }
-          },
-        })
-    );
-  }
-
-  onViewRegion(region: Region) {
+  onViewRegion(region: Region): void {
     this.matDialog.open(RegionDialogComponent, {
       data: { region: region, view: true, edit: false },
     });

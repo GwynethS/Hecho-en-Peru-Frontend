@@ -2,22 +2,16 @@
   padding: 1rem;
 }
 
-.modal-container {
-  button {
-    margin-bottom: 1.25rem;
-  }
-}
-
 .history-container {
-  height: 3.5rem;
+  height: 5.5rem;
 }
 
 .sitesIntroduction-container {
-  height: 3.5rem;
+  height: 5.5rem;
 }
 
 .craftsmenIntroduction-container {
-  height: 3.5rem;
+  height: 5.5rem;
 }
 
 .btn-save-color {
@@ -32,18 +26,27 @@
 
 .file-container {
   margin-bottom: 0.45rem;
-}
-
-.file-container label {
-  margin-left: 1rem;
+  img {
+    margin-top: 0.5rem;
+    width: auto;
+    object-fit: contain;
+    height: 17rem;
+    position: absolute;
+  }
+  .image-preview {
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .input-file-container {
-  padding: 2rem;
+  padding: 1rem;
   border: #a5a5a5 0.12rem solid;
   border-radius: 0.2rem;
   position: relative;
-  height: 3rem;
+  height: 3.5rem;
   display: flex;
   align-items: center;
 }
@@ -53,7 +56,7 @@
 }
 
 .upload-button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.5rem 1.2rem;
   font-weight: 600;
   font-size: 0.95rem;
   border: 0.063rem solid #ccc;
@@ -61,10 +64,9 @@
   color: #ffffff;
   background-color: #A5A5A5;
   cursor: pointer;
-}
-
-.modal-container[_ngcontent-ng-c1895961440] button[_ngcontent-ng-c1895961440] {
-  margin: 0;
+  button {
+    margin: 0;
+  }
 }
 
 input[type="file"] {
@@ -73,16 +75,21 @@ input[type="file"] {
   height: 100%;
   opacity: 0;
   cursor: pointer;
-  left: 0;
-  top: 0;
+}
+
+.file-name-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .file-name {
-  margin-left: 1.5rem;
   font-size: 1rem;
   color: #666;
-  white-space: nowrap;
+  word-break: break-all;
+  white-space: pre-wrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: calc(100% - 8.75rem);
+  text-align: center;
+  line-height: 1.2;
+  padding-left: 0.8rem;
 }

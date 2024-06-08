@@ -22,15 +22,13 @@
 
 .file-container {
   margin-bottom: 0.45rem;
-
   img {
     margin-top: 0.5rem;
     width: auto;
     object-fit: contain;
-    height: 20rem;
+    height: 20.5rem;
     position: absolute;
   }
-
   .image-preview {
     text-align: center;
     position: relative;
@@ -62,7 +60,6 @@
   color: #ffffff;
   background-color: #A5A5A5;
   cursor: pointer;
-
   button {
     margin: 0;
   }

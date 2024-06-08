@@ -3,7 +3,7 @@
 }
 
 .description-container {
-  height: 16rem;
+  height: 8rem;
 }
 
 .btn-save-color {
@@ -18,15 +18,13 @@
 
 .file-container {
   margin-bottom: 0.45rem;
-
   img {
     margin-top: 0.5rem;
     width: auto;
     object-fit: contain;
-    height: 18.4rem;
+    height: 24.9rem;
     position: absolute;
   }
-
   .image-preview {
     text-align: center;
     position: relative;
@@ -58,7 +56,6 @@
   color: #ffffff;
   background-color: #A5A5A5;
   cursor: pointer;
-
   button {
     margin: 0;
   }

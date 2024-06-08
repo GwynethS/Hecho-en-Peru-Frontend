@@ -60,10 +60,10 @@
         <div class="w-full file-container">
           <div class="input-file-container">
             <div class="col-4">
-              <button class="upload-button" type="button" (click)="fileInput.click()">Seleccionar imagen</button>
+              <button class="upload-button w-full" type="button" (click)="fileInput.click()">Seleccionar imagen</button>
             </div>
             <div class="col-8">
-              <input #fileInput type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)" style="display: none" />
+              <input #fileInput type="file" accept=".png, .jpg, .jpeg" class="w-full" (change)="onFileSelected($event)" style="display: none" />
               <div class="file-name-container">
                 <span class="file-name" id="file-name">{{ getFileName() }}</span>
               </div>
@@ -105,7 +105,7 @@
             ></textarea>
           </mat-form-field>
         </div>
-        <div class="col-12 py-2 w-full">
+        <div class="col-12 py-3 w-full">
           <mat-form-field class="w-full">
             <mat-label>Historia</mat-label>
             <textarea
