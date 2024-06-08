@@ -47,7 +47,7 @@
           <th mat-header-cell *matHeaderCellDef>
             Acciones
           </th>
-          <td mat-cell *matCellDef="let region" class="text-center w-1">
+          <td mat-cell *matCellDef="let region"  class="text-center w-1">
             <button
               (click)="editRegion.emit(region)"
               mat-icon-button
@@ -55,7 +55,7 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="primary" (click)="viewTouristSites(region)">
+            <button mat-icon-button color="primary" >
               <mat-icon>visibility</mat-icon>
             </button>
           </td>

@@ -86,7 +86,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.dataSource.data = this.products;
           },
           error: (err) => {
-            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
+            console.error(
+              `Failed to load product with ID ${this.productSearchForm.value.id}`,
+              err
+            );
             this.searchAttempted = true;
             this.dataSource.data = [];
           },
@@ -102,73 +105,51 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onCreateProduct(): void {
-    const subscription = this.matDialog
+    this.matDialog
       .open(ProductDialogComponent)
       .afterClosed()
+      .subscribe(
+        (result) => {
+        if (result) {
+          const { productData, image } = result;
+          this.productsService.addProducts(productData, image)
+            .subscribe({
+              next: () => this.loadProductsPage(),
+              error: (err) => console.error('Error adding product', err),
+            });
+        }}
+      );
+  }
+
+  onEditProduct(product: Product): void {
+    this.matDialog
+      .open(ProductDialogComponent, { data: product })
+      .afterClosed()
       .subscribe({
-        next: (productData) => {
-          if (productData) {
-            const addSubscription = this.productsService
-              .addProducts(productData)
+        next: (result) => {
+          if (result) {
+            const { productData, image } = result;
+            this.productsService.updateProducts(product.id, productData, image)
               .subscribe({
                 next: () => this.loadProductsPage(),
-                error: (err) => console.error('Failed to add product', err),
+                error: (err) => console.error('Error updating product', err),
               });
-            this.subscriptions.push(addSubscription);
           }
         },
         error: (err) => console.error('Failed to open product dialog', err),
       });
-    this.subscriptions.push(subscription);
-  }
-
-  onEditProduct(product: Product): void {
-    const subscription = this.productsService
-      .getProductDetailsByID(product.id)
-      .subscribe({
-        next: (fullProduct) => {
-          const editSubscription = this.matDialog
-            .open(ProductDialogComponent, { data: fullProduct })
-            .afterClosed()
-            .subscribe({
-              next: (productData) => {
-                if (productData) {
-                  const updateSubscription = this.productsService
-                    .updateProducts(product.id, productData)
-                    .subscribe({
-                      next: () => this.loadProductsPage(),
-                      error: (err) =>
-                        console.error('Failed to update product', err),
-                    });
-                  this.subscriptions.push(updateSubscription);
-                }
-              },
-              error: (err) =>
-                console.error('Failed to open product dialog', err),
-            });
-          this.subscriptions.push(editSubscription);
-        },
-        error: (err) =>
-          console.error(
-            `Failed to load full product details with ID ${product.id}`,
-            err
-          ),
-      });
-    this.subscriptions.push(subscription);
   }
 
   onDeleteProduct(id: string): void {
-    this.alertService
-      .showConfirmDeleteAction('este producto')
+    this.alertService.showConfirmDeleteAction('este producto')
       .then((result) => {
         if (result.isConfirmed) {
-          const subscription = this.productsService
-            .deleteProductsByID(id)
+          const deleteSubscription = this.productsService.deleteProductsByID(id)
             .subscribe({
               next: () => this.loadProductsPage(),
               error: (err) => console.error('Failed to delete product', err),
             });
-          this.subscriptions.push(subscription);
+          this.subscriptions.push(deleteSubscription);
         }
       });
   }
@@ -176,7 +157,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   onCreateCategory(): void {
     const subscription = this.matDialog
       .open(CategoryDialogComponent, {
-        data: { categories: this.categories }
+        data: { categories: this.categories },
       })
       .afterClosed()
       .subscribe({

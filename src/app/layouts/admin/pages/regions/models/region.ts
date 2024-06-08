@@ -1,7 +1,7 @@
 export interface Region {
   id: string;
   name: string;
-  image: File | string;
+  image: File;
   history: string;
   sitesIntroduction: string;
   craftsmenIntroduction: string;

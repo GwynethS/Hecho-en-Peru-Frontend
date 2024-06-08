@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { LocalCraftsman } from '../../models/localCraftsman';
+import { LocalCraftsman } from '../../models/local-craftsman';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -32,7 +32,7 @@ export class LocalCraftsmanTableComponent implements AfterViewInit {
     'fullName',
     'specialty',
     'experience',
-    'name_region',
+    'region',
     'enabled',
     'actions',
   ];

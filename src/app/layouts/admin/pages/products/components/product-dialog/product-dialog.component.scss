@@ -27,10 +27,13 @@
     margin-top: 0.5rem;
     width: auto;
     object-fit: contain;
-    height: 16.15rem;
+    height: 20rem;
+    position: absolute;
   }
 
   .image-preview {
+    text-align: center;
+    position: relative;
     display: flex;
     justify-content: center;
   }
@@ -41,7 +44,7 @@
   border: #a5a5a5 0.12rem solid;
   border-radius: 0.2rem;
   position: relative;
-  height: 4rem;
+  height: 3.5rem;
   display: flex;
   align-items: center;
 }
@@ -87,4 +90,5 @@ input[type="file"] {
   overflow: hidden;
   text-align: center;
   line-height: 1.2;
+  padding-left: 0.8rem;
 }

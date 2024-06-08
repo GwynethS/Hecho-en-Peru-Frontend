@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-product-table',
   templateUrl: './product-table.component.html',
-  styleUrls: ['./product-table.component.scss'],
+  styleUrl:'./product-table.component.scss',
 })
 export class ProductTableComponent implements AfterViewInit {
   @Input()
@@ -30,12 +30,13 @@ export class ProductTableComponent implements AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'name',
-    'name_category',
-    'name_region',
-    'fullname_localCraftsman',
+    'category',
+    'region',
+    'localCraftsman',
     'price',
     'stock',
     'averageRating',
+    'availability',
     'enabled',
     'actions',
   ];

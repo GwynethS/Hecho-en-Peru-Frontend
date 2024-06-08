@@ -1,12 +1,11 @@
 import { Region } from "./region";
 
-export interface LocalCraftsman {
+export interface LocalCraftsmanRequest {
   id: string;
   fullName: string;
   description: string;
   specialty: string;
-  image: File;
+  image: string;
   experience: string;
-  region: Region;
-  enabled: boolean;
+  region_id: Region;
 }

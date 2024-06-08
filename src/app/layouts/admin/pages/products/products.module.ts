@@ -9,6 +9,7 @@ import { ProductDialogComponent } from './components/product-dialog/product-dial
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { ProductsService } from './products.service';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
+import { LocalCraftsmenService } from '../local-craftsmen/local-craftsmen.service';
 
 
 @NgModule({
@@ -25,6 +26,6 @@ import { CategoryDialogComponent } from './components/category-dialog/category-d
     ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [ProductsService],
+  providers: [ProductsService, LocalCraftsmenService],
 })
 export class ProductsModule {}

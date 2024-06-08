@@ -1,18 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Product } from '../../models/product';
 import { Category } from '../../models/category';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LocalCraftsman } from '../../../local-craftsmen/models/localCraftsman';
+import { LocalCraftsman } from '../../../local-craftsmen/models/local-craftsman';
 import { Region } from '../../models/region';
 import { ProductsService } from '../../products.service';
-import { firstValueFrom } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { LocalCraftsmenService } from '../../../local-craftsmen/local-craftsmen.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-dialog',
   templateUrl: './product-dialog.component.html',
-  styleUrls: ['./product-dialog.component.scss'],
+  styleUrl: './product-dialog.component.scss',
 })
 export class ProductDialogComponent implements OnInit {
   productForm: FormGroup;
@@ -26,32 +27,28 @@ export class ProductDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductsService,
-    private httpClient: HttpClient,
+    private localCraftsmanService: LocalCraftsmenService,
+    private matDialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private editingProduct?: Product
   ) {
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      name_category: ['', Validators.required],
-      name_region: ['', Validators.required],
-      fullname_localCraftsman: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
-      stock: ['', [Validators.required, Validators.min(0)]],
-      image: ['', Validators.required],
-      averageRating: ['',[Validators.required, Validators.min(0), Validators.max(5)]],
+      category_id: ['', Validators.required],
+      localCraftsman_id: ['', Validators.required],
+      price: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.min(1)]],
+      stock: ['', [Validators.required, Validators.pattern(/^[1-9]\d*$/), Validators.min(1)]],
       history: ['', Validators.required],
       details: ['', Validators.required],
-      enabled: ['', Validators.required],
     });
     if (this.editingProduct) {
       this.productForm.patchValue({
         ...this.editingProduct,
-        name_category: this.editingProduct.category.id,
-        name_region: this.editingProduct.localCraftsman.region.id,
-        fullname_localCraftsman: this.editingProduct.localCraftsman.id,
+        category_id: this.editingProduct.category.id,
+        localCraftsman_id: this.editingProduct.localCraftsman.id,
         enabled: this.editingProduct.enabled ? 'true' : 'false',
       });
       if (this.editingProduct.image) {
-        this.imageUrl = `http://localhost:8080/api/uploadsLoadImage/${this.editingProduct.image}`;
+        this.imageUrl = `${environment.apiURL}uploadsLoadImage/${this.editingProduct.image}`;
         this.imageName = this.extractFileName(this.editingProduct.image);
       }
     }
@@ -59,40 +56,20 @@ export class ProductDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
-    this.loadRegions();
     this.loadLocalCraftsmen();
   }
 
   loadCategories(): void {
     this.productService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-      },
-      error: (err) => {
-        console.error('Failed to load categories', err);
-      },
-    });
-  }
-
-  loadRegions(): void {
-    this.productService.getRegions().subscribe({
-      next: (regions) => {
-        this.regions = regions;
-      },
-      error: (err) => {
-        console.error('Failed to load regions', err);
-      },
+      next: (categories) => this.categories = categories,
+      error: (err) => console.error('Failed to load categories', err)
     });
   }
 
   loadLocalCraftsmen(): void {
-    this.productService.getLocalCraftsmen().subscribe({
-      next: (localCraftsmen) => {
-        this.localCraftsmen = localCraftsmen;
-      },
-      error: (err) => {
-        console.error('Failed to load local craftsmen', err);
-      },
+    this.localCraftsmanService.getLocalCraftsmen().subscribe({
+      next: (localCraftsmen) => this.localCraftsmen = localCraftsmen,
+      error: (err) => console.error('Failed to load local craftsmen', err)
     });
   }
 
@@ -120,62 +97,42 @@ export class ProductDialogComponent implements OnInit {
     return this.imageName ? this.imageName : 'Ninguna imagen seleccionada';
   }
 
-  onCreate(): void {
+  onSave(): void {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
     } else {
-      const productData = this.productForm.value;
-      if (this.selectedFile) {
-        this.uploadFile(this.selectedFile).then(({ imageUrl, filename }) => {
-          productData.image = imageUrl;
-          productData.imageName = filename;
-          this.sendProductData(productData);
-        });
-      } else {
-        this.sendProductData(productData);
-      }
-    }
-  }
+      if (!this.editingProduct && !this.selectedFile) { return }
 
-  async uploadFile(file: File): Promise<{ imageUrl: string; filename: string }> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    const uploadUrl = 'http://localhost:8080/api/uploadsLoadImage';
-    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
-    const response = await firstValueFrom(this.httpClient.post<any>(uploadUrl, formData, { headers }));
-    return { imageUrl: `http://localhost:8080/api/uploadsLoadImage/${response.filename}`, filename: response.filename };
-  }
-
-  sendProductData(productData: any): void {
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(productData));
-    if (this.selectedFile) {
-      formData.append('file', this.selectedFile, this.selectedFile.name);
-    }
-
-    if (this.editingProduct) {
-      this.productService.updateProducts(this.editingProduct.id, formData).subscribe({
-        next: () => {
-          console.log('Product updated successfully');
+      forkJoin({
+        localCraftsman: this.localCraftsmanService.getSearchLocalCraftsmanDetailsByID(
+            this.productForm.get('localCraftsman_id')?.value
+          ),
+        category: this.productService.getCategoriesByID(
+          this.productForm.get('category_id')?.value
+        ),
+      }).subscribe({
+        next: (results) => {
+          const localCraftsman = results.localCraftsman;
+          const category = results.category;
+          const productData = { ...this.productForm.value, localCraftsman, category };
+          
+          let imageToSend;
+          if (this.selectedFile) {
+            imageToSend = this.selectedFile;
+          } else {
+            imageToSend = this.productForm.get('image')?.value || new Blob();
+          }
+          this.matDialogRef.close({ productData, image: imageToSend });
         },
         error: (err) => {
-          console.error('Failed to update product', err);
-        },
-      });
-    } else {
-      this.productService.addProducts(formData).subscribe({
-        next: () => {
-          console.log('Product created successfully');
-        },
-        error: (err) => {
-          console.error('Failed to create product', err);
+          console.error('Error in one of the requests', err);
         },
       });
     }
   }
 
   onCancel(): void {
-    this.productForm.reset();
+    this.matDialogRef.close();
     this.selectedFile = null;
     this.imageUrl = null;
     this.imageName = null;
