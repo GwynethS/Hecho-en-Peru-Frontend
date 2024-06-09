@@ -32,10 +32,16 @@ export class CatalogDetailComponent {
   pageIndex = 0;
   pageEvent!: PageEvent;
 
+  lengthBestSellers = 0;
+  pageSizeBestSellers = 4;
+  pageIndexBestSellers = 0;
+
   inputProductQuantity: number = 1;
   avgRating = 4.5;
 
   productSelected: Product | null = null;
+
+  bestSellers: Product[] = [];
 
   commentForm: FormGroup;
   comments: Comment[] = [];
@@ -66,22 +72,69 @@ export class CatalogDetailComponent {
 
   ngOnInit(): void {
     this.subscriptions.push(
+      this.route.params.subscribe((params) => {
+        const productId = params['id'];
+        if (productId) {
+          this.productsService
+            .getSearchProductDetailsByID(productId)
+            .subscribe({
+              next: (findedProduct) => {
+                if (findedProduct) {
+                  this.productSelected = findedProduct;
+                  this.avgRating = this.productSelected.averageRating;
+                  this.getComments();
+                  this.getCommentsByPage();
+                }
+              },
+              error: () => {
+                this.router.navigate([`/404`]);
+              },
+            });
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.productsService.getBestSellingProductsUser().subscribe({
+        next: (bestSellers) => {
+          this.lengthBestSellers = bestSellers.length;
+        },
+      })
+    );
+
+    this.getBestSellersByPage();
+  }
+
+  getBestSellersByPage() {
+    this.subscriptions.push(
       this.productsService
-        .getSearchProductDetailsByID(this.route.snapshot.params['id'])
+        .getBestSellingProductsByPageUser(
+          this.pageIndexBestSellers,
+          this.pageSizeBestSellers
+        )
         .subscribe({
-          next: (findedProduct) => {
-            if (findedProduct) {
-              this.productSelected = findedProduct;
-              this.avgRating = this.productSelected.averageRating;
-              this.getComments();
-              this.getCommentsByPage();
-            }
-          },
-          error: () => {
-            this.router.navigate([`/404`]);
+          next: (bestSellers) => {
+            this.bestSellers = bestSellers;
           },
         })
     );
+  }
+
+  previousBestSellersPage() {
+    if (this.pageIndexBestSellers > 0) {
+      this.pageIndexBestSellers--;
+      this.getBestSellersByPage();
+    }
+  }
+
+  nextBestSellersPage() {
+    if (
+      this.pageIndexBestSellers <
+      Math.ceil(this.lengthBestSellers / this.pageSizeBestSellers) - 1
+    ) {
+      this.pageIndexBestSellers++;
+      this.getBestSellersByPage();
+    }
   }
 
   onSubmit() {
@@ -189,10 +242,8 @@ export class CatalogDetailComponent {
     }
   }
 
-  redirectToRegion(regionId?: string ) {
-    if (regionId) {
-      this.router.navigate([`/shop/regions/${regionId}`]);
-    }
+  redirectTo(path: string) {
+    this.router.navigate([`/shop/${path}`]);
   }
 
   ngOnDestroy(): void {

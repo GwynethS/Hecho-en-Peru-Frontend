@@ -100,7 +100,7 @@
       ><button
         mat-flat-button
         class="btn-region"
-        (click)="redirectToRegion(productSelected?.localCraftsman?.region?.id)"
+        (click)="redirectTo('regions/' + productSelected?.localCraftsman?.region?.id)"
       >
         Conocer más
       </button>
@@ -109,6 +109,40 @@
   <div class="product-details">
     <h3>Detalles del producto</h3>
     <p>{{ productSelected?.details }}</p>
+  </div>
+</section>
+
+<section class="container-best-sellers">
+  <h2>PRODUCTOS QUE PODRÍAN INTERESARTE</h2>
+  <div class="container-carousel">
+    <button class="btn-carusel" mat-icon-button (click)="previousBestSellersPage()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <ul class="carousel">
+      
+      <li class="carousel-product" *ngFor="let product of bestSellers">
+        <figure (click)="redirectTo('catalog/' + product.id)">
+          <img
+            src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
+            alt="{{product.name}}"
+          />
+        </figure>
+        <div class="rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating-value">{{
+            product.averageRating | number : "1.1-1"
+          }}</span>
+        </div>
+        <div class="info-product">
+          <h3>{{product.name}}</h3>
+          <p>s/.{{product.price | number: '1.2-2'}}</p>
+        </div>
+        <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
+      </li>
+    </ul>
+    <button class="btn-carusel" mat-icon-button (click)="nextBestSellersPage()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
   </div>
 </section>
 
