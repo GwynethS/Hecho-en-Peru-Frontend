@@ -15,8 +15,8 @@
   </div>
   <div class="position-center">
     <div class="name-admin-custom">
-      <span *ngIf="(authUser$ | async) as authUser">
-        {{ authUser.user.name + ' ' + authUser.user.lastName }}
+      <span>
+        {{ authUser$ | async | fullNameUserLogin }}
       </span>
       <i class="fa-regular fa-user space-left-icon"></i>
     </div>
