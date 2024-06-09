@@ -25,12 +25,14 @@
 
         <mat-form-field>
           <mat-label>Número de celular</mat-label>
-          <input matInput formControlName="telefono" type="text">
+          <input matInput formControlName="phone" type="text">
+          <mat-error>{{paymentForm.get('phone')?.errors | errorsFeedback}}</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Código de aprobación</mat-label>
-          <input matInput formControlName="codigo" type="text">
+          <input matInput formControlName="verificationCode" type="text">
+          <mat-error>{{paymentForm.get('verificationCode')?.errors | errorsFeedback}}</mat-error>
         </mat-form-field>
       </form>
       <button mat-flat-button type="submit" id="btn-submit" (click)="onSubmit()">Realizar pago</button>

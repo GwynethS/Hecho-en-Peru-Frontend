@@ -17,7 +17,7 @@
           {{ productSelected?.averageRating | number : "1.1-1" }}
         </p>
       </div>
-      <p class="number-comments"> {{comments.length}} comentarios </p>
+      <p class="number-comments">{{ comments.length }} comentarios</p>
     </div>
     <h2 class="product-title">{{ productSelected?.name }}</h2>
     <h2 class="precio-product">
@@ -27,13 +27,28 @@
     <div class="quantity-box">
       <h4>Número de unidades</h4>
       <div class="quantity-form">
-        <button mat-icon-button type="button" (click)="updateQuantityProduct(-1)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="updateQuantityProduct(-1)"
+        >
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field class="product-quantity">
-          <input matInput [(ngModel)]="inputProductQuantity" (change)="onChangeInputProductQuantity()" type="number" value="1" min="1" />
+          <input
+            matInput
+            [(ngModel)]="inputProductQuantity"
+            (change)="onChangeInputProductQuantity()"
+            type="number"
+            value="1"
+            min="1"
+          />
         </mat-form-field>
-        <button mat-icon-button type="button" (click)="updateQuantityProduct(1)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="updateQuantityProduct(1)"
+        >
           <mat-icon>add</mat-icon>
         </button>
       </div>
@@ -42,7 +57,12 @@
       <h4>Stock:</h4>
       <span>{{ productSelected?.stock }} unidades</span>
     </div>
-    <button mat-flat-button class="btn-add-cart" type="button" (click)="onAddProduct(productSelected)">
+    <button
+      mat-flat-button
+      class="btn-add-cart"
+      type="button"
+      (click)="onAddProduct(productSelected)"
+    >
       <span>Agregar al carrito</span><i class="fa-solid fa-cart-shopping"></i>
     </button>
   </div>
@@ -77,7 +97,13 @@
       ><label class="region-name" for="cusco">{{
         productSelected?.localCraftsman?.region?.name
       }}</label
-      ><button mat-flat-button class="btn-region" (click)="redirectToRegion(productSelected?.localCraftsman?.region?.id)">Conocer más</button>
+      ><button
+        mat-flat-button
+        class="btn-region"
+        (click)="redirectTo('regions/' + productSelected?.localCraftsman?.region?.id)"
+      >
+        Conocer más
+      </button>
     </div>
   </div>
   <div class="product-details">
@@ -86,16 +112,49 @@
   </div>
 </section>
 
+<section class="container-best-sellers">
+  <h2>PRODUCTOS QUE PODRÍAN INTERESARTE</h2>
+  <div class="container-carousel">
+    <button class="btn-carusel" mat-icon-button (click)="previousBestSellersPage()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <ul class="carousel">
+      
+      <li class="carousel-product" *ngFor="let product of bestSellers">
+        <figure (click)="redirectTo('catalog/' + product.id)">
+          <img
+            src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
+            alt="{{product.name}}"
+          />
+        </figure>
+        <div class="rating">
+          <i class="fa-solid fa-star"></i>
+          <span class="rating-value">{{
+            product.averageRating | number : "1.1-1"
+          }}</span>
+        </div>
+        <div class="info-product">
+          <h3>{{product.name}}</h3>
+          <p>s/.{{product.price | number: '1.2-2'}}</p>
+        </div>
+        <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
+      </li>
+    </ul>
+    <button class="btn-carusel" mat-icon-button (click)="nextBestSellersPage()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</section>
+
 <section class="comments-section">
   <div class="comments-section-header">
     <h2>Comentarios</h2>
-    <p>{{length}} comentarios</p>
+    <p>{{ length }} comentarios</p>
   </div>
   <div class="new-comment">
     <div class="user-information">
       <i class="fa-solid fa-user"></i>
-      <h4 *ngIf="(authUser$ | async)">{{(authUser$ | async)?.user?.name + " " + (authUser$ | async)?.user?.lastName}}</h4>
-      <h4 *ngIf="!(authUser$ | async)">Usuario</h4>
+      <h4>{{ authUser$ | async | fullNameUserLogin }}</h4>
     </div>
     <form [formGroup]="commentForm" class="comment-form">
       <mat-form-field>
@@ -120,8 +179,12 @@
         <i class="fa-solid fa-user"></i>
         <h4>{{ comment.user.name + " " + comment.user.lastName }}</h4>
       </div>
-      <p-rating [(ngModel)]="comment.rating" [readonly]="true" [cancel]="false" />
-      <div class="comment-text">{{comment.textCommentary}}</div>
+      <p-rating
+        [(ngModel)]="comment.rating"
+        [readonly]="true"
+        [cancel]="false"
+      />
+      <div class="comment-text">{{ comment.textCommentary }}</div>
     </div>
     <mat-paginator
       *ngIf="comments.length"
@@ -133,6 +196,8 @@
       aria-label="Select page"
     >
     </mat-paginator>
-    <p *ngIf="!comments.length" class="no-comments">Aún no hay comentarios. ¡Sé el primero en comentar!</p>
+    <p *ngIf="!comments.length" class="no-comments">
+      Aún no hay comentarios. ¡Sé el primero en comentar!
+    </p>
   </div>
 </section>

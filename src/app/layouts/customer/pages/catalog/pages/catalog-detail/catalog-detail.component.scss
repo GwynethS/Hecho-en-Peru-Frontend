@@ -211,6 +211,115 @@ a {
   }
 }
 
+.container-best-sellers {
+  padding: 2rem 4rem;
+  background-color: #a9e5bb3b;
+  margin: 4rem 0;
+  h2 {
+    padding: 2rem 0;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  .container-carousel {
+    width: 100%;
+    position: relative;
+    .btn-carusel {
+      position: absolute;
+      top: 40%;
+      color: #969696;
+      padding: 0.7rem 1rem;
+      &:first-child {
+        left: -1.5rem;
+      }
+      &:last-child {
+        right: -1.5rem;
+      }
+      &:hover {
+        background-color: #71717114;
+      }
+    }
+    .carousel {
+      margin: 0;
+      padding: 0;
+      padding-bottom: 2rem;
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: space-evenly;
+      grid-auto-columns: calc(((100%) / 4) - 4rem);
+      gap: 1rem;
+      margin-bottom: 0;
+      .carousel-product {
+        position: relative;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        gap: 0;
+        &:hover {
+          figure {
+            img {
+              transform: scale(1.1, 1.1);
+            }
+          }
+        }
+        figure {
+          border-radius: 0.5rem;
+          width: 100%;
+          height: 12rem;
+          margin: 0;
+          overflow: hidden;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 1s ease;
+          }
+        }
+        .rating {
+          position: absolute;
+          align-self: flex-start;
+          top: 1.2rem;
+          left: 1.4rem;
+          background-color: #ffe1fdc1;
+          padding: 0.2rem 0.5rem;
+          border-radius: 0.5rem;
+          i {
+            color: #de7bd7;
+          }
+          .rating-value {
+            font-weight: 500;
+          }
+        }
+        .info-product {
+          text-align: center;
+          margin: 1rem 0;
+          h3 {
+            margin: 0;
+            font-weight: 500;
+          }
+          p {
+            margin: 0;
+            margin-top: 1rem;
+          }
+        }
+        button {
+          background-color: #242423;
+          color: #fff;
+          transition: all 0.3s ease;
+          &:hover {
+            background-color: #0e0e0e;
+          }
+        }
+      }
+    }
+  }
+}
+
 .comments-section {
   margin: 4rem;
   .comments-section-header {

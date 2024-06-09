@@ -51,7 +51,7 @@ export class HomeComponent {
   }
 
   nextPage(){
-    if(this.pageIndex < Math.ceil(this.length / 3.0) - 1){
+    if(this.pageIndex < Math.ceil(this.length / this.pageSize) - 1){
       this.pageIndex++;
       this.getProductsByPage();
     }

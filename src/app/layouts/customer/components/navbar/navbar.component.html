@@ -65,11 +65,7 @@
 
     <div class="login-data" *ngIf="authUser$ | async">
       <p id="login-user" (click)="onUserIcon()">
-        {{
-          (authUser$ | async)?.user?.name +
-            " " +
-            (authUser$ | async)?.user?.lastName
-        }}
+        {{ authUser$ | async | fullNameUserLogin }}
       </p>
       <p id="logout" (click)="onLogOut()">Cerrar sesión</p>
     </div>

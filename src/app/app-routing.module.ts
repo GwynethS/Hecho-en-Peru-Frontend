@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 import { shopGuard } from './core/guards/shop.guard';
+import { checkoutGuard } from './core/guards/checkout.guard';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'shop/checkout',
+    canActivate: [shopGuard, checkoutGuard],
     loadChildren: () =>
       import('./layouts/customer/pages/checkout/checkout.module').then(
         (m) => m.CheckoutModule

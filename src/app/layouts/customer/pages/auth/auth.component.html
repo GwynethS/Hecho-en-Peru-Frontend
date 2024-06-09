@@ -16,6 +16,7 @@
           placeholder="Ingresa tu correo electrónico"
           value=""
         />
+        <mat-error>{{authForm.get('email')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="field">
@@ -33,6 +34,7 @@
         >
           <mat-icon>visibility</mat-icon>
         </button>
+        <mat-error>{{authForm.get('password')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
       <button class="btn-submit" (click)="OnSubmit()" mat-flat-button type="submit">
         Iniciar sesión

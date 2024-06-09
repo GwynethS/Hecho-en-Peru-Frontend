@@ -6,7 +6,7 @@ import { CustomerComponent } from './customer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SharedModule } from '../../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
@@ -23,7 +23,6 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
     CustomerRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
   ],
   providers:[
     {

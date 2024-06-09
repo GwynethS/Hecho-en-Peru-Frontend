@@ -23,6 +23,10 @@ export class CatalogComponent {
   pageSize = 12;
   pageIndex = 0;
 
+  lengthBestSellers = 0;
+  pageSizeBestSellers = 4;
+  pageIndexBestSellers = 0;
+
   inputPageNumber = 1;
 
   productsByPage: Product[] = [];
@@ -34,6 +38,7 @@ export class CatalogComponent {
   categories: Category[] = [];
   regions: Region[] = [];
   products: Product[] = [];
+  bestSellers: Product[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -66,9 +71,44 @@ export class CatalogComponent {
         },
       })
     );
-    
+
+    this.subscriptions.push(
+      this.productsService.getBestSellingProductsUser().subscribe({
+        next: (bestSellers) => {
+          this.lengthBestSellers = bestSellers.length;
+        },
+      })
+    );
+
+    this.getBestSellersByPage();
     this.getCategories();
     this.getRegiones();
+  }
+
+  getBestSellersByPage(){
+    this.subscriptions.push(
+      this.productsService
+        .getBestSellingProductsByPageUser(this.pageIndexBestSellers, this.pageSizeBestSellers)
+        .subscribe({
+          next: (bestSellers) => {
+            this.bestSellers = bestSellers;
+          },
+        })
+    );
+  }
+
+  previousBestSellersPage(){
+    if(this.pageIndexBestSellers > 0){
+      this.pageIndexBestSellers--;
+      this.getBestSellersByPage();
+    }
+  }
+
+  nextBestSellersPage(){
+    if(this.pageIndexBestSellers < Math.ceil(this.lengthBestSellers / this.pageSizeBestSellers) - 1){
+      this.pageIndexBestSellers++;
+      this.getBestSellersByPage();
+    }
   }
 
   get categoriesArray() {
@@ -128,7 +168,7 @@ export class CatalogComponent {
   changeInputPage() {
     if (
       this.inputPageNumber > 0 &&
-      this.inputPageNumber <= Math.ceil(this.length / 12.0)
+      this.inputPageNumber <= Math.ceil(this.length / this.pageSize)
     ) {
       this.pageIndex = this.inputPageNumber - 1;
       this.showProductsByPage();
@@ -138,7 +178,7 @@ export class CatalogComponent {
   }
 
   nextPage() {
-    if (this.pageIndex < Math.ceil(this.length / 12.0) - 1) {
+    if (this.pageIndex < Math.ceil(this.length / this.pageSize) - 1) {
       this.pageIndex++;
       this.showProductsByPage();
       this.inputPageNumber = this.pageIndex + 1;

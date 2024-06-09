@@ -12,6 +12,7 @@ import { OrderDetailRequest } from '../../pages/checkout/models/order-detail-req
 import { LoginResponse } from '../../pages/auth/models/login-response';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { AuthService } from '../../pages/auth/auth.service';
+import { CheckoutService } from '../../pages/checkout/checkout.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -27,6 +28,7 @@ export class ShoppingCartComponent {
     private dialogRef: MatDialogRef<ShoppingCartComponent>,
     private store: Store,
     private authService: AuthService,
+    private checkoutService: CheckoutService,
     private router: Router
   ) {
     this.authUser$ = this.store.select(selectAuthUser);
@@ -89,6 +91,7 @@ export class ShoppingCartComponent {
   onCheckout() {
     const user: LoginResponse | null = this.authService.getAuthUser();
     if (user) {
+      this.checkoutService.enableCheckoutAccess();
       this.router.navigate(['/shop/checkout']);
       this.dialogRef.close();
     }else{
