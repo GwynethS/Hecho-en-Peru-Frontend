@@ -10,6 +10,7 @@
           placeholder="Ingresa tu nombre"
           value=""
         />
+        <mat-error>{{signUpForm.get('name')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
       <mat-form-field class="field">
         <mat-label>Apellido</mat-label>
@@ -19,6 +20,7 @@
           placeholder="Ingresa tus apellidos"
           value=""
         />
+        <mat-error>{{signUpForm.get('lastName')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
       <mat-form-field class="field">
         <mat-label>Correo electrónico</mat-label>
@@ -28,6 +30,7 @@
           placeholder="Ingresa tu correo electrónico"
           value=""
         />
+        <mat-error>{{signUpForm.get('email')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="field">
@@ -45,6 +48,7 @@
         >
           <mat-icon>visibility</mat-icon>
         </button>
+        <mat-error>{{signUpForm.get('password')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
       <button class="btn-submit" (click)="onSubmit()" mat-flat-button type="submit">
         Crear cuenta

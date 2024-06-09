@@ -4,9 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { CheckoutComponent } from './checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
-import { MaterialModule } from '../../../../shared/material/material.module';
 import { OrderService } from './order.service';
+import { SharedModule } from '../../../../shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +16,6 @@ import { OrderService } from './order.service';
     CommonModule,
     CheckoutRoutingModule,
     SharedModule,
-    MaterialModule,
     ReactiveFormsModule
   ],
   providers: [

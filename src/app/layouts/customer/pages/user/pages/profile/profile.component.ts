@@ -6,6 +6,8 @@ import { UserProfile } from './models/user-profile';
 import { CustomersService } from '../../../../../admin/pages/customers/customers.service';
 import { Store } from '@ngrx/store';
 import { AuthAction } from '../../../../../../core/store/auth/auth.actions';
+import { AlertService } from '../../../../../../core/services/alert.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +21,13 @@ export class ProfileComponent {
   authUserData: LoginResponse | null;
   changePassword: boolean = false;
 
+  subscriptions: Subscription[] = [];
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private customersService: CustomersService,
-    private store: Store
+    private alertService: AlertService
   ) {
     this.editProfileForm = this.fb.group({
       name: this.fb.control('', [
@@ -57,30 +61,71 @@ export class ProfileComponent {
         ...this.editProfileForm.value,
       };
       if (!editUserData.newPassword) editUserData.password = '';
-      console.log(editUserData);
-      if (this.authUserData) {
-        this.customersService
-          .updateUser(editUserData, this.authUserData.user.id)
-          .subscribe({
-            next: (user) => {
-              if (this.authUserData) {
-                const updatedUser = {
-                  user: { ...this.authUserData.user, ...user },
-                  jwtResponse: this.authUserData.jwtResponse,
-                };
-                this.authService.updateAuthUser(updatedUser);
-                console.log('Usuario actualizado');
-              }
-            },
-          });
-      }
+
+      this.alertService
+        .showConfirmAction(
+          '¿Estás seguro que deseas continuar?',
+          'Se guardarán los cambios realizados',
+          'Continuar'
+        )
+        .then((result) => {
+          if (result.isConfirmed && this.authUserData) {
+            this.subscriptions.push(
+              this.customersService
+                .updateUser(editUserData, this.authUserData.user.id)
+                .subscribe({
+                  next: (user) => {
+                    if (this.authUserData) {
+                      const updatedUser = {
+                        user: { ...this.authUserData.user, ...user },
+                        jwtResponse: this.authUserData.jwtResponse,
+                      };
+                      this.authService.updateAuthUser(updatedUser);
+                      this.alertService.showSuccess(
+                        '¡Operación exitosa!',
+                        'Los datos se actualizaron correctamente'
+                      );
+                    }
+                  },
+                  error: () =>
+                    this.alertService.showError(
+                      'Ups! Ocurrió un problema',
+                      'No se pudieron actualizar los datos'
+                    ),
+                })
+            );
+          }
+        });
     }
   }
 
   onDelete(): void {
-    if (this.authUserData)
-      this.customersService.deleteUser(this.authUserData.user.id).subscribe();
-    console.log('Cuenta eliminada');
+    this.alertService
+      .showConfirmAction(
+        '¿Estás seguro que deseas continuar?',
+        'Esta acción no se puede revertir',
+        'Continuar'
+      )
+      .then((result) => {
+        if (result.isConfirmed && this.authUserData) {
+          this.subscriptions.push(
+            this.customersService
+              .deleteUser(this.authUserData.user.id)
+              .subscribe({
+                next: () =>
+                  this.alertService.showSuccess(
+                    '¡Operación exitosa!',
+                    'La cuenta fue eliminada correctamente'
+                  ),
+                error: () =>
+                  this.alertService.showError(
+                    'Ups! Ocurrió un problema',
+                    'No se pudo eliminar la cuenta'
+                  ),
+              })
+          );
+        }
+      });
   }
 
   onChangePasswordInput(e: any) {

@@ -20,7 +20,19 @@ export class AlertService {
     this.notification$.next({
       icon: 'success',
       title,
-      text: message
+      text: message,
+      confirmButtonColor: '#383838',
+      confirmButtonText: 'Cerrar',
+    });
+  }
+
+  showWarning(title: string, message?: string): void{
+    this.notification$.next({
+      icon: 'warning',
+      title,
+      text: message,
+      confirmButtonColor: '#383838',
+      confirmButtonText: 'Cerrar',
     });
   }
 
@@ -29,7 +41,8 @@ export class AlertService {
       icon: 'error',
       title,
       text: message,
-      confirmButtonColor: '#FF857A',
+      confirmButtonColor: '#383838',
+      confirmButtonText: 'Cerrar',
     });
   }
 
@@ -48,6 +61,34 @@ export class AlertService {
         cancelButton: "alter-cancel-btn",
         confirmButton: 'custom-confirm-btn',
       },
+    });
+  }
+
+  showConfirmAction(title: string, message?: string, confirmButtonText?: string){
+    return Swal.fire({
+      title,
+      text: message,
+      icon: "warning",
+      iconColor: "#EC9892",
+      showCancelButton: true,
+      cancelButtonColor: "#383838",
+      confirmButtonColor: "#FF857A",
+      cancelButtonText: "Cancelar",
+      confirmButtonText,
+      customClass: {
+        cancelButton: "alter-cancel-btn",
+        confirmButton: 'custom-confirm-btn',
+      },
+    });
+  }
+
+  showSuccesActionWaitResponse(title: string, message?: string, confirmButtonText?: string){
+    return Swal.fire({
+      icon: 'success',
+      title,
+      text: message,
+      confirmButtonColor: '#383838',
+      confirmButtonText
     });
   }
 }
