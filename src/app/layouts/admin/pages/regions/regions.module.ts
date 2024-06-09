@@ -9,10 +9,20 @@ import { RegionTableComponent } from './components/region-table/region-table.com
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
 import { RegionsService } from './regions.service';
 import { TouristSitesComponent } from './pages/tourist-sites/tourist-sites.component';
+import { TouristSitesService } from './pages/tourist-sites/tourist-sites.service';
+import { TouristSiteTableComponent } from './pages/tourist-sites/components/tourist-site-table/tourist-site-table.component';
+import { TouristSiteDialogComponent } from './pages/tourist-sites/components/tourist-site-dialog/tourist-site-dialog.component';
 
 
 @NgModule({
-  declarations: [RegionsComponent, RegionTableComponent, RegionDialogComponent, TouristSitesComponent],
+  declarations: [
+    RegionsComponent,
+    RegionTableComponent,
+    RegionDialogComponent,
+    TouristSitesComponent,
+    TouristSiteTableComponent,
+    TouristSiteDialogComponent,
+  ],
   imports: [
     CommonModule,
     RegionsRoutingModule,
@@ -20,6 +30,9 @@ import { TouristSitesComponent } from './pages/tourist-sites/tourist-sites.compo
     ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [RegionsService],
+  providers: [
+    RegionsService,
+    TouristSitesService
+  ],
 })
 export class RegionsModule {}

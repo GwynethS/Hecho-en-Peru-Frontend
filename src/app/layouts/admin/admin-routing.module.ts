@@ -15,23 +15,17 @@ const routes: Routes = [
       {
         path: 'products',
         loadChildren: () =>
-          import('./pages/products/products.module').then(
-            (m) => m.ProductsModule
-          ),
+          import('./pages/products/products.module').then((m) => m.ProductsModule),
       },
       {
         path: 'customers',
         loadChildren: () =>
-          import('./pages/customers/customers.module').then(
-            (m) => m.CustomersModule
-          ),
+          import('./pages/customers/customers.module').then((m) => m.CustomersModule),
       },
       {
         path: 'local-craftsmen',
         loadChildren: () =>
-          import('./pages/local-craftsmen/local-craftsmen.module').then(
-            (m) => m.LocalCraftsmenModule
-          ),
+          import('./pages/local-craftsmen/local-craftsmen.module').then((m) => m.LocalCraftsmenModule),
       },
       {
         path: 'regions',

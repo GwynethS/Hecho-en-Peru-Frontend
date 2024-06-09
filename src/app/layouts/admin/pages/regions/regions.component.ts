@@ -7,6 +7,7 @@ import { RegionDialogComponent } from './components/region-dialog/region-dialog.
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-regions',
@@ -30,7 +31,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private regionsService: RegionsService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
   ) {
     this.regionSearchForm = this.fb.group({
       name: this.fb.control('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*')]),
@@ -122,11 +123,5 @@ export class RegionsComponent implements OnInit, OnDestroy {
         },
         error: (err) => console.error('Failed to open region dialog', err),
       });
-  }
-
-  onViewRegion(region: Region): void {
-    this.matDialog.open(RegionDialogComponent, {
-      data: { region: region, view: true, edit: false },
-    });
   }
 }

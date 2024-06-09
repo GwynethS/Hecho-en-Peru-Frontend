@@ -15,50 +15,27 @@ export class ProductsService {
   }
 
   getProductsByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}productsByPageModeAdmin?offset=${offset}&limit=${limit}`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeAdmin?offset=${offset}&limit=${limit}`);
   }
 
   getProductsByPageUser(offSet: number, limit: number) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}productsByPageModeUser?offset=${offSet}&limit=${limit}`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeUser?offset=${offSet}&limit=${limit}`);
   }
 
   getBestSellingProductsUser() {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}listBestSellingProducts`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}listBestSellingProducts`);
   }
 
   getBestSellingProductsByPageUser(offSet: number, limit: number) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}bestSellingProductsByPage?offset=${offSet}&limit=${limit}`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}bestSellingProductsByPage?offset=${offSet}&limit=${limit}`);
   }
 
   getProductDetailsByID(id: string) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}productDetails/${id}`
-    );
+    return this.httpClient.get<Product[]>(`${environment.apiURL}productDetails/${id}`);
   }
 
   getSearchProductDetailsByID(id: string) {
-    return this.httpClient.get<Product>(
-      `${environment.apiURL}productDetails/${id}`
-    );
-  }
-
-  deleteProductsByID(id: string) {
-    return this.httpClient
-      .delete(`${environment.apiURL}productDelete/${id}`, { responseType: 'text' })
-      .pipe(
-        catchError((err) => {
-          console.error('Failed to delete product', err);
-          return of([]);
-        })
-      );
+    return this.httpClient.get<Product>(`${environment.apiURL}productDetails/${id}`);
   }
 
   addProducts(data: ProductRequest, file: File) {
@@ -87,6 +64,17 @@ export class ProductsService {
         catchError((err) => {
           console.error('Failed to update product', err);
           return of({ err });
+        })
+      );
+  }
+
+  deleteProductsByID(id: string) {
+    return this.httpClient
+      .delete(`${environment.apiURL}productDelete/${id}`, { responseType: 'text' })
+      .pipe(
+        catchError((err) => {
+          console.error('Failed to delete product', err);
+          return of([]);
         })
       );
   }

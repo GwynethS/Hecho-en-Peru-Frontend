@@ -1,0 +1,38 @@
+.shadow-table {
+  box-shadow: 0.01rem 0.01rem 0.01rem rgba(199, 197, 197, 0.062);
+}
+
+table {
+  table-layout: fixed;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  position: relative;
+}
+
+.mdc-data-table__cell {
+  text-align: center;
+}
+
+.w-size-id {
+  width: 3.5rem;
+}
+
+.w-size-actions {
+  width: 8.5rem;
+}
+
+.overflow-div {
+  height: 3.5rem;
+  white-space: wrap;
+  overflow: hidden;
+  display: flex;
+}
+
+.paginator-border {
+  border-top: rgba(242, 242, 242, 0.052) 0.001rem solid;
+}

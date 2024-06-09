@@ -1,46 +1,45 @@
-<div *ngIf="region">
-  <h2>{{ region.name }}</h2>
-  <div>
-    <h3>Historia</h3>
-    <p>{{ region.history }}</p>
+<div class="div-add-container" *ngIf="regionSelected">
+  <span>REGIÓN {{ regionSelected.name | uppercase }}</span>
+  <div class="container-text">
+    <p>
+      <b>Historia: </b>
+      {{ regionSelected.history }}
+    </p>
   </div>
-  <div>
-    <h3>Introducción de sitios turísticos</h3>
-    <p>{{ region.sitesIntroduction }}</p>
+  <div class="container-text">
+    <p>
+      <b>Introducción de sitios turísticos: </b>
+      {{ regionSelected.sitesIntroduction }}
+    </p>
   </div>
-  <div>
-    <h3>Introducción de artesanos</h3>
-    <p>{{ region.craftsmenIntroduction }}</p>
+  <div class="container-text">
+    <p>
+      <b>Introducción de artesanos: </b>
+      {{ regionSelected.craftsmenIntroduction }}
+    </p>
   </div>
-  <button mat-flat-button (click)="createTouristSite()" class="w-full btn-add-site">
-    <mat-icon>add</mat-icon> Añadir lugar turístico
-  </button>
-  <h3>LUGARES TURÍSTICOS</h3>
-  <table mat-table [dataSource]="touristSites" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let site">{{ site.id }}</td>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let site">{{ site.name }}</td>
-    </ng-container>
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Descripción</th>
-      <td mat-cell *matCellDef="let site">{{ site.description }}</td>
-    </ng-container>
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let site">
-        <button mat-icon-button (click)="editTouristSite(site)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteTouristSite(site)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  <div
+    class="div-table-container grid formgrid flex justify-content-center align-items-top"
+  >
+    <div class="col-3 py-4">
+      <button
+        (click)="onCreateTouristSite()"
+        mat-flat-button
+        class="w-full btn-add-site"
+      >
+        <mat-icon>add</mat-icon> Añadir lugar turístico
+      </button>
+    </div>
+    <div class="col-1 py-4"></div>
+    <div class="col-4 centered-header py-4">
+      <span>LUGARES TURÍSTICOS</span>
+    </div>
+    <div class="col-4"></div>
+    <app-tourist-site-table
+      class="w-full"
+      [dataSource]="dataSource"
+      (editTouristSite)="onEditTouristSite($event)"
+      (deleteTouristSite)="onDeleteTouristSite($event)"
+    ></app-tourist-site-table>
+  </div>
 </div>

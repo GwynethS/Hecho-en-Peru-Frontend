@@ -5,7 +5,7 @@ import { RegionsService } from '../../../../../admin/pages/regions/regions.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalCraftsman } from '../../../../../admin/pages/local-craftsmen/models/local-craftsman';
 import { LocalCraftsmenService } from '../../../../../admin/pages/local-craftsmen/local-craftsmen.service';
-import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/touristSite';
+import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/tourist-site';
 import { TouristSitesService } from '../../../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';
 
 @Component({
@@ -23,14 +23,14 @@ export class RegionDetailComponent {
     private regionsService: RegionsService,
     private localCraftsmenService: LocalCraftsmenService,
     private touristSitesService: TouristSitesService,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.subscription.push(
       this.regionsService
-        .getRegionDetailsByID(this.route.snapshot.params['id'])
+        .getRegionDetailsByID(this.activatedRoute.snapshot.params['id'])
         .subscribe({
           next: (findedRegion) => {
             if (findedRegion) {

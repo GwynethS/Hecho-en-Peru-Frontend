@@ -1,1 +1,92 @@
-<p>tourist-site-dialog works!</p>
+<div class="modal-container">
+  <h1
+    mat-dialog-title
+    class="flex align-items-center justify-content-center py-3"
+  >
+    DATOS DEL LUGAR TURÍSTICO
+  </h1>
+  <div mat-dialog-content>
+    <form [formGroup]="touristSiteForm" class="grid formgrid w-full" enctype="multipart/form-data">
+      <div class="col-7">
+        <div class="input-file-container">
+          <div class="col-4">
+            <button
+              class="upload-button"
+              type="button"
+              (click)="fileInput.click()"
+            >
+              Seleccionar imagen
+            </button>
+          </div>
+          <div class="col-8">
+            <input
+              #fileInput
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              (change)="onFileSelected($event)"
+              style="display: none"
+            />
+            <div class="file-name-container">
+              <span class="file-name" id="file-name">{{
+                getFileName()
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="w-full file-container">
+          <div class="col-12 w-full">
+            <div *ngIf="imageUrl" class="image-preview">
+              <img [src]="imageUrl" alt="Imagen del producto" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-7 px-0">
+        <div class="col-12 py-3 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Nombre</mat-label>
+            <input
+              formControlName="name"
+              placeholder="Ingrese el nombre del lugar turístico"
+              matInput
+              type="text"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col-12 py-1 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Descripción</mat-label>
+            <textarea
+              formControlName="description"
+              placeholder="Ingrese la descripción del lugar turístico"
+              matInput
+              type="text"
+              class="description-container"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions class="flex justify-content-center gap-2">
+    <button
+      (click)="onSave()"
+      mat-raised-button
+      type="submit"
+      class="col-2 btn-save-color"
+    >
+      Guardar
+    </button>
+    <button
+      (click)="onCancel()"
+      [mat-dialog-close]="false"
+      mat-raised-button
+      type="button"
+      class="col-2 btn-cancel-color"
+    >
+      Cancelar
+    </button>
+  </div>
+</div>

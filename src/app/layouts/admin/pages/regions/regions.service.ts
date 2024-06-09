@@ -21,15 +21,11 @@ export class RegionsService {
   }
 
   getSearchRegionDetailsByID(id: string) {
-    return this.httpClient.get<Region[]>(
-      `${environment.apiURL}regionDetail/${id}`
-    );
+    return this.httpClient.get<Region[]>(`${environment.apiURL}regionDetail/${id}`);
   }
 
   getRegionDetailsByID(id: string) {
-    return this.httpClient.get<Region>(
-      `${environment.apiURL}regionDetail/${id}`
-    );
+    return this.httpClient.get<Region>(`${environment.apiURL}regionDetail/${id}`);
   }
 
   addRegions(data: Region, file: File) {
