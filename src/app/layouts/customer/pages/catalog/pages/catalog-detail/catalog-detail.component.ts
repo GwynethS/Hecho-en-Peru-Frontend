@@ -20,6 +20,7 @@ import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/s
 import { MatDialog } from '@angular/material/dialog';
 import { ShoppingCartComponent } from '../../../../components/shopping-cart/shopping-cart.component';
 import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
+import { AlertService } from '../../../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -57,6 +58,7 @@ export class CatalogDetailComponent {
     private authService: AuthService,
     private productsService: ProductsService,
     private commentsService: CommentsService,
+    private alertService: AlertService,
     private store: Store,
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -84,6 +86,8 @@ export class CatalogDetailComponent {
                   this.avgRating = this.productSelected.averageRating;
                   this.getComments();
                   this.getCommentsByPage();
+                  this.getBestSellers();
+                  this.getBestSellersByPage();
                 }
               },
               error: () => {
@@ -93,16 +97,41 @@ export class CatalogDetailComponent {
         }
       })
     );
+  }
 
+  updateProductData() {
+    if (this.productSelected) {
+      this.subscriptions.push(
+        this.productsService
+          .getSearchProductDetailsByID(this.productSelected.id)
+          .subscribe({
+            next: (findedProduct) => {
+              this.productSelected = findedProduct;
+              this.avgRating = this.productSelected.averageRating;
+            },
+            error: () =>
+              this.alertService.showError(
+                'Ups! Ocurrió un error',
+                'No se pudieron cargar los datos correctamente'
+              ),
+          })
+      );
+    }
+  }
+
+  getBestSellers() {
     this.subscriptions.push(
       this.productsService.getBestSellingProductsUser().subscribe({
         next: (bestSellers) => {
           this.lengthBestSellers = bestSellers.length;
         },
+        error: () =>
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          ),
       })
     );
-
-    this.getBestSellersByPage();
   }
 
   getBestSellersByPage() {
@@ -116,6 +145,11 @@ export class CatalogDetailComponent {
           next: (bestSellers) => {
             this.bestSellers = bestSellers;
           },
+          error: () =>
+            this.alertService.showError(
+              'Ups! Ocurrió un error',
+              'No se pudieron cargar los datos correctamente'
+            ),
         })
     );
   }
@@ -143,25 +177,43 @@ export class CatalogDetailComponent {
     } else {
       const user = this.authService.getAuthUser();
       if (user) {
-        this.commentsService
-          .addComment(
-            {
-              ...this.commentForm.value,
-              user: user.user,
-              product: this.productSelected,
-            },
-            this.pageIndex,
-            this.pageSize
-          )
-          .subscribe({
-            next: (data) => {
-              this.comments = data;
-              this.length++;
-              this.commentFormDir.resetForm();
-            },
-          });
+        this.subscriptions.push(
+          this.commentsService
+            .addComment(
+              {
+                ...this.commentForm.value,
+                user: user.user,
+                product: this.productSelected,
+              },
+              this.pageIndex,
+              this.pageSize
+            )
+            .subscribe({
+              next: (data) => {
+                this.comments = data;
+                this.length++;
+                this.commentFormDir.resetForm();
+                this.updateProductData();
+              },
+              error: () =>
+                this.alertService.showError(
+                  'Ups! Ocurrió un error',
+                  'No se pudo crear el comentario'
+                ),
+            })
+        );
       } else {
-        console.log('Necesita iniciar sesión');
+        this.alertService
+          .showWarningActionWaitResponse(
+            'Necesita iniciar sesión',
+            'Debe iniciar sesión para comentar',
+            'Iniciar sesión'
+          )
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/shop/auth']);
+            }
+          });
       }
     }
   }

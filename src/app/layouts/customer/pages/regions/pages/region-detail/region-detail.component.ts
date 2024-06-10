@@ -7,6 +7,7 @@ import { LocalCraftsman } from '../../../../../admin/pages/local-craftsmen/model
 import { LocalCraftsmenService } from '../../../../../admin/pages/local-craftsmen/local-craftsmen.service';
 import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/touristSite';
 import { TouristSitesService } from '../../../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';
+import { AlertService } from '../../../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-region-detail',
@@ -15,20 +16,22 @@ import { TouristSitesService } from '../../../../../admin/pages/regions/pages/to
 })
 export class RegionDetailComponent {
   regionSelected: Region | null = null;
-  subscription: Subscription[] = [];
   localCraftsman: LocalCraftsman[] = [];
   touristSites: TouristSite[] = [];
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private regionsService: RegionsService,
     private localCraftsmenService: LocalCraftsmenService,
     private touristSitesService: TouristSitesService,
+    private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.subscription.push(
+    this.subscriptions.push(
       this.regionsService
         .getRegionDetailsByID(this.route.snapshot.params['id'])
         .subscribe({
@@ -48,29 +51,43 @@ export class RegionDetailComponent {
 
   getLocalCraftsmen() {
     if (this.regionSelected) {
-      this.subscription.push(
+      this.subscriptions.push(
         this.localCraftsmenService
           .getlocalCraftsmenByRegion(this.regionSelected.id)
           .subscribe({
             next: (localCraftsmen) => {
               this.localCraftsman = localCraftsmen;
             },
+            error: () =>
+              this.alertService.showError(
+                'Ups! Ocurrió un error',
+                'No se pudieron cargar los datos correctamente'
+              ),
           })
       );
     }
   }
 
   getTouristSites() {
-    if(this.regionSelected) {
-      this.subscription.push(
+    if (this.regionSelected) {
+      this.subscriptions.push(
         this.touristSitesService
           .getTouristSitesByRegion(this.regionSelected.id)
           .subscribe({
             next: (touristSites) => {
               this.touristSites = touristSites;
             },
+            error: () =>
+              this.alertService.showError(
+                'Ups! Ocurrió un error',
+                'No se pudieron cargar los datos correctamente'
+              ),
           })
       );
     }
+  }
+
+  OnDestroy() {
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

@@ -4,8 +4,6 @@ import { AuthService } from '../../../auth/auth.service';
 import { LoginResponse } from '../../../auth/models/login-response';
 import { UserProfile } from './models/user-profile';
 import { CustomersService } from '../../../../../admin/pages/customers/customers.service';
-import { Store } from '@ngrx/store';
-import { AuthAction } from '../../../../../../core/store/auth/auth.actions';
 import { AlertService } from '../../../../../../core/services/alert.service';
 import { Subscription } from 'rxjs';
 
@@ -60,6 +58,7 @@ export class ProfileComponent {
       const editUserData: UserProfile = {
         ...this.editProfileForm.value,
       };
+
       if (!editUserData.newPassword) editUserData.password = '';
 
       this.alertService
@@ -141,5 +140,9 @@ export class ProfileComponent {
     } else {
       this.editProfileForm.get('password')?.setErrors(null);
     }
+  }
+
+  OnDestroy(){
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

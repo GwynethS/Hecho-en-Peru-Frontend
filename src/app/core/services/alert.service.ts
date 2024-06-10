@@ -91,4 +91,14 @@ export class AlertService {
       confirmButtonText
     });
   }
+
+  showWarningActionWaitResponse(title: string, message?: string, confirmButtonText?: string){
+    return Swal.fire({
+      icon: 'warning',
+      title,
+      text: message,
+      confirmButtonColor: '#383838',
+      confirmButtonText
+    });
+  }
 }

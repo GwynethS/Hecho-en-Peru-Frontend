@@ -72,4 +72,8 @@ export class SignUpComponent {
       );
     }
   }
+
+  OnDestroy(){
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
+  }
 }
