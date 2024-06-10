@@ -127,6 +127,7 @@ export class OrderDetailComponent implements AfterViewInit {
           next: order => {
             this.orders = [order];
             this.dataSourceOrder.data = this.orders;
+            this.searchAttempted = false;
           },
           error: err => {
             console.error(`Failed to load order with ID ${orderId}`, err);
