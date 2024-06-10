@@ -83,6 +83,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
           next: (product) => {
             this.products = [product];
             this.dataSource.data = this.products;
+            this.searchAttempted = false;
           },
           error: (err) => {
             console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);

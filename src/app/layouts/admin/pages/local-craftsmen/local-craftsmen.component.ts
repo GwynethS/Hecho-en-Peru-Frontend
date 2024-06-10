@@ -76,6 +76,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
           next: (localCraftsman) => {
             this.localCraftsmen = [localCraftsman];
             this.dataSource.data = this.localCraftsmen;
+            this.searchAttempted = false;
           },
           error: (err) => {
             console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);

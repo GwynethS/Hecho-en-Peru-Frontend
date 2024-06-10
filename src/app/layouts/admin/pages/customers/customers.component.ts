@@ -66,6 +66,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
         next: customer => {
             this.customers = [customer];
             this.dataSource.data = this.customers;
+            this.searchAttempted = false;
         },
         error: err => {
           console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
