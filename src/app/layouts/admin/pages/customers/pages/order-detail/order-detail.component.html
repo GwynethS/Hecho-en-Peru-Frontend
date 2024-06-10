@@ -1,7 +1,7 @@
 <div *ngIf="customer" class="div-add-container grid formgrid">
   <div class="col-1"></div>
   <div class="col-10 centered-header">
-    <span>DETALLES DEL CLIENTE</span>
+    <span>DETALLES DEL CLIENTE SELECCIONADO</span>
   </div>
   <div class="col-1">
     <button mat-button (click)="redirectToCustomers()">
@@ -56,16 +56,15 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
-
   <div class="grid formgrid w-full order-container">
-    <div class="col-3"></div>
-    <div class="col-6 centered-header">
+    <div class="col-4"></div>
+    <div class="col-4 centered-header">
       <span>ÓRDENES DE COMPRA</span>
     </div>
-    <div class="col-3 search-bar">
+    <div class="col-4 search-bar">
       <form
         [formGroup]="orderSearchForm"
-        class="customer-form-search flex justify-content-between"
+        class="customer-form-search"
       >
         <mat-form-field class="field">
           <input

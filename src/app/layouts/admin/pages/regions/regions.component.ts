@@ -88,6 +88,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     this.regionSearchForm.reset();
     this.pageIndex = 0;
     this.loadRegionsPage();
+    this.searchAttempted = false;
   }
 
   onCreateRegion(): void {

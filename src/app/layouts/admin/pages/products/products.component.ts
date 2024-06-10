@@ -98,6 +98,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productSearchForm.reset();
     this.pageIndex = 0;
     this.loadProductsPage();
+    this.searchAttempted = false;
   }
 
   onCreateProduct(): void {

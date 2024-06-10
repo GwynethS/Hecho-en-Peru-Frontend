@@ -91,6 +91,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     this.localCraftsmanSearchForm.reset();
     this.pageIndex = 0;
     this.loadLocalCraftsmenPage();
+    this.searchAttempted = false;
   }
 
   onCreateLocalCraftsman(): void {

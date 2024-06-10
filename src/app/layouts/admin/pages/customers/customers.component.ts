@@ -81,5 +81,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.customerSearchForm.reset();
     this.pageIndex = 0;
     this.loadCustomersPage();
+    this.searchAttempted = false;
   }
 }

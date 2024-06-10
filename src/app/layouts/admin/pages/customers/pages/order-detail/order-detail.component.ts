@@ -52,6 +52,7 @@ export class OrderDetailComponent implements AfterViewInit {
 
   pageSize = 10;
   pageIndex = 0;
+
   orderSearchForm: FormGroup;
   orders: OrderDetail[] = [];
   searchAttempted: boolean = false;
@@ -141,6 +142,7 @@ export class OrderDetailComponent implements AfterViewInit {
     this.orderSearchForm.reset();
     this.pageIndex = 0;
     this.loadOrdersPage();
+    this.searchAttempted = false;
   }
 
   redirectToCustomers() {
