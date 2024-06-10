@@ -43,6 +43,7 @@ export class CatalogDetailComponent {
 
   bestSellers: Product[] = [];
 
+  requiredRating: boolean = false;
   commentForm: FormGroup;
   comments: Comment[] = [];
 
@@ -170,9 +171,14 @@ export class CatalogDetailComponent {
     }
   }
 
+  onChangeRating(){
+    this.requiredRating = false;
+  }
+
   onSubmit() {
     if (this.commentForm.invalid) {
       this.commentForm.markAllAsTouched();
+      if(this.commentForm.get('rating')?.invalid) this.requiredRating = true;
     } else {
       const user = this.authService.getAuthUser();
       if (user) {

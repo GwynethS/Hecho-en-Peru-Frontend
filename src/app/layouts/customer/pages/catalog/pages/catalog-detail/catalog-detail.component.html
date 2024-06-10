@@ -164,8 +164,12 @@
           type="text"
           placeholder="Agrega un comentario..."
         ></textarea>
+        <mat-error>{{commentForm.get('textCommentary')?.errors | errorsFeedback}}</mat-error>
       </mat-form-field>
-      <p-rating formControlName="rating" [cancel]="false" />
+      <div class="rating-field">
+        <p-rating formControlName="rating" (ngModelChange)="onChangeRating()" [cancel]="false" />
+        <p *ngIf="requiredRating" id="required-rating">La valoración es requerida.</p>
+      </div>
       <div class="btn-comment">
         <button mat-flat-button type="submit" (click)="onSubmit()">
           Comentar

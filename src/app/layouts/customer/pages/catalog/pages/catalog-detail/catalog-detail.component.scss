@@ -354,9 +354,19 @@ a {
         width: 100%;
         margin: 1rem 0;
       }
-      p-rating {
+      .rating-field{
         width: 100%;
-        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        p-rating {
+          margin: 1rem 0;
+        }
+        #required-rating{
+          margin-left: 1rem;
+          color: #f44336;
+          font-size: 0.8rem;
+          transition: all ease 0.5s;
+        }
       }
       button {
         font-weight: 500;
