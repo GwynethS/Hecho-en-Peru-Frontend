@@ -8,6 +8,7 @@ import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dial
 import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-local-craftsmen',
@@ -32,7 +33,8 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private localCraftsmenService: LocalCraftsmenService,
     private matDialog: MatDialog,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private toastService: ToastService,
   ) {
     this.localCraftsmanSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')])
@@ -101,7 +103,10 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
           const { localCraftsmanData, image } = result;
           this.localCraftsmenService.addLocalCraftsmen(localCraftsmanData, image)
             .subscribe({
-              next: () => this.loadLocalCraftsmenPage(),
+              next: () => {
+                this.loadLocalCraftsmenPage(),
+                this.toastService.showToast("Se añadió el artesano correctamente");
+              },
               error: (err) => console.error('Error adding local craftsman', err)
             });
         }}
@@ -118,7 +123,10 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
             const { localCraftsmanData, image } = result;
             this.localCraftsmenService.updateLocalCraftsmen(localCraftsman.id, localCraftsmanData, image)
               .subscribe({
-                next: () => this.loadLocalCraftsmenPage(),
+                next: () => {
+                  this.loadLocalCraftsmenPage(),
+                  this.toastService.showToast("Se actualizó el artesano correctamente");
+                },
                 error: (err) => console.error('Error updating local craftsman', err)
               });
           }
@@ -139,7 +147,10 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           const deleteSubscription = this.localCraftsmenService.deleteLocalCraftsmenByID(id)
             .subscribe({
-              next: () => this.loadLocalCraftsmenPage(),
+              next: () => {
+                this.loadLocalCraftsmenPage(),
+                this.toastService.showToast("Se eliminó el artesano correctamente");
+              },
               error: (err) => console.error('Failed to delete local craftsman', err)
             });
           this.subscriptions.push(deleteSubscription);

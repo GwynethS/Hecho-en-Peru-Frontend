@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { AlertService } from '../../../../core/services/alert.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-products',
@@ -37,7 +38,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private productsService: ProductsService,
     private matDialog: MatDialog,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private toastService: ToastService,
   ) {
     this.productSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -108,7 +110,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
           const { productData, image } = result;
           this.productsService.addProducts(productData, image)
             .subscribe({
-              next: () => this.loadProductsPage(),
+              next: () => {
+                this.loadProductsPage(),
+                this.toastService.showToast("Se añadió el producto correctamente");
+              },
               error: (err) => console.error('Error adding product', err),
             });
         }}
@@ -125,7 +130,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
             const { productData, image } = result;
             this.productsService.updateProducts(product.id, productData, image)
               .subscribe({
-                next: () => this.loadProductsPage(),
+                next: () => {
+                  this.loadProductsPage(),
+                  this.toastService.showToast("Se actualizó el producto correctamente");
+                },
                 error: (err) => console.error('Error updating product', err),
               });
           }
@@ -140,7 +148,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           const deleteSubscription = this.productsService.deleteProductsByID(id)
             .subscribe({
-              next: () => this.loadProductsPage(),
+              next: () => {
+                this.loadProductsPage(),
+                this.toastService.showToast("Se eliminó el producto correctamente");
+              },
               error: (err) => console.error('Failed to delete product', err),
             });
           this.subscriptions.push(deleteSubscription);
@@ -160,7 +171,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
             const addSubscription = this.productsService
               .addCategories(categoryData)
               .subscribe({
-                next: () => this.loadAllCategories(),
+                next: () => {
+                  this.loadAllCategories(),
+                  this.toastService.showToast("Se añadió la categoría correctamente");
+                },
                 error: (err) => console.error('Failed to add category', err),
               });
             this.subscriptions.push(addSubscription);

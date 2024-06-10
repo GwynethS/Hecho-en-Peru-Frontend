@@ -7,6 +7,7 @@ import { RegionDialogComponent } from './components/region-dialog/region-dialog.
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-regions',
@@ -31,6 +32,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private regionsService: RegionsService,
     private matDialog: MatDialog,
+    private toastService: ToastService,
   ) {
     this.regionSearchForm = this.fb.group({
       name: this.fb.control('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*')]),
@@ -98,7 +100,10 @@ export class RegionsComponent implements OnInit, OnDestroy {
           const { regionData, image } = result;
           this.regionsService.addRegions(regionData, image)
             .subscribe({
-              next: () => this.loadRegionsPage(),
+              next: () => {
+                this.loadRegionsPage(),
+                this.toastService.showToast("Se añadió la región correctamente");
+              },
               error: (err) => console.error('Error adding region', err),
             });
         }}
@@ -115,7 +120,10 @@ export class RegionsComponent implements OnInit, OnDestroy {
             const { regionData, image } = result;
             this.regionsService.updateRegions(region.id, regionData, image)
               .subscribe({
-                next: () => this.loadRegionsPage(),
+                next: () => {
+                  this.loadRegionsPage(),
+                  this.toastService.showToast("Se actualizó la región correctamente");
+                },
                 error: (err) => console.error('Error updating region', err),
               });
           }

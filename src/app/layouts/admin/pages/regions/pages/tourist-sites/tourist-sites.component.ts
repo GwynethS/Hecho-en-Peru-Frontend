@@ -10,6 +10,7 @@ import { AlertService } from '../../../../../../core/services/alert.service';
 import { TouristSiteDialogComponent } from './components/tourist-site-dialog/tourist-site-dialog.component';
 import { Subscription } from 'rxjs';
 import { RegionsService } from '../../regions.service';
+import { ToastService } from '../../../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-tourist-sites',
@@ -35,6 +36,7 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private router: Router,
     private alertService: AlertService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -104,7 +106,10 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
           const { touristSiteData, image } = result;
           this.touristSiteService.addTouristSites(touristSiteData, image)
             .subscribe({
-              next: () => this.loadTouristSitesPage(),
+              next: () => {
+                this.loadTouristSitesPage(),
+                this.toastService.showToast("Se añadió el lugar turístico correctamente");
+              },
               error: (err) => console.error('Error adding tourist site', err)
             });
         }}
@@ -121,7 +126,10 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
             const { touristSiteData, image } = result;
             this.touristSiteService.updateTouristSites(touristSite.id, touristSiteData, image)
               .subscribe({
-                next: () => this.loadTouristSitesPage(),
+                next: () => {
+                  this.loadTouristSitesPage(),
+                  this.toastService.showToast("Se actualizó el lugar turístico correctamente");
+                },
                 error: (err) => console.error('Error updating tourist site', err)
               });
           }
@@ -136,7 +144,10 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           const deleteSubscription = this.touristSiteService.deleteTouristSiteByID(id)
             .subscribe({
-              next: () => this.loadTouristSitesPage(),
+              next: () => {
+                this.loadTouristSitesPage(),
+                this.toastService.showToast("Se eliminó el lugar turístico correctamente");
+              },
               error: (err) => console.error('Failed to delete tourist site', err)
             });
           this.subscriptions.push(deleteSubscription);
