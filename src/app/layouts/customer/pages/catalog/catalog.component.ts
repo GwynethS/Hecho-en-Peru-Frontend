@@ -9,9 +9,8 @@ import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
-import { MatDialog } from '@angular/material/dialog';
-import { ShoppingCartComponent } from '../../components/shopping-cart/shopping-cart.component';
 import { OrderDetailRequest } from '../checkout/models/order-detail-request';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-catalog',
@@ -45,9 +44,9 @@ export class CatalogComponent {
     private router: Router,
     private productsService: ProductsService,
     private regionService: RegionsService,
+    private toastService: ToastService,
     private fb: FormBuilder,
     private store: Store,
-    public dialog: MatDialog
   ) {
     this.filterForm = this.fb.group({
       price: this.fb.group({
@@ -259,10 +258,11 @@ export class CatalogComponent {
     };
     
     this.store.dispatch(ShoppingCartAction.addProduct({orderDetail}));
-    this.dialog.open(ShoppingCartComponent);
+    this.toastService.showToast("Se añadió el producto al carrito");
   }
   
   ngOnDestroy(): void {
     this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }
+

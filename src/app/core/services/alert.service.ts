@@ -54,7 +54,7 @@ export class AlertService {
       iconColor: "#EC9892",
       showCancelButton: true,
       cancelButtonColor: "#383838",
-      confirmButtonColor: "#FF857A",
+      confirmButtonColor: "#E9806E",
       cancelButtonText: "Cancelar",
       confirmButtonText: 'Confirmar',
       customClass: {
@@ -72,7 +72,7 @@ export class AlertService {
       iconColor: "#EC9892",
       showCancelButton: true,
       cancelButtonColor: "#383838",
-      confirmButtonColor: "#FF857A",
+      confirmButtonColor: "#E9806E",
       cancelButtonText: "Cancelar",
       confirmButtonText,
       customClass: {

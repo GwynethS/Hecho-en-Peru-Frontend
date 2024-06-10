@@ -17,10 +17,9 @@ import { AuthService } from '../../../auth/auth.service';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../../../core/store/auth/auth.selectors';
 import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/shopping-cart.actions';
-import { MatDialog } from '@angular/material/dialog';
-import { ShoppingCartComponent } from '../../../../components/shopping-cart/shopping-cart.component';
 import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
 import { AlertService } from '../../../../../../core/services/alert.service';
+import { ToastService } from '../../../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -59,8 +58,8 @@ export class CatalogDetailComponent {
     private productsService: ProductsService,
     private commentsService: CommentsService,
     private alertService: AlertService,
+    private toastService: ToastService,
     private store: Store,
-    public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -290,7 +289,7 @@ export class CatalogDetailComponent {
       };
 
       this.store.dispatch(ShoppingCartAction.addProduct({ orderDetail }));
-      this.dialog.open(ShoppingCartComponent);
+      this.toastService.showToast("Se añadió el producto al carrito");
     }
   }
 
