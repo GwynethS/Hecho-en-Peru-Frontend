@@ -17,9 +17,9 @@ import { AuthService } from '../../../auth/auth.service';
 import { Store } from '@ngrx/store';
 import { selectAuthUser } from '../../../../../../core/store/auth/auth.selectors';
 import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/shopping-cart.actions';
-import { MatDialog } from '@angular/material/dialog';
-import { ShoppingCartComponent } from '../../../../components/shopping-cart/shopping-cart.component';
 import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
+import { AlertService } from '../../../../../../core/services/alert.service';
+import { ToastService } from '../../../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -43,6 +43,7 @@ export class CatalogDetailComponent {
 
   bestSellers: Product[] = [];
 
+  requiredRating: boolean = false;
   commentForm: FormGroup;
   comments: Comment[] = [];
 
@@ -57,8 +58,9 @@ export class CatalogDetailComponent {
     private authService: AuthService,
     private productsService: ProductsService,
     private commentsService: CommentsService,
+    private alertService: AlertService,
+    private toastService: ToastService,
     private store: Store,
-    public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -84,6 +86,8 @@ export class CatalogDetailComponent {
                   this.avgRating = this.productSelected.averageRating;
                   this.getComments();
                   this.getCommentsByPage();
+                  this.getBestSellers();
+                  this.getBestSellersByPage();
                 }
               },
               error: () => {
@@ -93,16 +97,41 @@ export class CatalogDetailComponent {
         }
       })
     );
+  }
 
+  updateProductData() {
+    if (this.productSelected) {
+      this.subscriptions.push(
+        this.productsService
+          .getSearchProductDetailsByID(this.productSelected.id)
+          .subscribe({
+            next: (findedProduct) => {
+              this.productSelected = findedProduct;
+              this.avgRating = this.productSelected.averageRating;
+            },
+            error: () =>
+              this.alertService.showError(
+                'Ups! Ocurrió un error',
+                'No se pudieron cargar los datos correctamente'
+              ),
+          })
+      );
+    }
+  }
+
+  getBestSellers() {
     this.subscriptions.push(
       this.productsService.getBestSellingProductsUser().subscribe({
         next: (bestSellers) => {
           this.lengthBestSellers = bestSellers.length;
         },
+        error: () =>
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          ),
       })
     );
-
-    this.getBestSellersByPage();
   }
 
   getBestSellersByPage() {
@@ -116,6 +145,11 @@ export class CatalogDetailComponent {
           next: (bestSellers) => {
             this.bestSellers = bestSellers;
           },
+          error: () =>
+            this.alertService.showError(
+              'Ups! Ocurrió un error',
+              'No se pudieron cargar los datos correctamente'
+            ),
         })
     );
   }
@@ -137,31 +171,54 @@ export class CatalogDetailComponent {
     }
   }
 
+  onChangeRating(){
+    this.requiredRating = false;
+  }
+
   onSubmit() {
     if (this.commentForm.invalid) {
       this.commentForm.markAllAsTouched();
+      if(this.commentForm.get('rating')?.invalid) this.requiredRating = true;
     } else {
       const user = this.authService.getAuthUser();
       if (user) {
-        this.commentsService
-          .addComment(
-            {
-              ...this.commentForm.value,
-              user: user.user,
-              product: this.productSelected,
-            },
-            this.pageIndex,
-            this.pageSize
-          )
-          .subscribe({
-            next: (data) => {
-              this.comments = data;
-              this.length++;
-              this.commentFormDir.resetForm();
-            },
-          });
+        this.subscriptions.push(
+          this.commentsService
+            .addComment(
+              {
+                ...this.commentForm.value,
+                user: user.user,
+                product: this.productSelected,
+              },
+              this.pageIndex,
+              this.pageSize
+            )
+            .subscribe({
+              next: (data) => {
+                this.comments = data;
+                this.length++;
+                this.commentFormDir.resetForm();
+                this.updateProductData();
+              },
+              error: () =>
+                this.alertService.showError(
+                  'Ups! Ocurrió un error',
+                  'No se pudo crear el comentario'
+                ),
+            })
+        );
       } else {
-        console.log('Necesita iniciar sesión');
+        this.alertService
+          .showWarningActionWaitResponse(
+            'Necesita iniciar sesión',
+            'Debe iniciar sesión para comentar',
+            'Iniciar sesión'
+          )
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/shop/auth']);
+            }
+          });
       }
     }
   }
@@ -238,7 +295,7 @@ export class CatalogDetailComponent {
       };
 
       this.store.dispatch(ShoppingCartAction.addProduct({ orderDetail }));
-      this.dialog.open(ShoppingCartComponent);
+      this.toastService.showToast("Se añadió el producto al carrito");
     }
   }
 

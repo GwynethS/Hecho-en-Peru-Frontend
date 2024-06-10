@@ -54,7 +54,7 @@ export class AlertService {
       iconColor: "#EC9892",
       showCancelButton: true,
       cancelButtonColor: "#383838",
-      confirmButtonColor: "#FF857A",
+      confirmButtonColor: "#E9806E",
       cancelButtonText: "Cancelar",
       confirmButtonText: 'Confirmar',
       customClass: {
@@ -72,7 +72,7 @@ export class AlertService {
       iconColor: "#EC9892",
       showCancelButton: true,
       cancelButtonColor: "#383838",
-      confirmButtonColor: "#FF857A",
+      confirmButtonColor: "#E9806E",
       cancelButtonText: "Cancelar",
       confirmButtonText,
       customClass: {
@@ -85,6 +85,16 @@ export class AlertService {
   showSuccesActionWaitResponse(title: string, message?: string, confirmButtonText?: string){
     return Swal.fire({
       icon: 'success',
+      title,
+      text: message,
+      confirmButtonColor: '#383838',
+      confirmButtonText
+    });
+  }
+
+  showWarningActionWaitResponse(title: string, message?: string, confirmButtonText?: string){
+    return Swal.fire({
+      icon: 'warning',
       title,
       text: message,
       confirmButtonColor: '#383838',

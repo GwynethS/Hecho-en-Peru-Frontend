@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { AlertService } from '../../../../core/services/alert.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -11,6 +12,8 @@ import { AlertService } from '../../../../core/services/alert.service';
 export class AuthComponent {
   authForm: FormGroup;
   revealPassword = false;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -27,11 +30,20 @@ export class AuthComponent {
     if (this.authForm.invalid) {
       this.authForm.markAllAsTouched();
     } else {
-      this.authService.logIn(this.authForm.value).subscribe({
-        error: () => {
-          this.alertService.showError('Ups! Ocurrió un problema', 'El email o la constraseña son incorrectos');
-        },
-      });
+      this.subscriptions.push(
+        this.authService.logIn(this.authForm.value).subscribe({
+          error: () => {
+            this.alertService.showError(
+              'Ups! Ocurrió un problema',
+              'El email o la constraseña son incorrectos'
+            );
+          },
+        })
+      );
     }
+  }
+
+  OnDestroy(){
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 }

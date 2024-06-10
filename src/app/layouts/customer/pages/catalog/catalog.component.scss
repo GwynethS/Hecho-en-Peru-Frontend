@@ -281,6 +281,7 @@ mat-slider {
         gap: 0;
         &:hover {
           figure {
+            cursor: pointer;
             img {
               transform: scale(1.1, 1.1);
             }

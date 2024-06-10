@@ -109,4 +109,8 @@ export class CheckoutComponent {
   onCancel() {
     this.router.navigate(['/shop']);
   }
+
+  OnDestroy(){
+    this.subscriptions.forEach((suscription) => suscription.unsubscribe());
+  }
 }
