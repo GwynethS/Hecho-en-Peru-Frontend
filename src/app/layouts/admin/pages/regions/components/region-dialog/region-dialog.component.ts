@@ -65,9 +65,13 @@ export class RegionDialogComponent {
     } else {
       if (!this.editingRegion && !this.selectedFile) { return }
       
-      const regionData = this.regionForm.value;
-      let imageToSend;
+      const regionData = { ...this.regionForm.value };
       
+      if (!this.selectedFile && this.editingRegion) {
+        regionData.image = this.editingRegion.image;
+      }
+      
+      let imageToSend;
       if (this.selectedFile) {
         imageToSend = this.selectedFile;
       } else {

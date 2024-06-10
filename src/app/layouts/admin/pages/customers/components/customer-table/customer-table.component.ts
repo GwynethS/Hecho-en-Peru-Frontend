@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { Customer } from '../../models/customer';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-table',
@@ -38,16 +39,19 @@ export class CustomerTableComponent implements AfterViewInit {
     'actions',
   ];
 
-  
   _dataSource = new MatTableDataSource<Customer>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngAfterViewInit() {
     if (this.paginator) {
       this._dataSource.paginator = this.paginator;
     }
+  }
+
+  onViewOrderDetails(id: string) {
+    this.router.navigate([`/admin/customers/${id}`]);
   }
 }

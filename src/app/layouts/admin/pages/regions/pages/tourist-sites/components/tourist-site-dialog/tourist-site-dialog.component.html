@@ -7,7 +7,43 @@
   </h1>
   <div mat-dialog-content>
     <form [formGroup]="touristSiteForm" class="grid formgrid w-full" enctype="multipart/form-data">
-      <div class="col-7">
+        <div class="col-7 px-0 py-1">
+          <div class="w-full">
+            <div class="col-12 w-full">
+              <mat-form-field class="w-full">
+                <mat-label>Nombre</mat-label>
+                <input
+                  formControlName="name"
+                  placeholder="Ingrese el nombre del lugar turístico"
+                  matInput
+                  type="text"
+                />
+              </mat-form-field>
+            </div>
+            <div class="col-12 py-4 w-full">
+              <mat-form-field class="w-full">
+                <mat-label>Descripción</mat-label>
+                <textarea
+                  formControlName="description"
+                  placeholder="Ingrese la descripción del lugar turístico"
+                  matInput
+                  type="text"
+                  class="description-container"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="w-full file-container">
+            <div class="col-12 w-full">
+              <div *ngIf="imageUrl" class="image-preview">
+                <img [src]="imageUrl" alt="Imagen del producto" />
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="col-7 py-0">
         <div class="input-file-container">
           <div class="col-4">
             <button
@@ -32,40 +68,6 @@
               }}</span>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-5">
-        <div class="w-full file-container">
-          <div class="col-12 w-full">
-            <div *ngIf="imageUrl" class="image-preview">
-              <img [src]="imageUrl" alt="Imagen del producto" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-7 px-0">
-        <div class="col-12 py-3 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Nombre</mat-label>
-            <input
-              formControlName="name"
-              placeholder="Ingrese el nombre del lugar turístico"
-              matInput
-              type="text"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-12 py-1 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Descripción</mat-label>
-            <textarea
-              formControlName="description"
-              placeholder="Ingrese la descripción del lugar turístico"
-              matInput
-              type="text"
-              class="description-container"
-            ></textarea>
-          </mat-form-field>
         </div>
       </div>
     </form>

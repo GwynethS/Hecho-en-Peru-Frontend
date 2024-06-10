@@ -16,7 +16,7 @@ import { RegionsService } from '../../regions.service';
   templateUrl: './tourist-sites.component.html',
   styleUrl: './tourist-sites.component.scss'
 })
-export class TouristSitesComponent {
+export class TouristSitesComponent implements OnInit, OnDestroy {
   pageSize = 50;
   pageIndex = 0;
 
@@ -56,7 +56,7 @@ export class TouristSitesComponent {
     } else {
       this.router.navigate(['/404']);
     }
-  }  
+  }
 
   loadTouristSitesPage(): void {
     const regionId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -142,5 +142,13 @@ export class TouristSitesComponent {
           this.subscriptions.push(deleteSubscription);
         }
       });
+  }
+
+  redirectToRegions() {
+    this.router.navigate([`/admin/regions`]);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

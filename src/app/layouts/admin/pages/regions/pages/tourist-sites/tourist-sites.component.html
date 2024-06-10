@@ -1,22 +1,35 @@
-<div class="div-add-container" *ngIf="regionSelected">
-  <span>REGIÓN {{ regionSelected.name | uppercase }}</span>
-  <div class="container-text">
-    <p>
-      <b>Historia: </b>
-      {{ regionSelected.history }}
-    </p>
+<div class="div-add-container grid formgrid" *ngIf="regionSelected">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <span>REGIÓN {{ regionSelected.name | uppercase }}</span>
   </div>
-  <div class="container-text">
-    <p>
-      <b>Introducción de sitios turísticos: </b>
-      {{ regionSelected.sitesIntroduction }}
-    </p>
+  <div class="col-1">
+    <button
+      mat-button
+      (click)="redirectToRegions()"
+    >
+      <mat-icon>close</mat-icon> Cerrar
+    </button>
   </div>
-  <div class="container-text">
-    <p>
-      <b>Introducción de artesanos: </b>
-      {{ regionSelected.craftsmenIntroduction }}
-    </p>
+  <div>
+    <div class="container-text">
+      <p>
+        <b>Historia: </b>
+        {{ regionSelected.history }}
+      </p>
+    </div>
+    <div class="container-text">
+      <p>
+        <b>Introducción de sitios turísticos: </b>
+        {{ regionSelected.sitesIntroduction }}
+      </p>
+    </div>
+    <div class="container-text">
+      <p>
+        <b>Introducción de artesanos: </b>
+        {{ regionSelected.craftsmenIntroduction }}
+      </p>
+    </div>
   </div>
   <div
     class="div-table-container grid formgrid flex justify-content-center align-items-top"

@@ -5,7 +5,6 @@ import { TouristSite } from '../../models/tourist-site';
 import { environment } from '../../../../../../../../../environments/environment';
 import { RegionsService } from '../../../../regions.service';
 import { forkJoin } from 'rxjs';
-import { Region } from '../../../../models/region';
 
 @Component({
   selector: 'app-tourist-site-dialog',
@@ -17,6 +16,7 @@ export class TouristSiteDialogComponent {
   selectedFile: File | null = null;
   imageUrl: string | null = null;
   imageName: string | null = null;
+  region: any;
 
   constructor(
     private fb: FormBuilder,
@@ -68,13 +68,9 @@ export class TouristSiteDialogComponent {
       if (!this.touristSiteForm && !this.selectedFile) { return }
       
       const regionId = this.touristSiteForm.get('region_id')?.value;
-      if (!regionId) {
-        console.error('Region ID is undefined');
-        return;
-      }
       
       forkJoin({
-        region: this.regionService.getRegionDetailsByID(regionId.id),
+        region: this.regionService.getSearchRegionDetailsByID(regionId),
       }).subscribe({
         next: (results) => {
           const region = results.region;

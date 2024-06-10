@@ -7,7 +7,6 @@ import { RegionDialogComponent } from './components/region-dialog/region-dialog.
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-regions',

@@ -1,8 +1,8 @@
 export interface Region {
   id: string;
   name: string;
-  image: string;
   history: string;
+  image: string;
   sitesIntroduction: string;
   craftsmenIntroduction: string;
 }

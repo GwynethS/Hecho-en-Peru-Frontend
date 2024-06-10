@@ -5,6 +5,7 @@ import { environment } from '../../../../../environments/environment';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../customer/pages/auth/auth.service';
 import { UserProfile } from '../../../customer/pages/user/pages/profile/models/user-profile';
+import { OrderDetail } from './pages/order-detail/models/order-detail';
 
 @Injectable()
 export class CustomersService {
@@ -18,9 +19,7 @@ export class CustomersService {
   }
 
   getCustomersByPageAdmin(offSet: number, limit: number) {
-    return this.httpClient.get<Customer[]>(
-      `${environment.apiURL}usersByPageModeAdmin?offset=${offSet}&limit=${limit}`
-    );
+    return this.httpClient.get<Customer[]>(`${environment.apiURL}usersByPageModeAdmin?offset=${offSet}&limit=${limit}`);
   }
 
   getSearchCustomerByID(id: string) {
@@ -31,19 +30,20 @@ export class CustomersService {
     return this.httpClient.get<Customer[]>(`${environment.apiURL}orders`);
   }
 
+  getOrdersByPageAdmin(offset: number, limit: number) {
+    return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}/ordersByPageModeAdmin?offset=${offset}&limit=${limit}`);
+  }
+
+  getOrdersByCustomerId(customerId: string) {
+    return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}/customers/${customerId}/orders`);
+  }
+
   getSearchOrderDetailsByID(orderId: string, userId: string) {
-    return this.httpClient.get<Customer>(
-      `${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`
-    );
+    return this.httpClient.get<OrderDetail>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`);
   }
 
   createUser(userData: Customer) {
-    return this.httpClient.post<Customer>(
-      `${environment.apiURL}auth/register`,
-      {
-        ...userData,
-      }
-    );
+    return this.httpClient.post<Customer>(`${environment.apiURL}auth/register`, { ...userData });
   }
 
   updateUser(userProfile: UserProfile, id: string) {

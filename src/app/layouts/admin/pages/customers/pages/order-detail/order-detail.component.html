@@ -1,1 +1,156 @@
-<p>Hola</p>
+<div *ngIf="customer" class="div-add-container grid formgrid">
+  <div class="col-1"></div>
+  <div class="col-10 centered-header">
+    <span>DETALLES DEL CLIENTE</span>
+  </div>
+  <div class="col-1">
+    <button mat-button (click)="redirectToCustomers()">
+      <mat-icon>close</mat-icon> Cerrar
+    </button>
+  </div>
+  <div class="table-container shadow-table w-full py-4">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="w-size">ID</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.name }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Apellido</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.lastName }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.email }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="name_role">
+        <th mat-header-cell *matHeaderCellDef>Rol</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.roles[0].nameRole }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="dateCreated">
+        <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.dateCreated | date: 'short' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enabled">
+        <th mat-header-cell *matHeaderCellDef>Habilitado</th>
+        <td mat-cell *matCellDef="let customer">
+          {{ customer.enabled }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div class="grid formgrid w-full order-container">
+    <div class="col-3"></div>
+    <div class="col-6 centered-header">
+      <span>ÓRDENES DE COMPRA</span>
+    </div>
+    <div class="col-3 search-bar">
+      <form
+        [formGroup]="orderSearchForm"
+        class="customer-form-search flex justify-content-between"
+      >
+        <mat-form-field class="field">
+          <input
+            formControlName="id"
+            matInput
+            placeholder="Ingrese el ID"
+          />
+        </mat-form-field>
+        <button
+          mat-flat-button
+          type="button"
+          class="btn-search-icon"
+          (click)="onSearch()"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button
+          mat-flat-button
+          type="button"
+          class="btn-clean-icon"
+          (click)="onClean()"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+  <mat-tab-group #tabGroup class="w-full">
+    <mat-tab>
+      <div class="table-container shadow-table">
+        <table mat-table [dataSource]="dataSourceOrder" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="w-size-id">ID</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.id }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="id_product">
+            <th mat-header-cell *matHeaderCellDef>ID de producto</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.product.id }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="product">
+            <th mat-header-cell *matHeaderCellDef>Producto</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.product.name }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.quantity }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="sub_total">
+            <th mat-header-cell *matHeaderCellDef>Sub Total</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.subTotal | currency }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="date_created">
+            <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+            <td mat-cell *matCellDef="let order">
+              {{ order.order.dateCreated | date: 'short' }}
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsOrder"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsOrder"></tr>
+        </table>
+        <div class="paginator-border">
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 15]"
+            showFirstLastButtons
+          >
+          </mat-paginator>
+        </div>
+      </div>
+      <div class="no-results-container" *ngIf="!orders.length || searchAttempted">
+        <i class="fa-solid fa-face-sad-cry fa-3x"></i>
+        <div>
+          <p>No se encontraron resultados</p>
+          <p> para su búsqueda</p>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

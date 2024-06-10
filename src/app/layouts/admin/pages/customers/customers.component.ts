@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -26,13 +27,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private customersService: CustomersService
+    private customersService: CustomersService,
   ) {
     this.customerSearchForm = this.fb.group({
-      id: this.fb.control('', [
-        Validators.required,
-        Validators.pattern('^[0-9]+$'),
-      ]),
+      id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
     });
   }
 
@@ -84,6 +82,4 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.pageIndex = 0;
     this.loadCustomersPage();
   }
-
-  onViewProduct(customer: Customer) { }
 }

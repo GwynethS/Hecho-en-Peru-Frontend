@@ -7,10 +7,15 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomersService } from './customers.service';
 import { CustomerTableComponent } from './components/customer-table/customer-table.component';
+import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 
 
 @NgModule({
-  declarations: [CustomersComponent, CustomerTableComponent],
+  declarations: [
+    CustomersComponent,
+    CustomerTableComponent,
+    OrderDetailComponent,
+  ],
   imports: [
     CommonModule,
     CustomersRoutingModule,
