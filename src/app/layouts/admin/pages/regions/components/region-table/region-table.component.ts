@@ -3,7 +3,6 @@ import { Region } from '../../models/region';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { TouristSite } from '../../pages/tourist-sites/models/touristSite';
 
 @Component({
   selector: 'app-region-table',
@@ -47,7 +46,7 @@ export class RegionTableComponent implements AfterViewInit {
     }
   }
 
-  viewTouristSites(idRegion: string, idTouristSite: string): void {
-    this.router.navigate([`/admin/${idRegion}/${idTouristSite}`]);
+  onViewTouristSites(id: string) {
+    this.router.navigate([`/admin/regions/${id}`]);
   }
 }

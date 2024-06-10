@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TouristSite } from './models/touristSite';
+import { TouristSite } from './models/tourist-site';
 import { environment } from '../../../../../../../environments/environment';
+import { catchError, of } from 'rxjs';
+import { TouristSiteRequest } from './models/tourist-site-request';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TouristSitesService {
   constructor(private httpClient: HttpClient) {}
 
@@ -14,25 +14,49 @@ export class TouristSitesService {
     );
   }
 
-  addTouristSites(touristSite: TouristSite) {
-    const formData: FormData = new FormData();
-    formData.append('touristSiteDTO', new Blob([JSON.stringify(touristSite)], { type: "application/json" }));
-    if (touristSite.image) {
-      formData.append('file', touristSite.image);
-    }
-    return this.httpClient.post<TouristSite>(`${environment.apiURL}touristSite`, formData);
+  getTouristSitesByPageAdmin(offset: number, limit: number) {
+    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByPageAdmin?offset=${offset}&limit=${limit}`);
   }
 
-  updateTouristSite(id: string, touristSite: TouristSite) {
+  addTouristSites(data: TouristSiteRequest, file: File) {
+    console.log(data);
     const formData: FormData = new FormData();
-    formData.append('touristSiteDTO', new Blob([JSON.stringify(touristSite)], { type: "application/json" }));
-    if (touristSite.image) {
-      formData.append('file', touristSite.image);
+    formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
+    if (file) {
+      formData.append('file', file, file.name);
     }
-    return this.httpClient.put<TouristSite>(`${environment.apiURL}touristSite/${id}`, formData);
+    return this.httpClient.post(`${environment.apiURL}touristSite`, formData)
+    .pipe(
+      catchError((err) => {
+        console.error('Failed to add tourist site', err);
+        return of({ err });
+      })
+    );
   }
 
-  deleteTouristSite(id: string) {
-    return this.httpClient.delete<void>(`${environment.apiURL}touristSite/${id}`);
+  updateTouristSites(id: string, data: TouristSiteRequest, file: File) {
+    const formData: FormData = new FormData();
+    formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+    return this.httpClient.put(`${environment.apiURL}touristSite/${id}`, formData)
+    .pipe(
+      catchError((err) => {
+        console.error('Failed to update tourist site', err);
+        return of({ err });
+      })
+    );
+  }
+
+  deleteTouristSiteByID(id: string) {
+    return this.httpClient
+      .delete(`${environment.apiURL}touristSite/${id}`, { responseType: 'text' })
+      .pipe(
+        catchError((err) => {
+          console.error('Failed to delete tourist site', err);
+          return of([]);
+        })
+      );
   }
 }

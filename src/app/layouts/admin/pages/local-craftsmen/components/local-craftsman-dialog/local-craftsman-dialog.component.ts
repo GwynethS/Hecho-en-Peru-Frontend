@@ -23,7 +23,7 @@ export class LocalCraftsmanDialogComponent implements OnInit {
     private fb: FormBuilder,
     private regionService: RegionsService,
     private matDialogRef: MatDialogRef<LocalCraftsmanDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private editinglocalCraftsman?: LocalCraftsman
+    @Inject(MAT_DIALOG_DATA) private editingLocalCraftsman?: LocalCraftsman
   ) {
     this.localCraftsmanForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(10)]],
@@ -32,15 +32,15 @@ export class LocalCraftsmanDialogComponent implements OnInit {
       experience: ['', [Validators.required, Validators.minLength(3)]],
       region_id: ['', Validators.required],
     });
-    if (this.editinglocalCraftsman) {
+    if (this.editingLocalCraftsman) {
       this.localCraftsmanForm.patchValue({
-        ...this.editinglocalCraftsman,
-        region_id: this.editinglocalCraftsman.region.id,
-        enabled: this.editinglocalCraftsman.enabled ? 'true' : 'false',
+        ...this.editingLocalCraftsman,
+        region_id: this.editingLocalCraftsman.region.id,
+        enabled: this.editingLocalCraftsman.enabled ? 'true' : 'false',
       });
-      if (this.editinglocalCraftsman.image) {
-        this.imageUrl = `${environment.apiURL}uploadsLoadImage/${this.editinglocalCraftsman.image}`;
-        this.imageName = this.extractFileName(this.editinglocalCraftsman.image);
+      if (this.editingLocalCraftsman.image) {
+        this.imageUrl = `${environment.apiURL}uploadsLoadImage/${this.editingLocalCraftsman.image}`;
+        this.imageName = this.extractFileName(this.editingLocalCraftsman.image);
       }
     }
   }
@@ -84,7 +84,7 @@ export class LocalCraftsmanDialogComponent implements OnInit {
     if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
     } else {
-      if (!this.editinglocalCraftsman && !this.selectedFile) { return }
+      if (!this.editingLocalCraftsman && !this.selectedFile) { return }
       
       forkJoin({
         region: this.regionService.getSearchRegionDetailsByID(

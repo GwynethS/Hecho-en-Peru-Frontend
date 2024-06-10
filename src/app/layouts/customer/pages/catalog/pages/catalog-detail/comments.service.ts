@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../../../../environments/environment';
-import { Comment } from './models/Comment';
+import { Comment } from './models/comment';
 import { mergeMap } from 'rxjs';
 
 @Injectable()

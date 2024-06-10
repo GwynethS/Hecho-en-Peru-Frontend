@@ -24,6 +24,9 @@ import { RegionsService } from '../regions/regions.service';
     ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [LocalCraftsmenService, RegionsService],
+  providers: [
+    LocalCraftsmenService,
+    RegionsService
+  ],
 })
 export class LocalCraftsmenModule {}

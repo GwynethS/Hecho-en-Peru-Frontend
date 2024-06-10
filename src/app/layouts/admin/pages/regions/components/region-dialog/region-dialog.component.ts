@@ -24,10 +24,7 @@ export class RegionDialogComponent {
       name: ['', [Validators.required, Validators.minLength(3)]],
       history: ['', [Validators.required, Validators.minLength(3)]],
       sitesIntroduction: ['', [Validators.required, Validators.minLength(3)]],
-      craftsmenIntroduction: [
-        '',
-        [Validators.required, Validators.minLength(3)],
-      ],
+      craftsmenIntroduction: ['', [Validators.required, Validators.minLength(3)]],
     });
     if (this.editingRegion) {
       this.regionForm.patchValue(this.editingRegion);

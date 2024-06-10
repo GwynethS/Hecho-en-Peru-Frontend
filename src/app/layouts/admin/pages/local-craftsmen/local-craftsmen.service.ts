@@ -25,17 +25,6 @@ export class LocalCraftsmenService {
     return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmenByRegion/${regionId}`);
   }
 
-  deleteLocalCraftsmenByID(id: string) {
-    return this.httpClient
-      .delete(`${environment.apiURL}localCraftsmanDelete/${id}`, { responseType: 'text' })
-      .pipe(
-        catchError((err) => {
-          console.error('Failed to delete local craftsman', err);
-          return of([]);
-        })
-      );
-  }
-
   addLocalCraftsmen(data: LocalCraftsmanRequest, file: File) {
     const formData = new FormData();
     formData.append('localCraftsmanDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
@@ -62,6 +51,17 @@ export class LocalCraftsmenService {
         catchError((err) => {
           console.error('Failed to update local craftsman', err);
           return of({ err });
+        })
+      );
+  }
+
+  deleteLocalCraftsmenByID(id: string) {
+    return this.httpClient
+      .delete(`${environment.apiURL}localCraftsmanDelete/${id}`, { responseType: 'text' })
+      .pipe(
+        catchError((err) => {
+          console.error('Failed to delete local craftsman', err);
+          return of([]);
         })
       );
   }

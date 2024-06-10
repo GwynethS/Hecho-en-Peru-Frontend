@@ -10,13 +10,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: RegionsComponent,
-    children: [
-      {
-        path: ':id',
-        component: TouristSitesComponent,
-      },
-    ],
+    component: TouristSitesComponent,
   }
 ];
 

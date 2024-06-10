@@ -10,7 +10,7 @@ import { ProductsService } from '../../../../../admin/pages/products/products.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Product } from '../../../../../admin/pages/products/models/product';
-import { Comment } from './models/Comment';
+import { Comment } from './models/comment';
 import { CommentsService } from './comments.service';
 import { LoginResponse } from '../../../auth/models/login-response';
 import { AuthService } from '../../../auth/auth.service';

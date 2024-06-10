@@ -28,4 +28,4 @@ import { TouristSitesService } from '../../../admin/pages/regions/pages/tourist-
     TouristSitesService
   ]
 })
-export class RegionsModule { }
+export class RegionsModule {}
