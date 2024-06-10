@@ -35,6 +35,16 @@
     display: flex;
     justify-content: center;
   }
+  .file-error {
+    border: solid 1px #f44336;
+  }
+  #required-image {
+    margin-top: 0;
+    margin-left: 1rem;
+    color: #f44336;
+    font-size: 0.8rem;
+    transition: all ease 0.5s;
+  }
 }
 
 .input-file-container {
@@ -58,7 +68,7 @@
   border: 0.063rem solid #ccc;
   border-radius: 0.5rem;
   color: #ffffff;
-  background-color: #A5A5A5;
+  background-color: #a5a5a5;
   cursor: pointer;
   button {
     margin: 0;

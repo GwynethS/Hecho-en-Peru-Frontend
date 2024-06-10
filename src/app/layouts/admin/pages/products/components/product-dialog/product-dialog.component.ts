@@ -23,6 +23,7 @@ export class ProductDialogComponent implements OnInit {
   selectedFile: File | null = null;
   imageUrl: string | null = null;
   imageName: string | null = null;
+  requiredImage: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -83,7 +84,9 @@ export class ProductDialogComponent implements OnInit {
     if (this.selectedFile) {
       this.imageUrl = URL.createObjectURL(this.selectedFile);
       this.imageName = this.selectedFile.name;
+      this.requiredImage = false;
     } else {
+      this.requiredImage = true;
       this.imageUrl = null;
       this.imageName = null;
     }
@@ -100,8 +103,14 @@ export class ProductDialogComponent implements OnInit {
   onSave(): void {
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
+      if(!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.editingProduct && !this.selectedFile) { return }
+      if (!this.editingProduct && !this.selectedFile) { 
+        this.requiredImage = true;
+        return;
+      }
+
+      this.requiredImage = false;
       
       forkJoin({
         localCraftsman: this.localCraftsmanService.getSearchLocalCraftsmanDetailsByID(
