@@ -1,16 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormGroupDirective,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ProductsService } from '../../../../../admin/pages/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Product } from '../../../../../admin/pages/products/models/product';
-import { Comment } from './models/comment';
 import { CommentsService } from './comments.service';
 import { LoginResponse } from '../../../auth/models/login-response';
 import { AuthService } from '../../../auth/auth.service';
@@ -20,6 +14,7 @@ import { ShoppingCartAction } from '../../../../../../core/store/shopping-cart/s
 import { OrderDetailRequest } from '../../../checkout/models/order-detail-request';
 import { AlertService } from '../../../../../../core/services/alert.service';
 import { ToastService } from '../../../../../../core/services/toast.service';
+import { Comment } from './models/comment';
 
 @Component({
   selector: 'app-catalog-detail',

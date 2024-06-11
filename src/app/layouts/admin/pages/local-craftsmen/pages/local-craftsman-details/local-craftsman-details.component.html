@@ -1,0 +1,86 @@
+<div class="div-add-container grid formgrid" *ngIf="localCraftsmanSelected">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <span>DETALLES DEL ARTESANO SELECCIONADO</span>
+  </div>
+  <div class="col-1">
+    <button mat-button (click)="redirectToLocalCraftsmen()" class="btn-close">
+      <mat-icon>close</mat-icon> Cerrar
+    </button>
+  </div>
+  <div class="w-full text-container grid formgrid flex justify-content-evenly">
+    <div class="col-5">
+      <div class="w-full grid formgrid py-4 spaces-form">
+        <div class="col-12 field-container">
+          <div class="field-name">
+            <span>Nombre completo:</span>
+          </div>
+          <div class="container-text w-full">
+            <p>
+              {{ localCraftsmanSelected.fullName }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full grid formgrid py-3 spaces-form">
+        <div class="col-12 field-container">
+          <span>Experiencia:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ localCraftsmanSelected.experience }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full grid formgrid py-4 spaces-form">
+        <div class="col-12 field-container">
+          <span>Especialidad:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ localCraftsmanSelected.specialty }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full grid formgrid py-3 spaces-form">
+        <div class="col-6 field-container">
+          <span>Región:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ localCraftsmanSelected.region.name }}
+            </p>
+          </div>
+        </div>
+        <div class="col-5 field-container">
+          <span>Habilitado:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ localCraftsmanSelected.enabled }}
+            </p>
+          </div>
+        </div>
+      </div>
+        <div class="w-full grid formgrid py-4">
+          <div class="col-12 big-field-container">
+            <span>Descripción:</span>
+            <div class="container-text w-full" id="pre-format">
+              <p>
+                {{ localCraftsmanSelected.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 image-container py-3">
+        <span>Imagen:</span>
+        <div class="container-text image-center w-full">
+          <figure>
+            <img
+              src="http://localhost:8080/api/uploadsLoadImage/{{localCraftsmanSelected?.image}}"
+              class="product-img"
+            />
+          </figure>
+        </div>
+      </div>
+  </div>
+</div>

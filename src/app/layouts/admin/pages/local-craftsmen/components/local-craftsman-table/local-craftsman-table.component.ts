@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { LocalCraftsman } from '../../models/local-craftsman';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-local-craftsman-table',
@@ -41,11 +42,15 @@ export class LocalCraftsmanTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngAfterViewInit() {
     if (this.paginator) {
       this._dataSource.paginator = this.paginator;
     }
+  }
+
+  onViewLocalCraftsmanDetails(id: string) {
+    this.router.navigate([`/admin/local-craftsmen/${id}`]);
   }
 }

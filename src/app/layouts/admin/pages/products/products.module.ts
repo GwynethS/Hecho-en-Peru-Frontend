@@ -10,6 +10,7 @@ import { ProductTableComponent } from './components/product-table/product-table.
 import { ProductsService } from './products.service';
 import { CategoryDialogComponent } from './components/category-dialog/category-dialog.component';
 import { LocalCraftsmenService } from '../local-craftsmen/local-craftsmen.service';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { LocalCraftsmenService } from '../local-craftsmen/local-craftsmen.servic
     ProductsComponent,
     ProductTableComponent,
     ProductDialogComponent,
-    CategoryDialogComponent
+    CategoryDialogComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,

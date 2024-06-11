@@ -31,7 +31,7 @@ export class ProductsService {
   }
 
   getProductDetailsByID(id: string) {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productDetails/${id}`);
+    return this.httpClient.get<Product>(`${environment.apiURL}productDetails/${id}`);
   }
 
   getSearchProductDetailsByID(id: string) {

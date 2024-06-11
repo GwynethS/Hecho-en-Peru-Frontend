@@ -18,6 +18,9 @@
                   matInput
                   type="text"
                 />
+                <mat-error>{{
+                  touristSiteForm.get("name")?.errors | errorsFeedback
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 py-4 w-full">
@@ -30,6 +33,9 @@
                   type="text"
                   class="description-container"
                 ></textarea>
+                <mat-error>{{
+                  touristSiteForm.get("description")?.errors | errorsFeedback
+                }}</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -44,7 +50,7 @@
           </div>
         </div>
       <div class="col-7 py-0">
-        <div class="input-file-container">
+        <div class="input-file-container w-full" [ngClass]="requiredImage ? 'file-error' : ''">
           <div class="col-4">
             <button
               class="upload-button"
@@ -69,6 +75,7 @@
             </div>
           </div>
         </div>
+        <p *ngIf="requiredImage" id="required-image">Este campo es requerido.</p>
       </div>
     </form>
   </div>

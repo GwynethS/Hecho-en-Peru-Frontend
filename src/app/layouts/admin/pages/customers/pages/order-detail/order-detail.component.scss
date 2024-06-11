@@ -41,13 +41,12 @@
 }
 
 .no-results-container {
-  margin: 5rem;
-  padding: 1.25rem;
+  padding: 1rem;
+  margin-top: 1rem;
   text-align: center;
-  max-width: 80%;
   opacity: 0.5;
   .emoji {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 1.25rem;
   }
   div {
@@ -78,6 +77,10 @@ td {
 
 .mdc-data-table__cell {
   text-align: center;
+}
+
+.order-container {
+  padding-top: 1rem;
 }
 
 .paginator-border {

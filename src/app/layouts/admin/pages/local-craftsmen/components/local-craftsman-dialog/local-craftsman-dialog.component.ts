@@ -18,6 +18,7 @@ export class LocalCraftsmanDialogComponent implements OnInit {
   selectedFile: File | null = null;
   imageUrl: string | null = null;
   imageName: string | null = null;
+  requiredImage: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +67,9 @@ export class LocalCraftsmanDialogComponent implements OnInit {
     if (this.selectedFile) {
       this.imageUrl = URL.createObjectURL(this.selectedFile);
       this.imageName = this.selectedFile.name;
+      this.requiredImage = false;
     } else {
+      this.requiredImage = true;
       this.imageUrl = null;
       this.imageName = null;
     }
@@ -83,8 +86,14 @@ export class LocalCraftsmanDialogComponent implements OnInit {
   onSave(): void {
     if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
+      if(!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.editingLocalCraftsman && !this.selectedFile) { return }
+      if (!this.editingLocalCraftsman && !this.selectedFile) {
+        this.requiredImage = true;
+        return; 
+      }
+      
+      this.requiredImage = false;
       
       forkJoin({
         region: this.regionService.getSearchRegionDetailsByID(

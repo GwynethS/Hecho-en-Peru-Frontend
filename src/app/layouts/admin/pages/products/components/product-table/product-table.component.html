@@ -76,7 +76,11 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="primary">
+            <button
+              (click)="onViewProductDetails(product.id)"
+              mat-icon-button
+              color="primary"
+            >
               <mat-icon>visibility</mat-icon>
             </button>
             <button

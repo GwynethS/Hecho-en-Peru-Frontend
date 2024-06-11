@@ -9,6 +9,7 @@ import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dial
 import { LocalCraftsmanTableComponent } from './components/local-craftsman-table/local-craftsman-table.component';
 import { LocalCraftsmenService } from './local-craftsmen.service';
 import { RegionsService } from '../regions/regions.service';
+import { LocalCraftsmanDetailsComponent } from './pages/local-craftsman-details/local-craftsman-details.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { RegionsService } from '../regions/regions.service';
     LocalCraftsmenComponent,
     LocalCraftsmanTableComponent,
     LocalCraftsmanDialogComponent,
+    LocalCraftsmanDetailsComponent,
   ],
   imports: [
     CommonModule,

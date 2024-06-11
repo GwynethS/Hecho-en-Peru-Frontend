@@ -2,6 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { Product } from '../../models/product';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-table',
@@ -45,11 +46,15 @@ export class ProductTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngAfterViewInit() {
     if (this.paginator) {
       this._dataSource.paginator = this.paginator;
     }
+  }
+
+  onViewProductDetails(id: string) {
+    this.router.navigate([`/admin/products/${id}`]);
   }
 }

@@ -31,6 +31,16 @@
     display: flex;
     justify-content: center;
   }
+  .file-error {
+    border: solid 1px #f44336;
+  }
+  #required-image {
+    margin-top: 0;
+    margin-left: 1rem;
+    color: #f44336;
+    font-size: 0.8rem;
+    transition: all ease 0.5s;
+  }
 }
 
 .input-file-container {

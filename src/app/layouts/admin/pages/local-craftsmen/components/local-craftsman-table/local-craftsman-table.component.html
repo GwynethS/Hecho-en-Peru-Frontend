@@ -52,7 +52,10 @@
             >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="primary">
+            <button
+              (click)="onViewLocalCraftsmanDetails(localCraftsman.id)"
+              mat-icon-button
+              color="primary">
               <mat-icon>visibility</mat-icon>
             </button>
             <button

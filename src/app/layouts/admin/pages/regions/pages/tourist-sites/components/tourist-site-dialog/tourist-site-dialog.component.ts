@@ -17,6 +17,7 @@ export class TouristSiteDialogComponent {
   imageUrl: string | null = null;
   imageName: string | null = null;
   region: any;
+  requiredImage: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +48,9 @@ export class TouristSiteDialogComponent {
     if (this.selectedFile) {
       this.imageUrl = URL.createObjectURL(this.selectedFile);
       this.imageName = this.selectedFile.name;
+      this.requiredImage = false;
     } else {
+      this.requiredImage = true;
       this.imageUrl = null;
       this.imageName = null;
     }
@@ -64,19 +67,27 @@ export class TouristSiteDialogComponent {
   onSave(): void {
     if (this.touristSiteForm.invalid) {
       this.touristSiteForm.markAllAsTouched();
+      if(!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.touristSiteForm && !this.selectedFile) { return }
+      if (!this.editingTouristSite && !this.selectedFile) { 
+        this.requiredImage = true;
+        return;
+      }
       
-      const regionId = this.touristSiteForm.get('region_id')?.value;
+      this.requiredImage = false;
       
       forkJoin({
-        region: this.regionService.getSearchRegionDetailsByID(regionId),
+        region: this.regionService.getSearchRegionDetailsByID(this.touristSiteForm.get('region_id')?.value),
       }).subscribe({
         next: (results) => {
           const region = results.region;
           const touristSiteData = { ...this.touristSiteForm.value, region };
-          let imageToSend;
           
+          if (!this.selectedFile && this.editingTouristSite) {
+            touristSiteData.image = this.editingTouristSite.image;
+          }
+          
+          let imageToSend;
           if (this.selectedFile) {
             imageToSend = this.selectedFile;
           } else {

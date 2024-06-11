@@ -1,0 +1,114 @@
+<div class="div-add-container grid formgrid" *ngIf="productSelected">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <span>DETALLES DEL PRODUCTO SELECCIONADO</span>
+  </div>
+  <div class="col-1">
+    <button mat-button (click)="redirectToProducts()" class="btn-close">
+      <mat-icon>close</mat-icon> Cerrar
+    </button>
+  </div>
+  <div class="w-full text-container grid formgrid">
+    <div class="col-7">
+      <div class="w-full grid formgrid py-3 spaces-form">
+        <div class="col-5 field-container">
+          <span>Nombre:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.name }}
+            </p>
+          </div>
+        </div>
+        <div class="col-3 field-container">
+          <span>Categoría:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.category.name }}
+            </p>
+          </div>
+        </div>
+        <div class="col-3 field-container">
+          <span>Precio:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.price | number : "1.2-2" }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full grid formgrid py-2 spaces-form">
+        <div class="col-5 field-container">
+          <span>Artesano:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.localCraftsman.fullName }}
+            </p>
+          </div>
+        </div>
+        <div class="col-3 field-container">
+          <span>Región:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.localCraftsman.region.name }}
+            </p>
+          </div>
+        </div>
+        <div class="col-3 field-container">
+          <span>Stock:</span>
+          <div class="container-text w-full">
+            <p>
+              {{ productSelected.stock }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="w-full grid formgrid py-3">
+        <div class="col-12 big-field-container">
+          <span>Historia:</span>
+          <div class="container-text w-full" id="pre-format">
+            <p>
+              {{ productSelected.history }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-5 image-container py-3">
+      <span>Imagen:</span>
+      <div class="container-text image-center w-full">
+        <figure>
+          <img
+            src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.image}}"
+            class="product-img"
+          />
+        </figure>
+      </div>
+    </div>
+    <div class="col-12 big-field-container py-2">
+      <span>Detalles:</span>
+      <div class="container-text w-full" id="pre-format">
+        <p>
+          {{ productSelected.details }}
+        </p>
+      </div>
+    </div>
+    <div class="col-12 py-3 spaces-form">
+      <div class="col-2 field-container">
+        <span>Habilitado:</span>
+        <div class="container-text w-full">
+          <p>
+            {{ productSelected.enabled }}
+          </p>
+        </div>
+      </div>
+      <div class="col-2 field-container">
+        <span>Disponibilidad:</span>
+        <div class="container-text w-full">
+          <p>
+            {{ productSelected.availability }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

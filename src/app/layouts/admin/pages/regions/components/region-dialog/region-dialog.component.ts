@@ -14,6 +14,7 @@ export class RegionDialogComponent {
   selectedFile: File | null = null;
   imageUrl: string | null = null;
   imageName: string | null = null;
+  requiredImage: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,7 +46,9 @@ export class RegionDialogComponent {
     if (this.selectedFile) {
       this.imageUrl = URL.createObjectURL(this.selectedFile);
       this.imageName = this.selectedFile.name;
+      this.requiredImage = false;
     } else {
+      this.requiredImage = true;
       this.imageUrl = null;
       this.imageName = null;
     }
@@ -62,8 +65,14 @@ export class RegionDialogComponent {
   onSave(): void {
     if (this.regionForm.invalid) {
       this.regionForm.markAllAsTouched();
+      if(!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.editingRegion && !this.selectedFile) { return }
+      if (!this.editingRegion && !this.selectedFile) { 
+        this.requiredImage = true;
+        return;
+      }
+      
+      this.requiredImage = false;
       
       const regionData = { ...this.regionForm.value };
       

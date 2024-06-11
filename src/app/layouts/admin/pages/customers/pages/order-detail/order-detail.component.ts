@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { OrderDetail } from './models/order-detail';
 import { Customer } from '../../models/customer';
+import { OrderDetail } from './models/order-detail';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomersService } from '../../customers.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,11 +11,11 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
-  styleUrl: './order-detail.component.scss',
+  styleUrls: ['./order-detail.component.scss'],
 })
-export class OrderDetailComponent implements AfterViewInit {
-  customer: Customer | null = null;
-  customerId: string | null = null;
+export class OrderDetailComponent implements OnInit, OnDestroy {
+  customerSelected: Customer | null = null;
+  orders: OrderDetail[] = [];
   displayedColumns: string[] = [
     'id',
     'name',
@@ -23,21 +23,9 @@ export class OrderDetailComponent implements AfterViewInit {
     'email',
     'name_role',
     'dateCreated',
-    'enabled',
+    'enabled'
   ];
-  dataSource = new MatTableDataSource<Customer>();
-
-  @Input()
-  set dataSourceOrder(dataSourceOrder: MatTableDataSource<OrderDetail>) {
-    this._dataSourceOrder = dataSourceOrder;
-    if (this.paginator) {
-      this._dataSourceOrder.paginator = this.paginator;
-    }
-  }
-
-  get dataSourceOrder(): MatTableDataSource<OrderDetail> {
-    return this._dataSourceOrder;
-  }
+  dataSourceCustomer = new MatTableDataSource<Customer>();
 
   displayedColumnsOrder: string[] = [
     'id',
@@ -45,27 +33,24 @@ export class OrderDetailComponent implements AfterViewInit {
     'product',
     'quantity',
     'sub_total',
-    'date_created',
+    'date_created'
   ];
-
-  _dataSourceOrder = new MatTableDataSource<OrderDetail>();
+  dataSourceOrder = new MatTableDataSource<OrderDetail>();
 
   pageSize = 10;
   pageIndex = 0;
 
   orderSearchForm: FormGroup;
-  orders: OrderDetail[] = [];
   searchAttempted: boolean = false;
-
   subscriptions: Subscription[] = [];
-
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
+    private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private customersService: CustomersService,
-    private fb: FormBuilder,
   ) {
     this.orderSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -73,41 +58,51 @@ export class OrderDetailComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const customerId = params.get('id');
-      if (customerId) {
+    const customerId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (customerId) {
+      this.subscriptions.push(
         this.customersService.getSearchCustomerByID(customerId).subscribe({
-          next: customer => {
-            this.customer = customer;
-            this.customerId = customer.id;
-            this.dataSource.data = [customer];
+          next: (findedCustomer) => {
+            this.customerSelected = findedCustomer;
+            this.dataSourceCustomer.data = [findedCustomer];
             this.loadOrdersPage();
           },
-          error: err => {
-            console.error('Failed to load customer details', err);
-          }
-        });
-      }
-    });
+          error: () => {
+            this.router.navigate(['/404']);
+          },
+        })
+      );
+    } else {
+      this.router.navigate(['/404']);
+    }
   }
 
   ngAfterViewInit() {
     this.dataSourceOrder.paginator = this.paginator;
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
   loadOrdersPage(): void {
-    if (this.customerId) {
-      this.customersService.getOrdersByCustomerId(this.customerId).subscribe({
-        next: orders => {
-          this.orders = orders || [];
-          this.dataSourceOrder.data = this.orders;
-        },
-        error: err => {
-          this.orders = [];
-          this.dataSourceOrder.data = this.orders;
-          console.error('Failed to load orders', err);
-        }
-      });
+    const customerId = this.activatedRoute.snapshot.paramMap.get('id');
+    const offset = this.pageIndex * this.pageSize;
+    if (customerId) {
+      const subscription = this.customersService
+        .getOrderDetailByUserIdByPageAdmin(customerId, offset, this.pageSize)
+        .subscribe({
+          next: (orders) => {
+            this.orders = orders || [];
+            this.dataSourceOrder.data = this.orders;
+          },
+          error: (err) => {
+            this.orders = [];
+            this.dataSourceOrder.data = this.orders;
+            console.error('Failed to load orders by customer', err);
+          }
+        });
+      this.subscriptions.push(subscription);
     }
   }
 
@@ -121,9 +116,10 @@ export class OrderDetailComponent implements AfterViewInit {
     if (this.orderSearchForm.invalid) {
       this.orderSearchForm.markAllAsTouched();
     } else {
-      const orderId = this.orderSearchForm.value.orderId;
-      if (this.customerId && orderId) {
-        const subscription = this.customersService.getSearchOrderDetailsByID(orderId, this.customerId).subscribe({
+      const orderId = this.orderSearchForm.value.id;
+      const customerId = this.activatedRoute.snapshot.paramMap.get('id');
+      if (customerId && orderId) {
+        const subscription = this.customersService.getSearchOrderDetailsByID(orderId, customerId).subscribe({
           next: order => {
             this.orders = [order];
             this.dataSourceOrder.data = this.orders;
@@ -135,6 +131,7 @@ export class OrderDetailComponent implements AfterViewInit {
             this.dataSourceOrder.data = [];
           }
         });
+        this.subscriptions.push(subscription);
       }
     }
   }

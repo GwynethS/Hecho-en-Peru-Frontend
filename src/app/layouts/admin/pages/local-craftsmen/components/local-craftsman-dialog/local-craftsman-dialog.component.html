@@ -6,7 +6,11 @@
     DATOS DEL ARTESANO
   </h1>
   <div mat-dialog-content>
-    <form [formGroup]="localCraftsmanForm" class="grid formgrid w-full" enctype="multipart/form-data">
+    <form
+      [formGroup]="localCraftsmanForm"
+      class="grid formgrid w-full"
+      enctype="multipart/form-data"
+    >
       <div class="col-5 py-2">
         <mat-form-field class="w-full">
           <mat-label>Nombre completo</mat-label>
@@ -16,11 +20,14 @@
             matInput
             type="text"
           />
+          <mat-error>{{
+            localCraftsmanForm.get("fullName")?.errors | errorsFeedback
+          }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-7 py-2">
         <div class="w-full file-container">
-          <div class="input-file-container">
+          <div class="input-file-container" [ngClass]="requiredImage ? 'file-error' : ''">
             <div class="col-4">
               <button
                 class="upload-button"
@@ -45,6 +52,7 @@
               </div>
             </div>
           </div>
+          <p *ngIf="requiredImage" id="required-image">Este campo es requerido.</p>
           <div class="col-12 w-full">
             <div *ngIf="imageUrl" class="image-preview">
               <img [src]="imageUrl" alt="Imagen del producto" />
@@ -62,6 +70,9 @@
               matInput
               type="text"
             />
+            <mat-error>{{
+              localCraftsmanForm.get("specialty")?.errors | errorsFeedback
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 py-3 w-full">
@@ -75,6 +86,9 @@
                 {{ region.name }}
               </mat-option>
             </mat-select>
+            <mat-error>{{
+              localCraftsmanForm.get("region_id")?.errors | errorsFeedback
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 py-1 w-full">
@@ -86,6 +100,9 @@
               matInput
               type="text"
             />
+            <mat-error>{{
+              localCraftsmanForm.get("experience")?.errors | errorsFeedback
+            }}</mat-error>
           </mat-form-field>
         </div>
         <div class="col-12 py-3 w-full">
@@ -98,6 +115,9 @@
               type="text"
               class="description-container"
             ></textarea>
+            <mat-error>{{
+              localCraftsmanForm.get("description")?.errors | errorsFeedback
+            }}</mat-error>
           </mat-form-field>
         </div>
       </div>
