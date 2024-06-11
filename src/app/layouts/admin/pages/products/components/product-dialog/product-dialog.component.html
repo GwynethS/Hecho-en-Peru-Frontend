@@ -72,90 +72,97 @@
           }}</mat-error>
         </mat-form-field>
       </div>
-      <div class="col-5 py-2">
-        <div class="w-full file-container">
-          <div class="input-file-container" [ngClass]="requiredImage ? 'file-error' : ''">
-            <div class="col-4">
-              <button
-                class="upload-button w-full"
-                type="button"
-                (click)="fileInput.click()"
-              >
-                Seleccionar imagen
-              </button>
-            </div>
-            <div class="col-8">
-              <input
-                #fileInput
-                type="file"
-                accept=".png, .jpg, .jpeg"
-                class="w-full"
-                (change)="onFileSelected($event)"
-                style="display: none"
-              />
-              <div class="file-name-container">
-                <span class="file-name" id="file-name">{{
-                  getFileName()
-                }}</span>
+      <div class="col-12 px-0 w-full flex">
+        <div class="col-5 pt-2 h-full">
+          <div
+            class="input-file-container"
+            [ngClass]="requiredImage ? 'file-error' : ''"
+          >
+            <div class="col-12 px-0 flex input-file-header">
+              <div class="col-4 px-0 flex align-content-center">
+                <button
+                  class="upload-button w-full"
+                  type="button"
+                  (click)="fileInput.click()"
+                >
+                  Seleccionar imagen
+                </button>
+              </div>
+              <div class="col-8 px-0">
+                <input
+                  #fileInput
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  class="w-full"
+                  (change)="onFileSelected($event)"
+                  style="display: none"
+                />
+                <div class="file-name-container">
+                  <span
+                    class="file-name"
+                    id="file-name"
+                    [ngClass]="requiredImage ? 'missing' : ''"
+                    >{{ getFileName() }}</span
+                  >
+                </div>
               </div>
             </div>
-          </div>
-          <p *ngIf="requiredImage" id="required-image">Este campo es requerido.</p>
-          <div class="col-12 w-full">
-            <div *ngIf="imageUrl" class="image-preview">
+            <div *ngIf="imageUrl" class="col-12 px-0 w-full image-preview">
               <img [src]="imageUrl" alt="Imagen del producto" />
             </div>
           </div>
+          <p class="w-full" *ngIf="requiredImage" id="required-image">
+            Este campo es requerido.
+          </p>
         </div>
-      </div>
-      <div class="col-7 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Artesano</mat-label>
-          <mat-select
-            formControlName="localCraftsman_id"
-            placeholder="Seleccione el artesano"
-          >
-            <mat-option
-              *ngFor="let localCraftsman of localCraftsmen"
-              [value]="localCraftsman.id"
-            >
-              {{ localCraftsman.fullName }}
-            </mat-option>
-          </mat-select>
-          <mat-error>{{
-            productForm.get("localCraftsman_id")?.errors | errorsFeedback
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-5"></div>
-      <div class="col-7 px-0">
-        <div class="col-12 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Detalles</mat-label>
-            <textarea
-              formControlName="details"
-              matInput
-              placeholder="Ingrese los detalles del producto"
-              class="details-container"
-            ></textarea>
-            <mat-error>{{
-              productForm.get("details")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 py-3 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Historia</mat-label>
-            <textarea
-              formControlName="history"
-              matInput
-              placeholder="Ingrese la historia del producto"
-              class="history-container"
-            ></textarea>
-            <mat-error>{{
-              productForm.get("history")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
+        <div class="col-7">
+          <div class="col-12 px-0 pb-3 pt-2 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Artesano</mat-label>
+              <mat-select
+                formControlName="localCraftsman_id"
+                placeholder="Seleccione el artesano"
+              >
+                <mat-option
+                  *ngFor="let localCraftsman of localCraftsmen"
+                  [value]="localCraftsman.id"
+                >
+                  {{ localCraftsman.fullName }}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{
+                productForm.get("localCraftsman_id")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 px-0 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Detalles</mat-label>
+              <textarea
+                formControlName="details"
+                matInput
+                placeholder="Ingrese los detalles del producto"
+                class="details-container"
+              ></textarea>
+              <mat-error>{{
+                productForm.get("details")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 px-0 pt-3 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Historia</mat-label>
+              <textarea
+                formControlName="history"
+                matInput
+                placeholder="Ingrese la historia del producto"
+                class="history-container"
+              ></textarea>
+              <mat-error>{{
+                productForm.get("history")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </form>

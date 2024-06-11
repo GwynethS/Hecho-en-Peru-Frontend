@@ -66,9 +66,7 @@
         <div class="col-12 big-field-container">
           <span>Historia:</span>
           <div class="container-text w-full" id="pre-format">
-            <p>
-              {{ productSelected.history }}
-            </p>
+            <p>{{ productSelected.history }}</p>
           </div>
         </div>
       </div>
@@ -78,7 +76,9 @@
       <div class="container-text image-center w-full">
         <figure>
           <img
-            src="http://localhost:8080/api/uploadsLoadImage/{{productSelected?.image}}"
+            src="http://localhost:8080/api/uploadsLoadImage/{{
+              productSelected.image
+            }}"
             class="product-img"
           />
         </figure>
