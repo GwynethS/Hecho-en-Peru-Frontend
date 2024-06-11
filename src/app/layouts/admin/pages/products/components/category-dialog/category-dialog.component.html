@@ -41,6 +41,7 @@
             formControlName="name"
             placeholder="Ingrese el nombre de la categoría"
           />
+          <mat-error>{{categoryForm.get('name')?.errors | errorsFeedback}}</mat-error>
         </mat-form-field>
         <div mat-dialog-actions class="button-container">
             <button
