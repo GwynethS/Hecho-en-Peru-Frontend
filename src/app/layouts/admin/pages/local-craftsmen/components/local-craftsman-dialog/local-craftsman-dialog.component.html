@@ -11,114 +11,125 @@
       class="grid formgrid w-full"
       enctype="multipart/form-data"
     >
-      <div class="col-5 py-2">
-        <mat-form-field class="w-full">
-          <mat-label>Nombre completo</mat-label>
-          <input
-            formControlName="fullName"
-            placeholder="Ingrese el nombre completo del artesano"
-            matInput
-            type="text"
-          />
-          <mat-error>{{
-            localCraftsmanForm.get("fullName")?.errors | errorsFeedback
-          }}</mat-error>
-        </mat-form-field>
-      </div>
-      <div class="col-7 py-2">
-        <div class="w-full file-container">
-          <div class="input-file-container" [ngClass]="requiredImage ? 'file-error' : ''">
-            <div class="col-4">
-              <button
-                class="upload-button"
-                type="button"
-                (click)="fileInput.click()"
-              >
-                Seleccionar imagen
-              </button>
-            </div>
-            <div class="col-8">
+      <div class="col-12 px-0 w-full flex">
+        <div class="col-5 py-2">
+          <div class="col-12 py-21 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Nombre completo</mat-label>
               <input
-                #fileInput
-                type="file"
-                accept=".png, .jpg, .jpeg"
-                (change)="onFileSelected($event)"
-                style="display: none"
+                formControlName="fullName"
+                placeholder="Ingrese el nombre completo del artesano"
+                matInput
+                type="text"
               />
-              <div class="file-name-container">
-                <span class="file-name" id="file-name">
-                  {{ getFileName() }}
-                </span>
+              <mat-error>{{
+                localCraftsmanForm.get("fullName")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 py-4 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Especialidad</mat-label>
+              <input
+                formControlName="specialty"
+                placeholder="Ingrese la especialidad"
+                matInput
+                type="text"
+              />
+              <mat-error>{{
+                localCraftsmanForm.get("specialty")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 py-0 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Región</mat-label>
+              <mat-select
+                formControlName="region_id"
+                placeholder="Seleccione la región"
+              >
+                <mat-option *ngFor="let region of regions" [value]="region.id">
+                  {{ region.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{
+                localCraftsmanForm.get("region_id")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 py-4 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Experiencia</mat-label>
+              <input
+                formControlName="experience"
+                placeholder="Ingrese la experiencia"
+                matInput
+                type="text"
+              />
+              <mat-error>{{
+                localCraftsmanForm.get("experience")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-12 py-0 w-full">
+            <mat-form-field class="w-full">
+              <mat-label>Descripción</mat-label>
+              <textarea
+                formControlName="description"
+                placeholder="Ingrese la descripción del artesano"
+                matInput
+                type="text"
+                class="description-container"
+              ></textarea>
+              <mat-error>{{
+                localCraftsmanForm.get("description")?.errors | errorsFeedback
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-7 py-2">
+          <div class="col-12 w-full h-full">
+            <div
+              class="input-file-container"
+              [ngClass]="requiredImage ? 'file-error' : ''"
+            >
+              <div class="col-12 px-0 flex input-file-header">
+                <div class="col-4 px-0 flex align-content-center">
+                  <button
+                    class="upload-button w-full"
+                    type="button"
+                    (click)="fileInput.click()"
+                  >
+                    Seleccionar imagen
+                  </button>
+                </div>
+                <div class="col-8 px-0">
+                  <input
+                    #fileInput
+                    type="file"
+                    accept=".png, .jpg, .jpeg"
+                    class="w-full"
+                    (change)="onFileSelected($event)"
+                    style="display: none"
+                  />
+                  <div class="file-name-container">
+                    <span
+                      class="file-name"
+                      id="file-name"
+                      [ngClass]="requiredImage ? 'missing' : ''"
+                      >{{ getFileName() }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="imageUrl" class="image-preview">
+                <img [src]="imageUrl" alt="Imagen del producto" />
               </div>
             </div>
+            <p *ngIf="requiredImage" id="required-image">
+              Este campo es requerido.
+            </p>
           </div>
-          <p *ngIf="requiredImage" id="required-image">Este campo es requerido.</p>
-          <div class="col-12 w-full">
-            <div *ngIf="imageUrl" class="image-preview">
-              <img [src]="imageUrl" alt="Imagen del producto" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-5 px-0">
-        <div class="col-12 py-1 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Especialidad</mat-label>
-            <input
-              formControlName="specialty"
-              placeholder="Ingrese la especialidad"
-              matInput
-              type="text"
-            />
-            <mat-error>{{
-              localCraftsmanForm.get("specialty")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 py-3 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Región</mat-label>
-            <mat-select
-              formControlName="region_id"
-              placeholder="Seleccione la región"
-            >
-              <mat-option *ngFor="let region of regions" [value]="region.id">
-                {{ region.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error>{{
-              localCraftsmanForm.get("region_id")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 py-1 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Experiencia</mat-label>
-            <input
-              formControlName="experience"
-              placeholder="Ingrese la experiencia"
-              matInput
-              type="text"
-            />
-            <mat-error>{{
-              localCraftsmanForm.get("experience")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-12 py-3 w-full">
-          <mat-form-field class="w-full">
-            <mat-label>Descripción</mat-label>
-            <textarea
-              formControlName="description"
-              placeholder="Ingrese la descripción del artesano"
-              matInput
-              type="text"
-              class="description-container"
-            ></textarea>
-            <mat-error>{{
-              localCraftsmanForm.get("description")?.errors | errorsFeedback
-            }}</mat-error>
-          </mat-form-field>
         </div>
       </div>
     </form>
