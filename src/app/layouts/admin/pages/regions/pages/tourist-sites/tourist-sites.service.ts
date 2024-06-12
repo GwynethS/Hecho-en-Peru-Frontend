@@ -18,7 +18,7 @@ export class TouristSitesService {
     return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByPageAdmin?offset=${offset}&limit=${limit}`);
   }
 
-  addTouristSites(data: TouristSiteRequest, file: File) {
+  addTouristSites(data: TouristSite, file: File) {
     console.log(data);
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));

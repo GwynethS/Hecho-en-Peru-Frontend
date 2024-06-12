@@ -1,9 +1,10 @@
 .modal-container {
   padding: 1rem;
+  width: 60rem;
 }
 
 .description-container {
-  height: 8rem;
+  height: 18rem;
 }
 
 .btn-save-color {
@@ -16,45 +17,45 @@
   color: white;
 }
 
-.file-container {
-  display: flex;
-  align-items: center;
-  img {
-    width: 24.5rem;
-    object-fit: contain;
-    height: auto;
-    position: absolute;
-  }
-  .image-preview {
-    text-align: center;
-    position: relative;
-    display: flex;
-    justify-content: center;
-  }
-  .file-error {
-    border: solid 1px #f44336;
-  }
-  #required-image {
-    margin-top: 0;
-    margin-left: 1rem;
-    color: #f44336;
-    font-size: 0.8rem;
-    transition: all ease 0.5s;
-  }
-}
-
 .input-file-container {
   padding: 1rem;
   border: #a5a5a5 0.12rem solid;
   border-radius: 0.2rem;
   position: relative;
-  height: 3.5rem;
+  height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  &:hover {
+    border: #3a3a3a 0.12rem solid;
+  }
+  .input-file-header {
+    height: 15%;
+  }
+  .image-preview {
+    text-align: center;
+    height: calc(85% - 1rem);
+    display: flex;
+    align-items: center;
+      img {
+        width: 100%;
+        height: 100%;
+        max-height: 18.5rem;
+        object-fit: contain;
+      }
+    
+  }
+  &.file-error {
+    border: solid 1px #f44336;
+  }
 }
 
-.input-file-container:hover {
-  border: #3a3a3a 0.12rem solid;
+#required-image {
+  margin-top: 0;
+  margin-left: 1rem;
+  color: #f44336;
+  font-size: 0.8rem;
+  transition: all ease 0.5s;
 }
 
 .upload-button {
@@ -64,7 +65,7 @@
   border: 0.063rem solid #ccc;
   border-radius: 0.5rem;
   color: #ffffff;
-  background-color: #A5A5A5;
+  background-color: #a5a5a5;
   cursor: pointer;
   button {
     margin: 0;
@@ -86,7 +87,6 @@ input[type="file"] {
 }
 
 .file-name {
-  font-size: 1rem;
   color: #666;
   word-break: break-all;
   white-space: pre-wrap;
@@ -94,4 +94,7 @@ input[type="file"] {
   text-align: center;
   line-height: 1.2;
   padding-left: 0.8rem;
+  &.missing {
+    color: red;
+  }
 }

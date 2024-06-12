@@ -31,7 +31,7 @@ export class CustomersService {
   }
 
   getOrderDetailByUserIdByPageAdmin(customerId: string, offset: number, limit: number) {
-    return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}ordersByPageModeAdmin?userId=${customerId}&offset=${offset}&limit=${limit}`);
+    return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}orderDetailByUserId?userId=${customerId}&offset=${offset}&limit=${limit}`);
   }
 
   getSearchOrderDetailsByID(orderId: string, userId: string) {

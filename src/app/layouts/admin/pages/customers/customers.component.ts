@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -63,12 +62,12 @@ export class CustomersComponent implements OnInit, OnDestroy {
       this.customerSearchForm.markAllAsTouched();
     } else {
       const subscription = this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
-        next: customer => {
+        next: (customer) => {
             this.customers = [customer];
             this.dataSource.data = this.customers;
             this.searchAttempted = false;
         },
-        error: err => {
+        error: (err) => {
           console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           this.searchAttempted = true;
           this.dataSource.data = [];

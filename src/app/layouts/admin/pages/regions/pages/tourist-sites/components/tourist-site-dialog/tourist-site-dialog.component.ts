@@ -76,12 +76,7 @@ export class TouristSiteDialogComponent {
       
       this.requiredImage = false;
       
-      forkJoin({
-        region: this.regionService.getSearchRegionDetailsByID(this.touristSiteForm.get('region_id')?.value),
-      }).subscribe({
-        next: (results) => {
-          const region = results.region;
-          const touristSiteData = { ...this.touristSiteForm.value, region };
+          const touristSiteData = { ...this.touristSiteForm.value };
           
           if (!this.selectedFile && this.editingTouristSite) {
             touristSiteData.image = this.editingTouristSite.image;
@@ -94,13 +89,10 @@ export class TouristSiteDialogComponent {
             imageToSend = this.touristSiteForm.get('image')?.value || new Blob();
           }
           this.matDialogRef.close({ touristSiteData, image: imageToSend });
-        },
-        error: (err) => {
-          console.error('Error in one of the requests', err);
-        },
-      });
+        }
+      
     }
-  }
+
 
   onCancel(): void {
     this.matDialogRef.close();

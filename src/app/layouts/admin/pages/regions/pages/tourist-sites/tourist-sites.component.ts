@@ -100,21 +100,27 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
     this.matDialog
       .open(TouristSiteDialogComponent)
       .afterClosed()
-      .subscribe(
-        (result) => {
+      .subscribe((result) => {
         if (result) {
           const { touristSiteData, image } = result;
-          this.touristSiteService.addTouristSites(touristSiteData, image)
-            .subscribe({
-              next: () => {
-                this.loadTouristSitesPage(),
-                this.toastService.showToast("Se añadió el lugar turístico correctamente");
-              },
-              error: (err) => console.error('Error adding tourist site', err)
-            });
-        }}
-      );
-  }
+          if (this.regionSelected) {
+            const turistSiteRequest = {
+              ...touristSiteData,
+              region: this.regionSelected,
+            };
+            this.touristSiteService
+              .addTouristSites(turistSiteRequest, image)
+              .subscribe({
+                next: () => {
+                  this.loadTouristSitesPage(),
+                    this.toastService.showToast('Se añadió el lugar turístico correctamente');
+                },
+                error: (err) => console.error('Error adding tourist site', err),
+              });
+          }
+        }
+      });
+    }
 
   onEditTouristSite(touristSite: TouristSite): void {
     this.matDialog
@@ -139,7 +145,7 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
   }
 
   onDeleteTouristSite(id: string): void {
-    this.alertService.showConfirmDeleteAction('este artesano')
+    this.alertService.showConfirmDeleteAction('este lugar turístico')
       .then(result => {
         if (result.isConfirmed) {
           const deleteSubscription = this.touristSiteService.deleteTouristSiteByID(id)

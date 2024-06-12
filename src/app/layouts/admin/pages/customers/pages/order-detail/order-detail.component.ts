@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { Customer } from '../../models/customer';
 import { OrderDetail } from './models/order-detail';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +13,21 @@ import { Subscription } from 'rxjs';
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.scss'],
 })
-export class OrderDetailComponent implements OnInit, OnDestroy {
+export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
+  @Input()
+  set dataSource(dataSource: MatTableDataSource<OrderDetail>) {
+    this.dataSourceOrder = dataSource;
+    if (this.paginator) {
+      this.dataSourceOrder.paginator = this.paginator;
+    }
+  }
+
+  get dataSource(): MatTableDataSource<OrderDetail> {
+    return this.dataSourceOrder;
+  }
+
   customerSelected: Customer | null = null;
-  orders: OrderDetail[] = [];
+
   displayedColumns: string[] = [
     'id',
     'name',
@@ -37,11 +49,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   ];
   dataSourceOrder = new MatTableDataSource<OrderDetail>();
 
-  pageSize = 10;
+  pageSize = 50;
   pageIndex = 0;
 
   orderSearchForm: FormGroup;
+  orders: OrderDetail[] = [];
   searchAttempted: boolean = false;
+
   subscriptions: Subscription[] = [];
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -66,19 +80,18 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             this.customerSelected = findedCustomer;
             this.dataSourceCustomer.data = [findedCustomer];
             this.loadOrdersPage();
+            this.searchAttempted = false;
           },
-          error: () => {
-            this.router.navigate(['/404']);
+          error: (err) => {
+            console.error(`Failed to load customer with ID ${this.orderSearchForm.value.id}`, err);
+            this.searchAttempted = true;
+            this.dataSource.data = [];
           },
         })
       );
     } else {
       this.router.navigate(['/404']);
     }
-  }
-
-  ngAfterViewInit() {
-    this.dataSourceOrder.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {
@@ -104,12 +117,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
         });
       this.subscriptions.push(subscription);
     }
-  }
-
-  onPageChange(event: PageEvent): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.loadOrdersPage();
   }
 
   onSearch(): void {
@@ -141,6 +148,10 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     this.pageIndex = 0;
     this.loadOrdersPage();
     this.searchAttempted = false;
+  }
+
+  ngAfterViewInit() {
+    this.dataSourceOrder.paginator = this.paginator;
   }
 
   redirectToCustomers() {

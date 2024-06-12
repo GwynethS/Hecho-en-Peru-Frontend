@@ -6,76 +6,85 @@
     DATOS DEL LUGAR TURÍSTICO
   </h1>
   <div mat-dialog-content>
-    <form [formGroup]="touristSiteForm" class="grid formgrid w-full" enctype="multipart/form-data">
-        <div class="col-7 px-0 py-1">
-          <div class="w-full">
-            <div class="col-12 w-full">
-              <mat-form-field class="w-full">
-                <mat-label>Nombre</mat-label>
-                <input
-                  formControlName="name"
-                  placeholder="Ingrese el nombre del lugar turístico"
-                  matInput
-                  type="text"
-                />
-                <mat-error>{{
-                  touristSiteForm.get("name")?.errors | errorsFeedback
-                }}</mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-12 py-4 w-full">
-              <mat-form-field class="w-full">
-                <mat-label>Descripción</mat-label>
-                <textarea
-                  formControlName="description"
-                  placeholder="Ingrese la descripción del lugar turístico"
-                  matInput
-                  type="text"
-                  class="description-container"
-                ></textarea>
-                <mat-error>{{
-                  touristSiteForm.get("description")?.errors | errorsFeedback
-                }}</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
+    <form
+      [formGroup]="touristSiteForm"
+      class="grid formgrid w-full"
+      enctype="multipart/form-data"
+    >
+      <div class="col-5 px-0 py-2">
+        <div class="col-12 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Nombre</mat-label>
+            <input
+              formControlName="name"
+              placeholder="Ingrese el nombre del lugar turístico"
+              matInput
+              type="text"
+            />
+            <mat-error>{{
+              touristSiteForm.get("name")?.errors | errorsFeedback
+            }}</mat-error>
+          </mat-form-field>
         </div>
-        <div class="col-5">
-          <div class="w-full file-container">
-            <div class="col-12 w-full">
-              <div *ngIf="imageUrl" class="image-preview">
-                <img [src]="imageUrl" alt="Imagen del producto" />
+        <div class="col-12 pt-4 w-full">
+          <mat-form-field class="w-full">
+            <mat-label>Descripción</mat-label>
+            <textarea
+              formControlName="description"
+              placeholder="Ingrese la descripción del lugar turístico"
+              matInput
+              type="text"
+              class="description-container"
+            ></textarea>
+            <mat-error>{{
+              touristSiteForm.get("description")?.errors | errorsFeedback
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-7 py-2">
+        <div class="col-12 w-full h-full">
+          <div
+            class="input-file-container"
+            [ngClass]="requiredImage ? 'file-error' : ''"
+          >
+            <div class="col-12 px-0 flex input-file-header">
+              <div class="col-4 px-0 flex align-content-center">
+                <button
+                  class="upload-button w-full"
+                  type="button"
+                  (click)="fileInput.click()"
+                >
+                  Seleccionar imagen
+                </button>
+              </div>
+              <div class="col-8 px-0">
+                <input
+                  #fileInput
+                  type="file"
+                  accept=".png, .jpg, .jpeg"
+                  class="w-full"
+                  (change)="onFileSelected($event)"
+                  style="display: none"
+                />
+                <div class="file-name-container">
+                  <span
+                    class="file-name"
+                    id="file-name"
+                    [ngClass]="requiredImage ? 'missing' : ''"
+                    >{{ getFileName() }}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      <div class="col-7 py-0">
-        <div class="input-file-container w-full" [ngClass]="requiredImage ? 'file-error' : ''">
-          <div class="col-4">
-            <button
-              class="upload-button"
-              type="button"
-              (click)="fileInput.click()"
-            >
-              Seleccionar imagen
-            </button>
-          </div>
-          <div class="col-8">
-            <input
-              #fileInput
-              type="file"
-              accept=".png, .jpg, .jpeg"
-              (change)="onFileSelected($event)"
-              style="display: none"
-            />
-            <div class="file-name-container">
-              <span class="file-name" id="file-name">{{
-                getFileName()
-              }}</span>
+            <div *ngIf="imageUrl" class="image-preview">
+              <img [src]="imageUrl" alt="Imagen del producto" />
             </div>
           </div>
+          <p *ngIf="requiredImage" id="required-image">
+            Este campo es requerido.
+          </p>
         </div>
-        <p *ngIf="requiredImage" id="required-image">Este campo es requerido.</p>
       </div>
     </form>
   </div>

@@ -33,7 +33,7 @@
     </div>
   </div>
   <div
-    class="div-table-container grid formgrid flex justify-content-center align-items-top"
+    class="div-table-container w-full grid formgrid flex justify-content-center col-12"
   >
     <div class="col-3 py-4">
       <button
@@ -49,11 +49,12 @@
       <span>LUGARES TURÍSTICOS</span>
     </div>
     <div class="col-4"></div>
-    <app-tourist-site-table
-      class="w-full"
-      [dataSource]="dataSource"
-      (editTouristSite)="onEditTouristSite($event)"
-      (deleteTouristSite)="onDeleteTouristSite($event)"
-    ></app-tourist-site-table>
+    <div class="col-12">
+      <app-tourist-site-table
+        [dataSource]="dataSource"
+        (editTouristSite)="onEditTouristSite($event)"
+        (deleteTouristSite)="onDeleteTouristSite($event)"
+      ></app-tourist-site-table>
+    </div>
   </div>
 </div>
