@@ -73,6 +73,8 @@
               (click)="editProduct.emit(product)"
               mat-icon-button
               color="accent"
+              [disabled]="!product.enabled"
+              [class.disabled]="!product.enabled"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -87,6 +89,8 @@
               (click)="deleteProduct.emit(product.id)"
               mat-icon-button
               color="warn"
+              [disabled]="!product.enabled"
+              [class.disabled]="!product.enabled"
             >
               <mat-icon>delete</mat-icon>
             </button>

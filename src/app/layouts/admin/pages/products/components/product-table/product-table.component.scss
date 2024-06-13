@@ -17,3 +17,9 @@
 .paginator-border {
   border-top: rgba(242, 242, 242, 0.052) 0.001rem solid;
 }
+
+button[mat-icon-button].disabled {
+  .mat-icon {
+    opacity: 0.45;
+  }
+}

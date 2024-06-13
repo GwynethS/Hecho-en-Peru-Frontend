@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Customer } from '../../models/customer';
 import { OrderDetail } from './models/order-detail';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,6 +41,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   displayedColumnsOrder: string[] = [
     'id',
+    'id_detail',
     'id_product',
     'product',
     'quantity',
@@ -49,7 +50,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   dataSourceOrder = new MatTableDataSource<OrderDetail>();
 
-  pageSize = 50;
+  pageSize = 50; // Tamaño de página inicial
   pageIndex = 0;
 
   orderSearchForm: FormGroup;
@@ -108,6 +109,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           next: (orders) => {
             this.orders = orders || [];
             this.dataSourceOrder.data = this.orders;
+            this.paginator.length = orders.length;
           },
           error: (err) => {
             this.orders = [];
@@ -127,12 +129,12 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       const customerId = this.activatedRoute.snapshot.paramMap.get('id');
       if (customerId && orderId) {
         const subscription = this.customersService.getSearchOrderDetailsByID(orderId, customerId).subscribe({
-          next: order => {
-            this.orders = [order];
+          next: (order: OrderDetail[]) => {
+            this.orders = order;
             this.dataSourceOrder.data = this.orders;
             this.searchAttempted = false;
           },
-          error: err => {
+          error: (err) => {
             console.error(`Failed to load order with ID ${orderId}`, err);
             this.searchAttempted = true;
             this.dataSourceOrder.data = [];
@@ -152,6 +154,11 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSourceOrder.paginator = this.paginator;
+    this.paginator.page.subscribe((event: PageEvent) => {
+      this.pageIndex = event.pageIndex;
+      this.pageSize = event.pageSize;
+      this.loadOrdersPage();
+    });
   }
 
   redirectToCustomers() {

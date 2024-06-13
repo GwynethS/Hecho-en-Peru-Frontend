@@ -49,6 +49,8 @@
               (click)="editLocalCraftsman.emit(localCraftsman)"
               mat-icon-button
               color="accent"
+              [disabled]="!localCraftsman.enabled"
+              [class.disabled]="!localCraftsman.enabled"
             >
               <mat-icon>edit</mat-icon>
             </button>
@@ -62,6 +64,8 @@
               (click)="deleteLocalCraftsman.emit(localCraftsman.id)"
               mat-icon-button
               color="warn"
+              [disabled]="!localCraftsman.enabled"
+              [class.disabled]="!localCraftsman.enabled"
             >
               <mat-icon>delete</mat-icon>
             </button>
