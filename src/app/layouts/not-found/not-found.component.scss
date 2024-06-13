@@ -1,15 +1,12 @@
 .container {
-  background-color: #ffefbb;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   .error-card {
-    background-color: #fdf9fa;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 70%;
     // color: ##E3A84F;
@@ -17,9 +14,14 @@
     h1 {
       color: #ca5400;
       font-weight: 900;
-      font-size: 4rem;
+      font-size: 5rem;
       margin: 0;
+      margin-bottom: 1.5rem;
       padding: 1rem 0;
+    }
+    img{
+      width: 18rem;
+      height: auto;
     }
     p {
       font-size: 1.3rem;
@@ -30,6 +32,7 @@
       color: #fff;
       padding: 1.5rem 2rem;
       font-size: 1rem;
+      margin-top: 1rem;
     }
   }
 }
