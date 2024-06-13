@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from '../../../../core/services/alert.service';
 import { LocalCraftsmanDialogComponent } from './components/local-craftsman-dialog/local-craftsman-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastService } from '../../../../core/services/toast.service';
 
@@ -25,6 +25,9 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(FormGroupDirective)
+  private localCraftsmanSearchFormDir!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -88,7 +91,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
 
   onClean(): void {
     this.searchAttempted = false;
-    this.localCraftsmanSearchForm.reset();
+    this.localCraftsmanSearchFormDir.resetForm();
     this.loadLocalCraftsmen();
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Customer } from './models/customer';
 import { CustomersService } from './customers.service';
 import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
@@ -21,6 +21,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(FormGroupDirective)
+  private customerSearchFormDir!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -81,7 +84,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
   onClean(): void {
     this.searchAttempted = false;
-    this.customerSearchForm.reset();
+    this.customerSearchFormDir.resetForm();
     this.loadCustomers();
   }
 }

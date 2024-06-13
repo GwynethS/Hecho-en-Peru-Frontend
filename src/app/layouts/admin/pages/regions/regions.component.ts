@@ -4,7 +4,7 @@ import { Region } from './models/region';
 import { MatDialog } from '@angular/material/dialog';
 import { RegionsService } from './regions.service';
 import { RegionDialogComponent } from './components/region-dialog/region-dialog.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastService } from '../../../../core/services/toast.service';
@@ -24,6 +24,9 @@ export class RegionsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(FormGroupDirective)
+  private regionSearchFormDir!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -86,7 +89,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
 
   onClean(): void {
     this.searchAttempted = false;
-    this.regionSearchForm.reset();
+    this.regionSearchFormDir.resetForm();
     this.loadRegions();
   }
 

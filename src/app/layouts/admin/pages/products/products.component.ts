@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ProductsService } from './products.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -30,6 +30,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(FormGroupDirective)
+  private productSearchFormDir!: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -94,7 +97,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onClean(): void {
     this.searchAttempted = false;
-    this.productSearchForm.reset();
+    this.productSearchFormDir.resetForm();
     this.loadProducts();
   }
 
