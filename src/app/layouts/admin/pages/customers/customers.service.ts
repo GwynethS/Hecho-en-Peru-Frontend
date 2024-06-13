@@ -18,7 +18,7 @@ export class CustomersService {
     return this.httpClient.get<Customer[]>(`${environment.apiURL}users`);
   }
 
-  getSearchCustomerByID(id: string) {
+  getSearchCustomerById(id: string) {
     return this.httpClient.get<Customer>(`${environment.apiURL}user/${id}`);
   }
 
@@ -30,11 +30,11 @@ export class CustomersService {
     return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}orderDetailByUserId?userId=${customerId}&offset=${offset}&limit=${limit}`);
   }
 
-  getAllOrderDetailsByUserIAdmin(customerId: string) {
+  getAllOrderDetailsByUserIdAdmin(customerId: string) {
     return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}allOrderDetailsByUserId?userId=${customerId}`);
   }
 
-  getSearchOrderDetailsByID(orderId: string, userId: string) {
+  getSearchOrderDetailsById(orderId: string, userId: string) {
     return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`);
   }
 

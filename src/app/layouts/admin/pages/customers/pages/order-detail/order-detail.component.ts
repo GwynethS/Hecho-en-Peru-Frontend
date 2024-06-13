@@ -64,7 +64,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     const customerId = this.activatedRoute.snapshot.paramMap.get('id');
     if (customerId) {
       const customerSubscription = this.customersService
-        .getSearchCustomerByID(customerId)
+        .getSearchCustomerById(customerId)
         .subscribe({
           next: (customer) => {
             this.customerSelected = customer;
@@ -91,7 +91,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
 
   loadOrders(customerId: string) {
     const countSubscription = this.customersService
-      .getAllOrderDetailsByUserIAdmin(customerId)
+      .getAllOrderDetailsByUserIdAdmin(customerId)
       .subscribe({
         next: (orders) => {
           this.length = orders.length;
@@ -143,7 +143,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     const customerId = this.activatedRoute.snapshot.paramMap.get('id');
     if (customerId && orderId) {
       const searchSubscription = this.customersService
-        .getSearchOrderDetailsByID(orderId, customerId)
+        .getSearchOrderDetailsById(orderId, customerId)
         .subscribe({
           next: (order) => {
             this.dataSourceOrder.data = order;
