@@ -12,10 +12,6 @@ export class RegionsService {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regions`);
   }
 
-  getRegionsByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}regionsByPageAdmin?offset=${offset}&limit=${limit}`);
-  }
-
   getSearchRegionByName(name: string) {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regionSearch/${name}`);
   }

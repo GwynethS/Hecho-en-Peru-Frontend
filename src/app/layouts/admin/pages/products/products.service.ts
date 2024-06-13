@@ -14,8 +14,8 @@ export class ProductsService {
     return this.httpClient.get<Product[]>(`${environment.apiURL}products`);
   }
 
-  getProductsByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<Product[]>(`${environment.apiURL}productsByPageModeAdmin?offset=${offset}&limit=${limit}`);
+  getProductsAdmin() {
+    return this.httpClient.get<Product[]>(`${environment.apiURL}productsAdmin`);
   }
 
   getProductsByPageUser(offSet: number, limit: number) {

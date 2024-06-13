@@ -3,23 +3,20 @@ import { Injectable } from '@angular/core';
 import { TouristSite } from './models/tourist-site';
 import { environment } from '../../../../../../../environments/environment';
 import { catchError, of } from 'rxjs';
-import { TouristSiteRequest } from './models/tourist-site-request';
 
 @Injectable()
 export class TouristSitesService {
   constructor(private httpClient: HttpClient) {}
 
-  getTouristSitesByRegion(regionId: string) {
-    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByRegion/${regionId}`
-    );
+  getTouristSites() {
+    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSites`);
   }
 
-  getTouristSitesByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByPageAdmin?offset=${offset}&limit=${limit}`);
+  getTouristSitesByRegion(regionId: string) {
+    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByRegion/${regionId}`);
   }
 
   addTouristSites(data: TouristSite, file: File) {
-    console.log(data);
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
     if (file) {
@@ -34,7 +31,7 @@ export class TouristSitesService {
     );
   }
 
-  updateTouristSites(id: string, data: TouristSiteRequest, file: File) {
+  updateTouristSites(id: string, data: TouristSite, file: File) {
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
     if (file) {

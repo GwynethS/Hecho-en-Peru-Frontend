@@ -18,9 +18,6 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit, OnDestroy {
-  pageSize = 50;
-  pageIndex = 0;
-
   productSearchForm: FormGroup;
   products: Product[] = [];
   dataSource = new MatTableDataSource<Product>();
@@ -28,7 +25,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   dataSourceCategory = new MatTableDataSource<Category>();
 
-  searchAttempted = false;
+  searchAttempted: boolean = false;
 
   subscriptions: Subscription[] = [];
 
@@ -39,7 +36,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private productsService: ProductsService,
     private matDialog: MatDialog,
     private alertService: AlertService,
-    private toastService: ToastService,
+    private toastService: ToastService
   ) {
     this.productSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -47,26 +44,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadProductsPage();
-    this.loadAllCategories();
+    this.loadProducts();
+    this.loadCategories();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  loadProductsPage(): void {
-    const offset = this.pageIndex * this.pageSize;
+  loadProducts(): void {
     const subscription = this.productsService
-      .getProductsByPageAdmin(offset, this.pageSize)
+      .getProductsAdmin()
       .subscribe({
         next: (products) => {
+          this.searchAttempted = false;
           this.products = products || [];
           this.dataSource.data = this.products;
         },
         error: (err) => {
-          this.products = [];
-          this.dataSource.data = this.products;
+          this.dataSource.data = [];
+          this.searchAttempted = true;
           console.error('Failed to load products', err);
         },
       });
@@ -81,14 +78,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
         .getSearchProductDetailsByID(this.productSearchForm.value.id)
         .subscribe({
           next: (product) => {
+            this.searchAttempted = false;
             this.products = [product];
             this.dataSource.data = this.products;
-            this.searchAttempted = false;
           },
           error: (err) => {
-            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
-            this.searchAttempted = true;
             this.dataSource.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
           },
         });
       this.subscriptions.push(subscription);
@@ -96,30 +93,29 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onClean(): void {
-    this.productSearchForm.reset();
-    this.pageIndex = 0;
-    this.loadProductsPage();
     this.searchAttempted = false;
+    this.productSearchForm.reset();
+    this.loadProducts();
   }
 
   onCreateProduct(): void {
     this.matDialog
       .open(ProductDialogComponent)
       .afterClosed()
-      .subscribe(
-        (result) => {
+      .subscribe((result) => {
         if (result) {
           const { productData, image } = result;
-          this.productsService.addProducts(productData, image)
+          this.productsService
+            .addProducts(productData, image)
             .subscribe({
               next: () => {
-                this.loadProductsPage(),
-                this.toastService.showToast("Se añadió el producto correctamente");
+                this.loadProducts(),
+                this.toastService.showToast('Se añadió el producto correctamente');
               },
               error: (err) => console.error('Error adding product', err),
             });
-        }}
-      );
+        }
+      });
   }
 
   onEditProduct(product: Product): void {
@@ -130,11 +126,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
         next: (result) => {
           if (result) {
             const { productData, image } = result;
-            this.productsService.updateProducts(product.id, productData, image)
+            this.productsService
+              .updateProducts(product.id, productData, image)
               .subscribe({
                 next: () => {
-                  this.loadProductsPage(),
-                  this.toastService.showToast("Se actualizó el producto correctamente");
+                  this.loadProducts(),
+                  this.toastService.showToast('Se actualizó el producto correctamente');
                 },
                 error: (err) => console.error('Error updating product', err),
               });
@@ -145,14 +142,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   onDeleteProduct(id: string): void {
-    this.alertService.showConfirmDeleteAction('este producto')
+    this.alertService
+      .showConfirmDeleteAction('este producto')
       .then((result) => {
         if (result.isConfirmed) {
-          const deleteSubscription = this.productsService.deleteProductsByID(id)
+          const deleteSubscription = this.productsService
+            .deleteProductsByID(id)
             .subscribe({
               next: () => {
-                this.loadProductsPage(),
-                this.toastService.showToast("Se eliminó el producto correctamente");
+                this.loadProducts(),
+                this.toastService.showToast('Se eliminó el producto correctamente');
               },
               error: (err) => console.error('Failed to delete product', err),
             });
@@ -163,9 +162,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   onCreateCategory(): void {
     const subscription = this.matDialog
-      .open(CategoryDialogComponent, {
-        data: { categories: this.categories },
-      })
+      .open(CategoryDialogComponent, { data: { categories: this.categories }})
       .afterClosed()
       .subscribe({
         next: (categoryData) => {
@@ -174,8 +171,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
               .addCategories(categoryData)
               .subscribe({
                 next: () => {
-                  this.loadAllCategories(),
-                  this.toastService.showToast("Se añadió la categoría correctamente");
+                  this.loadCategories(),
+                  this.toastService.showToast('Se añadió la categoría correctamente');
                 },
                 error: (err) => console.error('Failed to add category', err),
               });
@@ -187,7 +184,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  loadAllCategories(): void {
+  loadCategories(): void {
     const subscription = this.productsService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories || [];

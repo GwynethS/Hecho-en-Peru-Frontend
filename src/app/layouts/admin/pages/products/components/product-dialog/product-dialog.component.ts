@@ -109,7 +109,6 @@ export class ProductDialogComponent implements OnInit {
         this.requiredImage = true;
         return;
       }
-      
       this.requiredImage = false;
       
       forkJoin({

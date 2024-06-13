@@ -12,12 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./customers.component.scss'],
 })
 export class CustomersComponent implements OnInit, OnDestroy {
-  pageSize = 50;
-  pageIndex = 0;
-
   customerSearchForm: FormGroup;
   customers: Customer[] = [];
   dataSource = new MatTableDataSource<Customer>();
+  
   searchAttempted: boolean = false;
 
   subscriptions: Subscription[] = [];
@@ -34,26 +32,28 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadCustomersPage();
+    this.loadCustomers();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  loadCustomersPage(): void {
-    const offset = this.pageIndex * this.pageSize;
-    const subscription = this.customersService.getCustomersByPageAdmin(offset, this.pageSize).subscribe({
-      next: customers => {
-        this.customers = customers || [];
-        this.dataSource.data = this.customers;
-      },
-      error: err => {
-        this.customers = [];
-        this.dataSource.data = this.customers;
-        console.error('Failed to load customers', err);
-      }
-    });
+  loadCustomers(): void {
+    const subscription = this.customersService
+      .getCustomers()
+      .subscribe({
+        next: (customers) => {
+          this.searchAttempted = false;
+          this.customers = customers || [];
+          this.dataSource.data = this.customers;
+        },
+        error: (err) => {
+          this.dataSource.data = [];
+          this.searchAttempted = true;
+          console.error('Failed to load customers', err);
+        }
+      });
     this.subscriptions.push(subscription);
   }
 
@@ -61,26 +61,27 @@ export class CustomersComponent implements OnInit, OnDestroy {
     if (this.customerSearchForm.invalid) {
       this.customerSearchForm.markAllAsTouched();
     } else {
-      const subscription = this.customersService.getSearchCustomerByID(this.customerSearchForm.value.id).subscribe({
-        next: (customer) => {
-            this.customers = [customer];
-            this.dataSource.data = this.customers;
+      const subscription = this.customersService
+        .getSearchCustomerByID(this.customerSearchForm.value.id)
+        .subscribe({
+          next: (customer) => {
             this.searchAttempted = false;
-        },
-        error: (err) => {
-          console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
-          this.searchAttempted = true;
-          this.dataSource.data = [];
-        }
-      });
+              this.customers = [customer];
+              this.dataSource.data = this.customers;
+          },
+          error: (err) => {
+            this.dataSource.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
+          }
+        });
       this.subscriptions.push(subscription);
     }
   }
 
   onClean(): void {
-    this.customerSearchForm.reset();
-    this.pageIndex = 0;
-    this.loadCustomersPage();
     this.searchAttempted = false;
+    this.customerSearchForm.reset();
+    this.loadCustomers();
   }
 }

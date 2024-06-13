@@ -18,10 +18,6 @@ export class CustomersService {
     return this.httpClient.get<Customer[]>(`${environment.apiURL}users`);
   }
 
-  getCustomersByPageAdmin(offSet: number, limit: number) {
-    return this.httpClient.get<Customer[]>(`${environment.apiURL}usersByPageModeAdmin?offset=${offSet}&limit=${limit}`);
-  }
-
   getSearchCustomerByID(id: string) {
     return this.httpClient.get<Customer>(`${environment.apiURL}user/${id}`);
   }

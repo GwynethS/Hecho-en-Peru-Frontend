@@ -60,8 +60,8 @@
           {{ customer.enabled }}
         </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsCustomer"></tr>
+      <tr mat-row *matRowDef="let customer; columns: displayedColumnsCustomer"></tr>
     </table>
   </div>
   <div class="grid formgrid w-full order-container">
@@ -149,17 +149,20 @@
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumnsOrder"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsOrder"></tr>
+      <tr mat-row *matRowDef="let orderDetail; columns: displayedColumnsOrder"></tr>
     </table>
     <div class="paginator-border">
       <mat-paginator
-        [pageSizeOptions]="[2, 6, 9]"
-        showFirstLastButtons
-      ></mat-paginator>
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [length]="totalOrders"
+        (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
   </div>
 </div>
-<div class="no-results-container" *ngIf="!orders.length || searchAttempted">
+<div class="no-results-container" *ngIf="!dataSourceOrder.data.length || searchAttempted">
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>

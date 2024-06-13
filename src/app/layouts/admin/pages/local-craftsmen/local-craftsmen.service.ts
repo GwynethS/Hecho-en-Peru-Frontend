@@ -13,10 +13,6 @@ export class LocalCraftsmenService {
     return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmen`);
   }
 
-  getLocalCraftsmenByPageAdmin(offset: number, limit: number) {
-    return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmenByPageModeAdmin?offset=${offset}&limit=${limit}`);
-  }
-
   getSearchLocalCraftsmanDetailsByID(id: string) {
     return this.httpClient.get<LocalCraftsman>(`${environment.apiURL}localCraftsmanDetail/${id}`);
   }

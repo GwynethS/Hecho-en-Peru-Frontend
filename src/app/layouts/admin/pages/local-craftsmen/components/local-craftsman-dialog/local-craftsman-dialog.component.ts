@@ -92,7 +92,6 @@ export class LocalCraftsmanDialogComponent implements OnInit {
         this.requiredImage = true;
         return; 
       }
-      
       this.requiredImage = false;
       
       forkJoin({

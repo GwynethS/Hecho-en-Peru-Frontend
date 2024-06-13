@@ -16,14 +16,11 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './local-craftsmen.component.scss',
 })
 export class LocalCraftsmenComponent implements OnInit, OnDestroy {
-  pageSize = 50;
-  pageIndex = 0;
-
   localCraftsmanSearchForm: FormGroup;
   localCraftsmen: LocalCraftsman[] = [];
   dataSource = new MatTableDataSource<LocalCraftsman>();
 
-  searchAttempted = false;
+  searchAttempted: boolean = false;
 
   subscriptions: Subscription[] = [];
 
@@ -42,24 +39,25 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadLocalCraftsmenPage();
+    this.loadLocalCraftsmen();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((suscription) => suscription.unsubscribe());
   }
 
-  loadLocalCraftsmenPage(): void {
-    const offset = this.pageIndex * this.pageSize;
+  loadLocalCraftsmen(): void {
     const subscription = this.localCraftsmenService
-      .getLocalCraftsmenByPageAdmin(offset, this.pageSize).subscribe({
+      .getLocalCraftsmen()
+      .subscribe({
         next: (localCraftsmen) => {
+          this.searchAttempted = false;
           this.localCraftsmen = localCraftsmen || [];
           this.dataSource.data = this.localCraftsmen;
         },
         error: (err) => {
-          this.localCraftsmen = [];
-          this.dataSource.data = this.localCraftsmen;
+          this.dataSource.data = [];
+          this.searchAttempted = true;
           console.error('Failed to load local craftsman', err);
         }
       });
@@ -74,14 +72,14 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
         .getSearchLocalCraftsmanDetailsByID(this.localCraftsmanSearchForm.value.id)
         .subscribe({
           next: (localCraftsman) => {
+            this.searchAttempted = false;
             this.localCraftsmen = [localCraftsman];
             this.dataSource.data = this.localCraftsmen;
-            this.searchAttempted = false;
           },
           error: (err) => {
-            console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
-            this.searchAttempted = true;
             this.dataSource.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           }
         });
       this.subscriptions.push(subscription);
@@ -89,24 +87,23 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
   }
 
   onClean(): void {
-    this.localCraftsmanSearchForm.reset();
-    this.pageIndex = 0;
-    this.loadLocalCraftsmenPage();
     this.searchAttempted = false;
+    this.localCraftsmanSearchForm.reset();
+    this.loadLocalCraftsmen();
   }
 
   onCreateLocalCraftsman(): void {
     this.matDialog
       .open(LocalCraftsmanDialogComponent)
       .afterClosed()
-      .subscribe(
-        (result) => {
+      .subscribe((result) => {
         if (result) {
           const { localCraftsmanData, image } = result;
-          this.localCraftsmenService.addLocalCraftsmen(localCraftsmanData, image)
+          this.localCraftsmenService
+            .addLocalCraftsmen(localCraftsmanData, image)
             .subscribe({
               next: () => {
-                this.loadLocalCraftsmenPage(),
+                this.loadLocalCraftsmen(),
                 this.toastService.showToast("Se añadió el artesano correctamente");
               },
               error: (err) => console.error('Error adding local craftsman', err)
@@ -123,10 +120,11 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
         next: (result) => {
           if (result) {
             const { localCraftsmanData, image } = result;
-            this.localCraftsmenService.updateLocalCraftsmen(localCraftsman.id, localCraftsmanData, image)
+            this.localCraftsmenService
+              .updateLocalCraftsmen(localCraftsman.id, localCraftsmanData, image)
               .subscribe({
                 next: () => {
-                  this.loadLocalCraftsmenPage(),
+                  this.loadLocalCraftsmen(),
                   this.toastService.showToast("Se actualizó el artesano correctamente");
                 },
                 error: (err) => console.error('Error updating local craftsman', err)
@@ -137,20 +135,16 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
       });
   }
 
-  onViewLocalCraftsman(localCraftsman: LocalCraftsman): void {
-    this.matDialog.open(LocalCraftsmanDialogComponent, {
-      data: { localCraftsman: localCraftsman, view: true, edit: false },
-    });
-  }
-
   onDeleteLocalCraftsman(id: string): void {
-    this.alertService.showConfirmDeleteAction('este artesano')
+    this.alertService
+      .showConfirmDeleteAction('este artesano')
       .then(result => {
         if (result.isConfirmed) {
-          const deleteSubscription = this.localCraftsmenService.deleteLocalCraftsmenByID(id)
+          const deleteSubscription = this.localCraftsmenService
+            .deleteLocalCraftsmenByID(id)
             .subscribe({
               next: () => {
-                this.loadLocalCraftsmenPage(),
+                this.loadLocalCraftsmen(),
                 this.toastService.showToast("Se eliminó el artesano correctamente");
               },
               error: (err) => console.error('Failed to delete local craftsman', err)

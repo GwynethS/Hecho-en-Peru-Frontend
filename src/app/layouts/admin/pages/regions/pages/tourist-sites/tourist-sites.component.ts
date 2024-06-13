@@ -18,12 +18,11 @@ import { ToastService } from '../../../../../../core/services/toast.service';
   styleUrl: './tourist-sites.component.scss'
 })
 export class TouristSitesComponent implements OnInit, OnDestroy {
-  pageSize = 50;
-  pageIndex = 0;
-
   regionSelected: Region | null = null;
   touristSites: TouristSite[] = [];
   dataSource = new MatTableDataSource<TouristSite>();
+
+  searchAttempted: boolean = false;
 
   subscriptions: Subscription[] = [];
 
@@ -47,7 +46,7 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
           next: (findedRegion) => {
             if (findedRegion) {
               this.regionSelected = findedRegion;
-              this.loadTouristSitesPage();
+              this.loadTouristSites();
             }
           },
           error: () => {
@@ -60,37 +59,42 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadTouristSitesPage(): void {
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  loadTouristSites(): void {
     const regionId = this.activatedRoute.snapshot.paramMap.get('id');
-    const offset = this.pageIndex * this.pageSize;
     let subscription;
     if (regionId) {
       subscription = this.touristSiteService
         .getTouristSitesByRegion(regionId)
         .subscribe({
           next: (touristSites) => {
+            this.searchAttempted = false;
             this.touristSites = touristSites || [];
             this.dataSource.data = this.touristSites;
           },
           error: (err) => {
-            this.touristSites = [];
-            this.dataSource.data = this.touristSites;
+            this.dataSource.data = [];
+            this.searchAttempted = true;
             console.error('Failed to load tourist sites by region', err);
           }
         });
     } else {
       subscription = this.touristSiteService
-        .getTouristSitesByPageAdmin(offset, this.pageSize)
+        .getTouristSites()
         .subscribe({
           next: (touristSites) => {
+            this.searchAttempted = false;
             this.touristSites = touristSites || [];
             this.dataSource.data = this.touristSites;
           },
           error: (err) => {
-            this.touristSites = [];
-            this.dataSource.data = this.touristSites;
+            this.dataSource.data = [];
+            this.searchAttempted = true;
             console.error('Failed to load tourist sites', err);
-          }
+          },
         });
     }
     this.subscriptions.push(subscription);
@@ -104,43 +108,47 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
         if (result) {
           const { touristSiteData, image } = result;
           if (this.regionSelected) {
-            const turistSiteRequest = {
+            const touristSiteUpdate = {
               ...touristSiteData,
               region: this.regionSelected,
             };
             this.touristSiteService
-              .addTouristSites(turistSiteRequest, image)
+              .addTouristSites(touristSiteUpdate, image)
               .subscribe({
                 next: () => {
-                  this.loadTouristSitesPage(),
-                    this.toastService.showToast('Se añadió el lugar turístico correctamente');
+                  this.loadTouristSites(),
+                  this.toastService.showToast('Se añadió el lugar turístico correctamente');
                 },
                 error: (err) => console.error('Error adding tourist site', err),
               });
           }
         }
       });
-    }
+  }
 
   onEditTouristSite(touristSite: TouristSite): void {
     this.matDialog
       .open(TouristSiteDialogComponent, { data: touristSite })
       .afterClosed()
-      .subscribe({
-        next: (result) => {
-          if (result) {
-            const { touristSiteData, image } = result;
-            this.touristSiteService.updateTouristSites(touristSite.id, touristSiteData, image)
+      .subscribe((result) => {
+        if (result) {
+          const { touristSiteData, image } = result;
+          if (this.regionSelected) {
+            const touristSiteUpdate = {
+              ...touristSiteData,
+              region: this.regionSelected,
+            };
+            this.touristSiteService
+              .updateTouristSites(touristSite.id, touristSiteUpdate, image)
               .subscribe({
                 next: () => {
-                  this.loadTouristSitesPage(),
-                  this.toastService.showToast("Se actualizó el lugar turístico correctamente");
+                  this.loadTouristSites(),
+                  this.toastService.showToast('Se actualizó el lugar turístico correctamente');
                 },
-                error: (err) => console.error('Error updating tourist site', err)
+                error: (err) => console.error('Error adding tourist site', err),
               });
           }
-        },
-        error: (err) => console.error('Failed to open tourist site dialog', err),
+        }
       });
   }
 
@@ -151,7 +159,7 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
           const deleteSubscription = this.touristSiteService.deleteTouristSiteByID(id)
             .subscribe({
               next: () => {
-                this.loadTouristSitesPage(),
+                this.loadTouristSites(),
                 this.toastService.showToast("Se eliminó el lugar turístico correctamente");
               },
               error: (err) => console.error('Failed to delete tourist site', err)
@@ -163,9 +171,5 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
 
   redirectToRegions() {
     this.router.navigate([`/admin/regions`]);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

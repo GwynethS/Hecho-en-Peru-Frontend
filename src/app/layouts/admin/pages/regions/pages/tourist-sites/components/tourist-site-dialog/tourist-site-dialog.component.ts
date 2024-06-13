@@ -1,10 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TouristSite } from '../../models/tourist-site';
 import { environment } from '../../../../../../../../../environments/environment';
-import { RegionsService } from '../../../../regions.service';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-tourist-site-dialog',
@@ -21,7 +19,6 @@ export class TouristSiteDialogComponent {
 
   constructor(
     private fb: FormBuilder,
-    private regionService: RegionsService,
     private matDialogRef: MatDialogRef<TouristSiteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private editingTouristSite?: TouristSite
   ) {
@@ -67,32 +64,29 @@ export class TouristSiteDialogComponent {
   onSave(): void {
     if (this.touristSiteForm.invalid) {
       this.touristSiteForm.markAllAsTouched();
-      if(!this.selectedFile) this.requiredImage = true;
+      if (!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.editingTouristSite && !this.selectedFile) { 
+      if (!this.editingTouristSite && !this.selectedFile) {
         this.requiredImage = true;
         return;
       }
-      
       this.requiredImage = false;
       
-          const touristSiteData = { ...this.touristSiteForm.value };
-          
-          if (!this.selectedFile && this.editingTouristSite) {
-            touristSiteData.image = this.editingTouristSite.image;
-          }
-          
-          let imageToSend;
-          if (this.selectedFile) {
-            imageToSend = this.selectedFile;
-          } else {
-            imageToSend = this.touristSiteForm.get('image')?.value || new Blob();
-          }
-          this.matDialogRef.close({ touristSiteData, image: imageToSend });
-        }
+      const touristSiteData = { ...this.touristSiteForm.value };
       
+      if (!this.selectedFile && this.editingTouristSite) {
+        touristSiteData.image = this.editingTouristSite.image;
+      }
+      
+      let imageToSend;
+      if (this.selectedFile) {
+        imageToSend = this.selectedFile;
+      } else {
+        imageToSend = this.touristSiteForm.get('image')?.value || new Blob();
+      }
+      this.matDialogRef.close({ touristSiteData, image: imageToSend });
     }
-
+  }
 
   onCancel(): void {
     this.matDialogRef.close();

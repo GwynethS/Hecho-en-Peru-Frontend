@@ -15,14 +15,11 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './regions.component.scss',
 })
 export class RegionsComponent implements OnInit, OnDestroy {
-  pageSize = 50;
-  pageIndex = 0;
-
   regionSearchForm: FormGroup;
   regions: Region[] = [];
   dataSource = new MatTableDataSource<Region>();
 
-  searchAttempted = false;
+  searchAttempted: boolean = false;
 
   subscriptions: Subscription[] = [];
 
@@ -40,26 +37,28 @@ export class RegionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadRegionsPage();
+    this.loadRegions();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  loadRegionsPage(): void {
-    const offset = this.pageIndex * this.pageSize;
-    const subscription = this.regionsService.getRegionsByPageAdmin(offset, this.pageSize).subscribe({
-      next: regions => {
-        this.regions = regions || [];
-        this.dataSource.data = this.regions;
-      },
-      error: err => {
-        this.regions = [];
-        this.dataSource.data = this.regions;
-        console.error('Failed to load regions', err);
-      }
-    });
+  loadRegions(): void {
+    const subscription = this.regionsService
+      .getRegions()
+      .subscribe({
+        next: (regions) => {
+          this.searchAttempted = false;
+          this.regions = regions || [];
+          this.dataSource.data = this.regions;
+        },
+        error: (err) => {
+          this.dataSource.data = [];
+          this.searchAttempted = true;
+          console.error('Failed to load regions', err);
+        }
+      });
     this.subscriptions.push(subscription);
   }
 
@@ -71,14 +70,14 @@ export class RegionsComponent implements OnInit, OnDestroy {
         .getSearchRegionByName(this.regionSearchForm.value.name)
         .subscribe({
           next: (region: Region[]) => {
+            this.searchAttempted = false;
             this.regions = region;
             this.dataSource.data = this.regions;
-            this.searchAttempted = false;
           },
           error: (err) => {
-            console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
-            this.searchAttempted = true;
             this.dataSource.data = [];
+            this.searchAttempted = true;
+            console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
           }
         });
       this.subscriptions.push(subscription);
@@ -86,24 +85,23 @@ export class RegionsComponent implements OnInit, OnDestroy {
   }
 
   onClean(): void {
-    this.regionSearchForm.reset();
-    this.pageIndex = 0;
-    this.loadRegionsPage();
     this.searchAttempted = false;
+    this.regionSearchForm.reset();
+    this.loadRegions();
   }
 
   onCreateRegion(): void {
     this.matDialog
       .open(RegionDialogComponent)
       .afterClosed()
-      .subscribe(
-        (result) => {
+      .subscribe((result) => {
         if (result) {
           const { regionData, image } = result;
-          this.regionsService.addRegions(regionData, image)
+          this.regionsService
+            .addRegions(regionData, image)
             .subscribe({
               next: () => {
-                this.loadRegionsPage(),
+                this.loadRegions(),
                 this.toastService.showToast("Se añadió la región correctamente");
               },
               error: (err) => console.error('Error adding region', err),
@@ -120,10 +118,11 @@ export class RegionsComponent implements OnInit, OnDestroy {
         next: (result) => {
           if (result) {
             const { regionData, image } = result;
-            this.regionsService.updateRegions(region.id, regionData, image)
+            this.regionsService
+              .updateRegions(region.id, regionData, image)
               .subscribe({
                 next: () => {
-                  this.loadRegionsPage(),
+                  this.loadRegions(),
                   this.toastService.showToast("Se actualizó la región correctamente");
                 },
                 error: (err) => console.error('Error updating region', err),
