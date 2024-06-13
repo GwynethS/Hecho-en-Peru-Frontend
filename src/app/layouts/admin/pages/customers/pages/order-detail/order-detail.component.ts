@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,11 @@ import { CustomersService } from '../../customers.service';
   styleUrls: ['./order-detail.component.scss'],
 })
 export class OrderDetailComponent implements OnInit, OnDestroy {
+  length = 0;
+  pageSize = 3;
+  pageIndex = 0;
+  pageEvent!: PageEvent;
+
   dataSourceOrder = new MatTableDataSource<OrderDetail>();
   dataSourceCustomer = new MatTableDataSource<Customer>();
 
@@ -37,18 +42,12 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     'enabled',
   ];
 
-  pageSizeOptions: number[] = [2, 4, 8];
-  pageSize = 2;
-  pageIndex = 0;
-  totalOrders = 0;
-
   orderSearchForm: FormGroup;
-  searchAttempted = false;
   customerSelected: Customer | null = null;
 
-  private subscriptions: Subscription[] = [];
+  searchAttempted = false;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -62,14 +61,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadCustomerAndOrders();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-
-  loadCustomerAndOrders(): void {
     const customerId = this.activatedRoute.snapshot.paramMap.get('id');
     if (customerId) {
       const customerSubscription = this.customersService
@@ -78,8 +69,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
           next: (customer) => {
             this.customerSelected = customer;
             this.dataSourceCustomer.data = [customer];
-            this.dataSourceOrder.data = [];
-            this.loadOrdersPage();
+            this.loadOrders(customerId);
+            this.loadOrdersByPage();
             this.searchAttempted = false;
           },
           error: (err) => {
@@ -94,33 +85,54 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadOrdersPage(): void {
-    const customerId = this.activatedRoute.snapshot.paramMap.get('id');
-    const offset = this.pageIndex * this.pageSize;
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  loadOrders(customerId: string) {
+    const orderId = '';
+    const countSubscription = this.customersService
+      .getSearchOrderDetailsByID(orderId, customerId)
+      .subscribe({
+        next: (orders) => {
+          this.length = orders.length;
+        },
+        error: (err) => {
+          console.error('Failed to load order count', err);
+        }
+      });
+      this.subscriptions.push(countSubscription);
+  }
+
+  loadOrdersByPage() {
+    const customerId = this.customerSelected?.id;
     if (customerId) {
-      const ordersSubscription = this.customersService
-        .getOrderDetailByUserIdByPageAdmin(customerId, offset, this.pageSize)
+      this.customersService
+        .getOrderDetailByUserIdByPageAdmin(
+          customerId,
+          this.pageIndex,
+          this.pageSize
+        )
         .subscribe({
           next: (orders) => {
-            this.dataSourceOrder.data = orders || [];
-            this.totalOrders = orders.length;
-            if (this.paginator) {
-              this.dataSourceOrder.paginator = this.paginator;
-            }
+            this.dataSourceOrder.data = orders;
           },
           error: (err) => {
-            console.error('Failed to load orders by customer', err);
+            console.error('Failed to load orders by page', err);
             this.dataSourceOrder.data = [];
           },
         });
-      this.subscriptions.push(ordersSubscription);
+    } else {
+      console.error('No customer selected');
     }
   }
 
-  onPageChange(event: PageEvent): void {
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.loadOrdersPage();
+  handlePageEvent(e: PageEvent) {
+    this.pageEvent = e;
+    this.length = e.length;
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+    this.loadOrdersByPage();
   }
 
   onSearch(): void {
@@ -136,16 +148,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (order) => {
             this.dataSourceOrder.data = order;
-            this.totalOrders = order.length;
-            if (this.paginator) {
-              this.dataSourceOrder.paginator = this.paginator;
-            }
+            this.length = order.length;
             this.searchAttempted = false;
           },
           error: (err) => {
             console.error(`Failed to load order with ID ${orderId}`, err);
             this.dataSourceOrder.data = [];
-            this.totalOrders = 0;
+            this.length = 0;
             this.searchAttempted = true;
           },
         });
@@ -156,8 +165,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   onClean(): void {
     this.orderSearchForm.reset();
     this.pageIndex = 0;
-    this.pageSize = this.totalOrders;
-    this.loadOrdersPage();
+    this.loadOrdersByPage();
     this.searchAttempted = false;
   }
 

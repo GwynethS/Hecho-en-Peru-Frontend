@@ -153,12 +153,15 @@
     </table>
     <div class="paginator-border">
       <mat-paginator
-        [pageSizeOptions]="pageSizeOptions"
+        *ngIf="dataSourceOrder.data.length"
+        (page)="handlePageEvent($event)"
+        [pageSizeOptions]="[3, 6, 9]"
+        [length]="length"
         [pageSize]="pageSize"
         [pageIndex]="pageIndex"
-        [length]="totalOrders"
-        (page)="onPageChange($event)">
-      </mat-paginator>
+        showFirstLastButtons
+        aria-label="Select page"
+      ></mat-paginator>
     </div>
   </div>
 </div>
