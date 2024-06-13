@@ -1,0 +1,62 @@
+.main-container {
+  background-color: #ffeebb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 35rem;
+  width: 60rem;
+  color: #ff6c00;
+  // color: ##E3A84F;
+  //color: ##FDF9FA;
+}
+
+.error-card h1 {
+  font-size: 5rem;
+  margin: 0;
+}
+
+.error-code {
+  font-size: 18rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cat-image-container {
+  position: relative;
+  width: 10rem;
+  height: 14rem;
+  margin: 0 1rem;
+}
+
+.cat-image {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../assets/img/2-llamitas.jpg'); // Cambia 'path-to-your-cat-image.png' por la ruta de tu imagen
+  background-size: cover;
+  background-position: center;
+  border-radius: 45%;
+}
+
+.error-card p {
+  font-size: 1.2rem;
+  color: #999;
+}
