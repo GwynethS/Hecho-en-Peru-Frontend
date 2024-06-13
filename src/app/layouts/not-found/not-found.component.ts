@@ -10,6 +10,6 @@ export class NotFoundComponent {
   constructor(private router: Router) {}
   
   redirectToHome(): void {
-    this.router.navigate(['/dashboard/home']);
+    this.router.navigate(['/shop']);
   }
 }
