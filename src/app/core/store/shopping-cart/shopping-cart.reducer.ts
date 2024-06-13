@@ -10,13 +10,13 @@ export interface State {
 }
 
 export const initialState: State = {
-  orderDetails: JSON.parse(sessionStorage.getItem('cartState') || '[]'),
-  total: JSON.parse(sessionStorage.getItem('cartTotal') || '0'),
+  orderDetails: JSON.parse(localStorage.getItem('cartState') || '[]'),
+  total: JSON.parse(localStorage.getItem('cartTotal') || '0'),
 }
 
-const updateSessionStorage = (state: State) => {
-  sessionStorage.setItem('cartState', JSON.stringify(state.orderDetails));
-  sessionStorage.setItem('cartTotal', JSON.stringify(state.total));
+const updatelocalStorage = (state: State) => {
+  localStorage.setItem('cartState', JSON.stringify(state.orderDetails));
+  localStorage.setItem('cartTotal', JSON.stringify(state.total));
 };
 
 export const ShoppingCartReducer = createReducer(
@@ -42,7 +42,7 @@ export const ShoppingCartReducer = createReducer(
       };
     }
 
-    updateSessionStorage(newState);
+    updatelocalStorage(newState);
     return newState;
   }),
   on(ShoppingCartAction.removeProduct, (state, action) => {
@@ -58,7 +58,7 @@ export const ShoppingCartReducer = createReducer(
       total: state.total - (productToRemove.subTotal || 0)
     };
 
-    updateSessionStorage(newState);
+    updatelocalStorage(newState);
     return newState;
   }),
   on(ShoppingCartAction.updateProductQuantity, (state, action) => {
@@ -73,7 +73,7 @@ export const ShoppingCartReducer = createReducer(
       total: newTotal
     };
 
-    updateSessionStorage(newState);
+    updatelocalStorage(newState);
     return newState;
   }),
   on(ShoppingCartAction.clearCart, () => {
@@ -81,7 +81,7 @@ export const ShoppingCartReducer = createReducer(
       orderDetails: [],
       total: 0
     }
-    updateSessionStorage(newState);
+    updatelocalStorage(newState);
     return newState;
   })
 );

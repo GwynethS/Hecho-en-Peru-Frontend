@@ -34,7 +34,7 @@ export class AuthService {
 
   private setAuthUser(user: LoginResponse): void {
     this.store.dispatch(AuthAction.setAuthUser({ user }));
-    sessionStorage.setItem('userData', JSON.stringify(user));
+    localStorage.setItem('userData', JSON.stringify(user));
     this.authUserSubject.next(user);
   }
 
@@ -58,14 +58,14 @@ export class AuthService {
   logOut(): void {
     this.store.dispatch(AuthAction.logout());
     this.router.navigate(['shop', 'auth']);
-    sessionStorage.removeItem('userData');
-    sessionStorage.removeItem('cartState');
-    sessionStorage.removeItem('cartTotal');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('cartState');
+    localStorage.removeItem('cartTotal');
     this.authUserSubject.next(null);
   }
 
   verifyToken() {
-    const userDataString = sessionStorage.getItem('userData');
+    const userDataString = localStorage.getItem('userData');
 
     if (userDataString) {
       const userData: LoginResponse = JSON.parse(userDataString);
@@ -76,7 +76,7 @@ export class AuthService {
         return true;
       } else {
         this.store.dispatch(AuthAction.logout());
-        sessionStorage.removeItem('userData');
+        localStorage.removeItem('userData');
         console.log("token inválido");
         return false;
       }
