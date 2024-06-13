@@ -65,7 +65,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       this.customerSearchForm.markAllAsTouched();
     } else {
       const subscription = this.customersService
-        .getSearchCustomerByID(this.customerSearchForm.value.id)
+        .getSearchCustomerById(this.customerSearchForm.value.id)
         .subscribe({
           next: (customer) => {
             this.searchAttempted = false;
