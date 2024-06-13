@@ -90,9 +90,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   loadOrders(customerId: string) {
-    const orderId = '';
     const countSubscription = this.customersService
-      .getSearchOrderDetailsByID(orderId, customerId)
+      .getAllOrderDetailsByUserIAdmin(customerId)
       .subscribe({
         next: (orders) => {
           this.length = orders.length;

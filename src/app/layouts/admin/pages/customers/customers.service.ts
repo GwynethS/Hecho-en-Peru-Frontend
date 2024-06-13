@@ -30,6 +30,10 @@ export class CustomersService {
     return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}orderDetailByUserId?userId=${customerId}&offset=${offset}&limit=${limit}`);
   }
 
+  getAllOrderDetailsByUserIAdmin(customerId: string) {
+    return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}allOrderDetailsByUserId?userId=${customerId}`);
+  }
+
   getSearchOrderDetailsByID(orderId: string, userId: string) {
     return this.httpClient.get<OrderDetail[]>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`);
   }
