@@ -15,6 +15,7 @@ import { OrderDetailRequest } from '../../../checkout/models/order-detail-reques
 import { AlertService } from '../../../../../../core/services/alert.service';
 import { ToastService } from '../../../../../../core/services/toast.service';
 import { Comment } from './models/comment';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-catalog-detail',
@@ -22,6 +23,8 @@ import { Comment } from './models/comment';
   styleUrl: './catalog-detail.component.scss',
 })
 export class CatalogDetailComponent {
+  apiURL = environment.apiURL;
+
   length = 0;
   pageSize = 5;
   pageIndex = 0;

@@ -2,9 +2,7 @@
   <div class="product-img">
     <figure>
       <img
-        src="http://localhost:8080/api/uploadsLoadImage/{{
-          productSelected?.image
-        }}"
+        src="{{ apiURL }}uploadsLoadImage/{{ productSelected?.image }}"
         class="product-img"
       />
     </figure>
@@ -71,7 +69,7 @@
 <section class="more-info-product">
   <figure>
     <img
-      src="http://localhost:8080/api/uploadsLoadImage/{{
+      src="{{ apiURL }}uploadsLoadImage/{{
         productSelected?.localCraftsman?.image
       }}"
     />
@@ -100,7 +98,9 @@
       ><button
         mat-flat-button
         class="btn-region"
-        (click)="redirectTo('regions/' + productSelected?.localCraftsman?.region?.id)"
+        (click)="
+          redirectTo('regions/' + productSelected?.localCraftsman?.region?.id)
+        "
       >
         Conocer más
       </button>
@@ -115,16 +115,19 @@
 <section class="container-best-sellers">
   <h2>PRODUCTOS QUE PODRÍAN INTERESARTE</h2>
   <div class="container-carousel">
-    <button class="btn-carusel" mat-icon-button (click)="previousBestSellersPage()">
+    <button
+      class="btn-carusel"
+      mat-icon-button
+      (click)="previousBestSellersPage()"
+    >
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <ul class="carousel">
-      
       <li class="carousel-product" *ngFor="let product of bestSellers">
         <figure (click)="redirectTo('catalog/' + product.id)">
           <img
-            src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
-            alt="{{product.name}}"
+            src="{{apiURL}}uploadsLoadImage/{{ product.image }}"
+            alt="{{ product.name }}"
           />
         </figure>
         <div class="rating">
@@ -134,10 +137,17 @@
           }}</span>
         </div>
         <div class="info-product">
-          <h3>{{product.name}}</h3>
-          <p>s/.{{product.price | number: '1.2-2'}}</p>
+          <h3>{{ product.name }}</h3>
+          <p>s/.{{ product.price | number : "1.2-2" }}</p>
         </div>
-        <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
+        <button
+          mat-flat-button
+          class="add-cart"
+          type="button"
+          (click)="onAddProduct(product)"
+        >
+          Añadir al carrito
+        </button>
       </li>
     </ul>
     <button class="btn-carusel" mat-icon-button (click)="nextBestSellersPage()">
@@ -164,11 +174,19 @@
           type="text"
           placeholder="Agrega un comentario..."
         ></textarea>
-        <mat-error>{{commentForm.get('textCommentary')?.errors | errorsFeedback}}</mat-error>
+        <mat-error>{{
+          commentForm.get("textCommentary")?.errors | errorsFeedback
+        }}</mat-error>
       </mat-form-field>
       <div class="rating-field">
-        <p-rating formControlName="rating" (ngModelChange)="onChangeRating()" [cancel]="false" />
-        <p *ngIf="requiredRating" id="required-rating">La valoración es requerida.</p>
+        <p-rating
+          formControlName="rating"
+          (ngModelChange)="onChangeRating()"
+          [cancel]="false"
+        />
+        <p *ngIf="requiredRating" id="required-rating">
+          La valoración es requerida.
+        </p>
       </div>
       <div class="btn-comment">
         <button mat-flat-button type="submit" (click)="onSubmit()">

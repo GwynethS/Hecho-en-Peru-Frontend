@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Product } from '../../../admin/pages/products/models/product';
-import { Subscription, map } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../../admin/pages/products/products.service';
 import { Category } from '../../../admin/pages/products/models/category';
@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { ShoppingCartAction } from '../../../../core/store/shopping-cart/shopping-cart.actions';
 import { OrderDetailRequest } from '../checkout/models/order-detail-request';
 import { ToastService } from '../../../../core/services/toast.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-catalog',
@@ -18,6 +19,8 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './catalog.component.scss',
 })
 export class CatalogComponent {
+  apiURL = environment.apiURL;
+
   length = 0;
   pageSize = 12;
   pageIndex = 0;

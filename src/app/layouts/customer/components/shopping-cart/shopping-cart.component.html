@@ -1,35 +1,54 @@
 <div class="cart-container">
   <div class="cart-header">
     <h2>Mi carrito</h2>
-    <button mat-icon-button type="button" (click)="onCloseCart()"><mat-icon>close</mat-icon></button>
+    <button mat-icon-button type="button" (click)="onCloseCart()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
   <div class="cart-items-container" *ngIf="(cartProducts$ | async)?.length">
-    <div  *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
-      <figure><img src="http://localhost:8080/api/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
+    <div *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
+      <figure>
+        <img
+          src="{{ apiURL }}uploadsLoadImage/{{ orderDetail.product.image }}"
+        />
+      </figure>
       <div class="product-info">
-        <p>{{orderDetail.product.name}}</p>
-        <p>S/. {{orderDetail.product.price | number: '1.2-2'}}</p>
+        <p>{{ orderDetail.product.name }}</p>
+        <p>S/. {{ orderDetail.product.price | number : "1.2-2" }}</p>
       </div>
       <div class="product-quantity">
-        <button mat-icon-button type="button" (click)="onDecrementQuantity(orderDetail)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="onDecrementQuantity(orderDetail)"
+        >
           <mat-icon>remove</mat-icon>
         </button>
         <mat-form-field>
-          <input matInput
+          <input
+            matInput
             (change)="onChangeInputProductQuantity(orderDetail, $event)"
             type="number"
             [value]="orderDetail.quantity"
           />
         </mat-form-field>
-        <button mat-icon-button type="button" (click)="onIncrementQuantity(orderDetail)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="onIncrementQuantity(orderDetail)"
+        >
           <mat-icon>add</mat-icon>
         </button>
       </div>
       <div class="product-subtotal">
-        <p>S/. {{orderDetail.subTotal| number: '1.2-2'}}</p>
+        <p>S/. {{ orderDetail.subTotal | number : "1.2-2" }}</p>
       </div>
       <div class="product-remove">
-        <button mat-icon-button type="button" (click)="onRemoveProduct(orderDetail.product.id)">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="onRemoveProduct(orderDetail.product.id)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </div>
@@ -37,13 +56,15 @@
   </div>
   <div class="cart-total" *ngIf="(cartProducts$ | async)?.length">
     <p>Total</p>
-    <p id="cart-total-price">S/. {{ cartTotal$ | async | number: '1.2-2'}}</p>
+    <p id="cart-total-price">S/. {{ cartTotal$ | async | number : "1.2-2" }}</p>
   </div>
   <div class="cart-button" *ngIf="(cartProducts$ | async)?.length">
-    <button mat-flat-button type="button" (click)="onCheckout()">Comprar ahora</button>
+    <button mat-flat-button type="button" (click)="onCheckout()">
+      Comprar ahora
+    </button>
   </div>
 
-  <div class="no-results-container" *ngIf="!((cartProducts$ | async)?.length)">
+  <div class="no-results-container" *ngIf="!(cartProducts$ | async)?.length">
     <i class="fa-solid fa-face-sad-cry fa-3x"></i>
     <div>
       <p>Su carrito está vacío</p>

@@ -14,8 +14,6 @@
   </div>
 </div>
 
-<!-- <pre>{{filterForm.value | json}}</pre> -->
-
 <section class="catalog-container">
   <form [formGroup]="filterForm" class="filter-form">
     <div class="filter-header">
@@ -97,7 +95,7 @@
     <div *ngFor="let product of productsByPage" class="product-card">
       <figure (click)="redirectTo(product.id)">
         <img
-          src="http://localhost:8080/api/uploadsLoadImage/{{ product.image }}"
+          src="{{ apiURL }}uploadsLoadImage/{{ product.image }}"
           alt="poncho"
         />
       </figure>
@@ -113,7 +111,14 @@
         <h4>{{ product.name }}</h4>
         <p>s/.{{ product.price | number : "1.2-2" }}</p>
       </div>
-      <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
+      <button
+        mat-flat-button
+        class="add-cart"
+        type="button"
+        (click)="onAddProduct(product)"
+      >
+        Añadir al carrito
+      </button>
     </div>
     <div class="paginator" *ngIf="filterProducts.length">
       <button (click)="previousPage()" mat-icon-button type="button">
@@ -137,7 +142,7 @@
       <i class="fa-solid fa-face-sad-cry fa-3x"></i>
       <div>
         <p>No se encontraron resultados</p>
-        <p> para su búsqueda</p>
+        <p>para su búsqueda</p>
       </div>
     </div>
   </div>
@@ -146,16 +151,19 @@
 <section class="container-best-sellers">
   <h2>PRODUCTOS QUE PODRÍAN INTERESARTE</h2>
   <div class="container-carousel">
-    <button class="btn-carusel" mat-icon-button (click)="previousBestSellersPage()">
+    <button
+      class="btn-carusel"
+      mat-icon-button
+      (click)="previousBestSellersPage()"
+    >
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <ul class="carousel">
-      
       <li class="carousel-product" *ngFor="let product of bestSellers">
         <figure (click)="redirectTo(product.id)">
           <img
-            src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
-            alt="{{product.name}}"
+            src="{{ apiURL }}uploadsLoadImage/{{ product.image }}"
+            alt="{{ product.name }}"
           />
         </figure>
         <div class="rating">
@@ -165,10 +173,17 @@
           }}</span>
         </div>
         <div class="info-product">
-          <h3>{{product.name}}</h3>
-          <p>s/.{{product.price | number: '1.2-2'}}</p>
+          <h3>{{ product.name }}</h3>
+          <p>s/.{{ product.price | number : "1.2-2" }}</p>
         </div>
-        <button mat-flat-button class="add-cart" type="button" (click)="onAddProduct(product)">Añadir al carrito</button>
+        <button
+          mat-flat-button
+          class="add-cart"
+          type="button"
+          (click)="onAddProduct(product)"
+        >
+          Añadir al carrito
+        </button>
       </li>
     </ul>
     <button class="btn-carusel" mat-icon-button (click)="nextBestSellersPage()">

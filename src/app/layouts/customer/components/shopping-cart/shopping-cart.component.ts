@@ -13,6 +13,7 @@ import { LoginResponse } from '../../pages/auth/models/login-response';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { AuthService } from '../../pages/auth/auth.service';
 import { CheckoutService } from '../../pages/checkout/checkout.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,6 +21,8 @@ import { CheckoutService } from '../../pages/checkout/checkout.service';
   styleUrl: './shopping-cart.component.scss',
 })
 export class ShoppingCartComponent {
+  apiURL = environment.apiURL;
+
   authUser$: Observable<LoginResponse | null>;
   cartProducts$: Observable<OrderDetailRequest[]>;
   cartTotal$: Observable<number>;

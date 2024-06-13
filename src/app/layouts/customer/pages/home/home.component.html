@@ -24,19 +24,18 @@
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
     <ul class="carousel">
-      
       <li class="carousel-product" *ngFor="let product of products">
         <figure (click)="redirectTo('catalog/' + product.id)">
           <img
-            src="http://localhost:8080/api/uploadsLoadImage/{{product.image}}"
-            alt="{{product.name}}"
+            src="{{ apiURL }}uploadsLoadImage/{{ product.image }}"
+            alt="{{ product.name }}"
           />
         </figure>
         <div class="info-product">
-          <h3>{{product.name}}</h3>
-          <p>s/.{{product.price | number: '1.2-2'}}</p>
+          <h3>{{ product.name }}</h3>
+          <p>s/.{{ product.price | number : "1.2-2" }}</p>
         </div>
-        <p>Región: {{product.localCraftsman.region.name}}</p>
+        <p>Región: {{ product.localCraftsman.region.name }}</p>
       </li>
     </ul>
     <button mat-icon-button (click)="nextPage()">

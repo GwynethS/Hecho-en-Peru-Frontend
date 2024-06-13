@@ -4,6 +4,7 @@ import { Product } from '../../../admin/pages/products/models/product';
 import { ProductsService } from '../../../admin/pages/products/products.service';
 import { Subscription } from 'rxjs';
 import { AlertService } from '../../../../core/services/alert.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ import { AlertService } from '../../../../core/services/alert.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
+  apiURL = environment.apiURL;
+
   length = 0;
   pageSize = 3;
   pageIndex = 0;
