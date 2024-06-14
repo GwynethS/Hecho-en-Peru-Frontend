@@ -10,13 +10,13 @@
         </ng-container>
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Nombre</th>
-          <td mat-cell *matCellDef="let touristSite">
+          <td mat-cell *matCellDef="let touristSite" class="start-text-style">
             {{ touristSite.name }}
           </td>
         </ng-container>
-        <ng-container matColumnDef="description">
+        <ng-container matColumnDef="description" class="">
           <th mat-header-cell *matHeaderCellDef>Descripción</th>
-          <td mat-cell *matCellDef="let touristSite">
+          <td mat-cell *matCellDef="let touristSite" class="justify-text-style size-description">
             {{ touristSite.description }}
           </td>
         </ng-container>

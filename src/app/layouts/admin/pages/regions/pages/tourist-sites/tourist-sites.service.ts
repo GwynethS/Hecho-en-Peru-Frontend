@@ -12,6 +12,10 @@ export class TouristSitesService {
     return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSites`);
   }
 
+  getAllTouristSitesByRegionId(regionId: string) {
+    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}allTouristSitesByRegionId?regionId=${regionId}`);
+  }
+
   getTouristSitesByRegion(regionId: string) {
     return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByRegion/${regionId}`);
   }

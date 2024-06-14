@@ -13,6 +13,10 @@ export class LocalCraftsmenService {
     return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}localCraftsmen`);
   }
 
+  getAllLocalCraftsmen() {
+    return this.httpClient.get<LocalCraftsman[]>(`${environment.apiURL}AllLocalCraftsmen`);
+  }
+
   getSearchLocalCraftsmanDetailsByID(id: string) {
     return this.httpClient.get<LocalCraftsman>(`${environment.apiURL}localCraftsmanDetail/${id}`);
   }

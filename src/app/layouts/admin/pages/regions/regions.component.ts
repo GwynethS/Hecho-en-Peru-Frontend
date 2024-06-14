@@ -49,7 +49,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
 
   loadRegions(): void {
     const subscription = this.regionsService
-      .getRegions()
+      .getAllRegions()
       .subscribe({
         next: (regions) => {
           this.searchAttempted = false;

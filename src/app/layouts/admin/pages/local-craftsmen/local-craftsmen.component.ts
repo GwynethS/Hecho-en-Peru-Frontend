@@ -51,7 +51,7 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
 
   loadLocalCraftsmen(): void {
     const subscription = this.localCraftsmenService
-      .getLocalCraftsmen()
+      .getAllLocalCraftsmen()
       .subscribe({
         next: (localCraftsmen) => {
           this.searchAttempted = false;

@@ -12,6 +12,10 @@ export class RegionsService {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regions`);
   }
 
+  getAllRegions() {
+    return this.httpClient.get<Region[]>(`${environment.apiURL}allRegions`);
+  }
+
   getSearchRegionByName(name: string) {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regionSearch/${name}`);
   }

@@ -18,10 +18,7 @@ export class CategoryDialogComponent {
   ) {
     this.data = this.data || { categories: [] };
     this.categoryForm = this.fb.group({
-      name: this.fb.control('', [
-        Validators.required,
-        Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*'),
-      ]),
+      name: this.fb.control('', [ Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)+$')]),
     });
   }
 

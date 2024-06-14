@@ -13,26 +13,26 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Nombre</th>
-          <td mat-cell *matCellDef="let product">
+          <th mat-header-cell *matHeaderCellDef class="start-text-style">Nombre</th>
+          <td mat-cell *matCellDef="let product" class="start-text-style">
             {{ product.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Categoría</th>
-          <td mat-cell *matCellDef="let product">
+          <th mat-header-cell *matHeaderCellDef class="start-text-style">Categoría</th>
+          <td mat-cell *matCellDef="let product" class="start-text-style">
             {{ product.category.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="region">
-          <th mat-header-cell *matHeaderCellDef>Región</th>
-          <td mat-cell *matCellDef="let product">
+          <th mat-header-cell *matHeaderCellDef class="start-text-style">Región</th>
+          <td mat-cell *matCellDef="let product" class="start-text-style">
             {{ product.localCraftsman.region.name }}
           </td>
         </ng-container>
         <ng-container matColumnDef="localCraftsman">
-          <th mat-header-cell *matHeaderCellDef>Artesano</th>
-          <td mat-cell *matCellDef="let product">
+          <th mat-header-cell *matHeaderCellDef class="start-text-style">Artesano</th>
+          <td mat-cell *matCellDef="let product" class="start-text-style">
             {{ product.localCraftsman.fullName }}
           </td>
         </ng-container>

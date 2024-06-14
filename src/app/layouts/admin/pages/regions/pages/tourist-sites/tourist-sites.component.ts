@@ -68,7 +68,7 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
     let subscription;
     if (regionId) {
       subscription = this.touristSiteService
-        .getTouristSitesByRegion(regionId)
+        .getAllTouristSitesByRegionId(regionId)
         .subscribe({
           next: (touristSites) => {
             this.searchAttempted = false;
