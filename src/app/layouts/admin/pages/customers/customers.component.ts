@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-customers',
@@ -28,6 +29,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private customersService: CustomersService,
+    private alertService: AlertService,
   ) {
     this.customerSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -51,10 +53,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
           this.customers = customers || [];
           this.dataSource.data = this.customers;
         },
-        error: (err) => {
+        error: () => {
           this.dataSource.data = [];
           this.searchAttempted = true;
-          console.error('Failed to load customers', err);
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          )
         }
       });
     this.subscriptions.push(subscription);
@@ -72,10 +77,9 @@ export class CustomersComponent implements OnInit, OnDestroy {
               this.customers = [customer];
               this.dataSource.data = this.customers;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load customer with ID ${this.customerSearchForm.value.id}`, err);
           }
         });
       this.subscriptions.push(subscription);

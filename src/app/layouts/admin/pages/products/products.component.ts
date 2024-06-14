@@ -64,11 +64,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
           this.products = products || [];
           this.dataSource.data = this.products;
         },
-        error: (err) => {
+        error: () => {
           this.dataSource.data = [];
           this.searchAttempted = true;
-          console.error('Failed to load products', err);
-        },
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          )
+        }
       });
     this.subscriptions.push(subscription);
   }
@@ -85,10 +88,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
             this.products = [product];
             this.dataSource.data = this.products;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load product with ID ${this.productSearchForm.value.id}`, err);
           },
         });
       this.subscriptions.push(subscription);
@@ -193,10 +195,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.categories = categories || [];
         this.dataSourceCategory.data = this.categories;
       },
-      error: (err) => {
+      error: () => {
         this.categories = [];
         this.dataSourceCategory.data = this.categories;
-        console.error('Failed to load categories', err);
       },
     });
     this.subscriptions.push(subscription);

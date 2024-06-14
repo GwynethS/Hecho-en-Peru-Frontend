@@ -53,7 +53,6 @@ export class LocalCraftsmanDialogComponent implements OnInit {
   loadRegions(): void {
     this.regionService.getRegions().subscribe({
       next: (regions) => this.regions = regions,
-      error: (err) => console.error('Failed to load regions', err)
     });
   }
 

@@ -150,8 +150,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
             this.length = order.length;
             this.searchAttempted = false;
           },
-          error: (err) => {
-            console.error(`Failed to load order with ID ${orderId}`, err);
+          error: () => {
             this.dataSourceOrder.data = [];
             this.length = 0;
             this.searchAttempted = true;

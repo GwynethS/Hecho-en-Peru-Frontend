@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastService } from '../../../../core/services/toast.service';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-regions',
@@ -32,6 +33,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private regionsService: RegionsService,
     private matDialog: MatDialog,
+    private alertService: AlertService,
     private toastService: ToastService,
   ) {
     this.regionSearchForm = this.fb.group({
@@ -56,10 +58,13 @@ export class RegionsComponent implements OnInit, OnDestroy {
           this.regions = regions || [];
           this.dataSource.data = this.regions;
         },
-        error: (err) => {
+        error: () => {
           this.dataSource.data = [];
           this.searchAttempted = true;
-          console.error('Failed to load regions', err);
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          )
         }
       });
     this.subscriptions.push(subscription);
@@ -77,10 +82,9 @@ export class RegionsComponent implements OnInit, OnDestroy {
             this.regions = region;
             this.dataSource.data = this.regions;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load region with name ${this.regionSearchForm.value.name}`, err);
           }
         });
       this.subscriptions.push(subscription);

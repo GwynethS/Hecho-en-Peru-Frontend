@@ -63,14 +63,12 @@ export class ProductDialogComponent implements OnInit {
   loadCategories(): void {
     this.productService.getCategories().subscribe({
       next: (categories) => this.categories = categories,
-      error: (err) => console.error('Failed to load categories', err)
     });
   }
 
   loadLocalCraftsmen(): void {
     this.localCraftsmanService.getLocalCraftsmen().subscribe({
       next: (localCraftsmen) => this.localCraftsmen = localCraftsmen,
-      error: (err) => console.error('Failed to load local craftsmen', err)
     });
   }
 

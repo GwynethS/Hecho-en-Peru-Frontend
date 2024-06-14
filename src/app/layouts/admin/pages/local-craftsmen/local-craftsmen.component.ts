@@ -58,10 +58,13 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
           this.localCraftsmen = localCraftsmen || [];
           this.dataSource.data = this.localCraftsmen;
         },
-        error: (err) => {
+        error: () => {
           this.dataSource.data = [];
           this.searchAttempted = true;
-          console.error('Failed to load local craftsman', err);
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          )
         }
       });
     this.subscriptions.push(subscription);
@@ -79,10 +82,9 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
             this.localCraftsmen = [localCraftsman];
             this.dataSource.data = this.localCraftsmen;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
             this.searchAttempted = true;
-            console.error(`Failed to load local craftsman with ID ${this.localCraftsmanSearchForm.value.id}`, err);
           }
         });
       this.subscriptions.push(subscription);
