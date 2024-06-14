@@ -66,3 +66,34 @@
     }
   }
 }
+
+.loading-overlay {
+  position: fixed;
+  top: 6.0625rem;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 6.0625rem);
+  background-color: rgba(0, 0, 0, 0.123);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-indicator {
+  width: 3.75rem;
+  height: 3.75rem;
+  border: 0.375rem solid #E9806E;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

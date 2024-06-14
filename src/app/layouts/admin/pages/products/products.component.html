@@ -1,5 +1,9 @@
+<div class="loading-overlay" *ngIf="loadingService.loading$ | async">
+  <div class="loading-indicator"></div>
+</div>
 <div
   class="div-add-container grid formgrid flex justify-content-center align-items-top"
+  *ngIf="!(loadingService.loading$ | async)"
 >
   <div class="col-2">
     <button
@@ -23,10 +27,7 @@
     <span>PRODUCTOS</span>
   </div>
   <div class="col-4 search-bar">
-    <form
-      [formGroup]="productSearchForm"
-      class="product-form-search"
-    >
+    <form [formGroup]="productSearchForm" class="product-form-search">
       <mat-form-field class="field">
         <input formControlName="id" matInput placeholder="Ingrese el ID" />
       </mat-form-field>
@@ -55,7 +56,7 @@
     (deleteProduct)="onDeleteProduct($event)"
   ></app-product-table>
 </div>
-<div class="no-results-container" *ngIf="!products.length || searchAttempted">
+<div class="no-results-container" *ngIf="searchAttempted">
   <i class="fa-solid fa-face-sad-cry fa-3x"></i>
   <div>
     <p>No se encontraron resultados</p>
