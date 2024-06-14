@@ -11,6 +11,9 @@
   <div class="sidenav-content">
     <app-toolbar (toggleSidebar)="showSidebar = !showSidebar"></app-toolbar>
     <main class="content-pages">
+      <div class="loading-overlay" *ngIf="isLoading">
+        <div class="loading-indicator"></div>
+      </div>
       <router-outlet></router-outlet>
     </main>
     <app-footer></app-footer>

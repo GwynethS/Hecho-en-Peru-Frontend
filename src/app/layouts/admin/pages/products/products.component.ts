@@ -11,7 +11,6 @@ import { CategoryDialogComponent } from './components/category-dialog/category-d
 import { ProductDialogComponent } from './components/product-dialog/product-dialog.component';
 import { AlertService } from '../../../../core/services/alert.service';
 import { ToastService } from '../../../../core/services/toast.service';
-import { LoadingService } from '../../../../core/services/loading.service';
 
 @Component({
   selector: 'app-products',
@@ -41,7 +40,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private matDialog: MatDialog,
     private alertService: AlertService,
     private toastService: ToastService,
-    public loadingService: LoadingService,
   ) {
     this.productSearchForm = this.fb.group({
       id: this.fb.control('', [Validators.required, Validators.pattern('^[0-9]+$')]),
@@ -49,7 +47,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadingService.setLoading(true);
     this.loadProducts();
     this.loadCategories();
   }
@@ -66,11 +63,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
           this.searchAttempted = false;
           this.products = products || [];
           this.dataSource.data = this.products;
-          this.loadingService.setLoading(false);
         },
         error: () => {
           this.dataSource.data = [];
-          this.loadingService.setLoading(false);
           this.alertService.showError(
             'Ups! Ocurrió un error',
             'No se pudieron cargar los datos correctamente'
