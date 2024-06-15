@@ -12,11 +12,12 @@ export class CustomersService {
   constructor(
     private httpClient: HttpClient,
     private authService: AuthService,
-    private loadingService: LoadingService,
+    private loadingService: LoadingService
   ) {}
 
   getCustomers() {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Customer[]>(`${environment.apiURL}users`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
@@ -24,22 +25,38 @@ export class CustomersService {
 
   getSearchCustomerById(id: string) {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Customer>(`${environment.apiURL}user/${id}`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   createUser(userData: Customer) {
-    return this.httpClient.post<Customer>(`${environment.apiURL}auth/register`, { ...userData });
+    this.loadingService.setIsLoading(true);
+
+    return this.httpClient
+      .post<Customer>(`${environment.apiURL}auth/register`, { ...userData })
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   updateUser(userProfile: UserProfile, id: string) {
-    return this.httpClient.put<Customer>(`${environment.apiURL}userUpdate/${id}`, userProfile);
+    this.loadingService.setIsLoading(true);
+
+    return this.httpClient
+      .put<Customer>(`${environment.apiURL}userUpdate/${id}`, userProfile)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   deleteUser(id: string) {
+    this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .delete(`${environment.apiURL}user/${id}`, { responseType: 'text' })
-      .pipe(finalize(() => this.authService.logOut()));
+      .pipe(
+        finalize(() => {
+          this.loadingService.setIsLoading(false);
+          this.authService.logOut();
+        })
+      );
   }
 }

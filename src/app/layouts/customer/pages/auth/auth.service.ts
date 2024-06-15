@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthAction } from '../../../../core/store/auth/auth.actions';
 import { environment } from '../../../../../environments/environment';
 import { LoginResponse } from './models/login-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
+import { LoadingService } from '../../../../core/services/loading.service';
 
 interface LoginData {
   email: null | string;
@@ -25,9 +26,10 @@ export class AuthService {
     private router: Router,
     private httpClient: HttpClient,
     private store: Store,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private loadingService: LoadingService
   ) {
-    this.store.select(selectAuthUser).subscribe(user => {
+    this.store.select(selectAuthUser).subscribe((user) => {
       this.authUserSubject.next(user);
     });
   }
@@ -39,6 +41,8 @@ export class AuthService {
   }
 
   logIn(data: LoginData): Observable<LoginResponse> {
+    this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .post<LoginResponse>(`${environment.apiURL}auth/login`, data)
       .pipe(
@@ -52,7 +56,8 @@ export class AuthService {
             }
           }
         })
-      );
+      )
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   logOut(): void {
@@ -92,7 +97,7 @@ export class AuthService {
     return this.authUserSubject.getValue();
   }
 
-  updateAuthUser(user: LoginResponse){
+  updateAuthUser(user: LoginResponse) {
     this.setAuthUser(user);
   }
 }

@@ -16,6 +16,7 @@ export class ProductsService {
 
   getProducts() {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Product[]>(`${environment.apiURL}products`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
@@ -23,6 +24,7 @@ export class ProductsService {
 
   getProductsAdmin() {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Product[]>(`${environment.apiURL}productsAdmin`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
@@ -35,15 +37,21 @@ export class ProductsService {
   }
 
   getBestSellingProductsUser() {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}listBestSellingProducts`
-    );
+    this.loadingService.setIsLoading(true);
+
+    return this.httpClient
+      .get<Product[]>(`${environment.apiURL}listBestSellingProducts`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getBestSellingProductsByPageUser(offSet: number, limit: number) {
-    return this.httpClient.get<Product[]>(
-      `${environment.apiURL}bestSellingProductsByPage?offset=${offSet}&limit=${limit}`
-    );
+    this.loadingService.setIsLoading(true);
+
+    return this.httpClient
+      .get<Product[]>(
+        `${environment.apiURL}bestSellingProductsByPage?offset=${offSet}&limit=${limit}`
+      )
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getProductDetailsByID(id: string) {
@@ -54,6 +62,7 @@ export class ProductsService {
 
   getSearchProductDetailsByID(id: string) {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Product>(`${environment.apiURL}productDetails/${id}`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
@@ -61,6 +70,7 @@ export class ProductsService {
 
   addProducts(data: ProductRequest, file: File) {
     this.loadingService.setIsLoading(true);
+
     const formData = new FormData();
     formData.append(
       'productDTO',
@@ -80,6 +90,7 @@ export class ProductsService {
 
   updateProducts(id: string, data: ProductRequest, file: File) {
     this.loadingService.setIsLoading(true);
+
     const formData = new FormData();
     formData.append(
       'productDTO',
@@ -101,6 +112,7 @@ export class ProductsService {
 
   deleteProductsByID(id: string) {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .delete(`${environment.apiURL}productDelete/${id}`, {
         responseType: 'text',
@@ -116,6 +128,7 @@ export class ProductsService {
 
   getCategories() {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .get<Category[]>(`${environment.apiURL}categories`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
@@ -127,6 +140,7 @@ export class ProductsService {
 
   addCategories(data: Category) {
     this.loadingService.setIsLoading(true);
+
     return this.httpClient
       .post<Category>(`${environment.apiURL}category`, data)
       .pipe(
