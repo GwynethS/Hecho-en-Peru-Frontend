@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { Customer } from '../../models/customer';
 import { OrderDetail } from './models/order-detail';
 import { CustomersService } from '../../customers.service';
-import { AlertService } from '../../../../../../core/services/alert.service';
+import { OrdersService } from './orders.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -58,6 +58,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private customersService: CustomersService,
+    private ordersService: OrdersService,
   ) {
     this.orderSearchForm = this.fb.group({
       id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
@@ -92,7 +93,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   }
 
   loadOrders(customerId: string) {
-    const countSubscription = this.customersService
+    const countSubscription = this.ordersService
       .getAllOrderDetailsByUserIdAdmin(customerId)
       .subscribe({
         next: (orders) => {
@@ -105,7 +106,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   loadOrdersByPage() {
     const customerId = this.customerSelected?.id;
     if (customerId) {
-      this.customersService
+      this.ordersService
         .getOrderDetailByUserIdByPageAdmin(
           customerId,
           this.pageIndex,
@@ -138,7 +139,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     const orderId = this.orderSearchForm.value.id;
     const customerId = this.activatedRoute.snapshot.paramMap.get('id');
     if (customerId && orderId) {
-      const searchSubscription = this.customersService
+      const searchSubscription = this.ordersService
         .getSearchOrderDetailsById(orderId, customerId)
         .subscribe({
           next: (order) => {
@@ -160,7 +161,10 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     this.searchAttempted = false;
     this.orderSearchFormDir.resetForm();
     this.pageIndex = 0;
-    this.loadOrdersByPage();
+    if (this.customerSelected) {
+      this.loadOrders(this.customerSelected.id);
+      this.loadOrdersByPage();
+    }
   }
 
   redirectToCustomers(): void {

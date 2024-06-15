@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import {
-  selectShoppingCartProducts,
-  selectShoppingCartTotal,
-} from '../../../../core/store/shopping-cart/shopping-cart.selector';
+import { selectShoppingCartProducts, selectShoppingCartTotal } from '../../../../core/store/shopping-cart/shopping-cart.selector';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ShoppingCartService } from '../../components/shopping-cart/shopping-cart.service';
 import { Router } from '@angular/router';
 import { OrderDetailRequest } from './models/order-detail-request';
-import { OrderService } from './order.service';
+import { OrdersService } from '../../../admin/pages/customers/pages/order-detail/orders.service';
 import { LoginResponse } from '../auth/models/login-response';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { AuthService } from '../auth/auth.service';
@@ -33,7 +30,7 @@ export class CheckoutComponent {
     private store: Store,
     private authService: AuthService,
     private shoppingCartService: ShoppingCartService,
-    private orderService: OrderService,
+    private ordersService: OrdersService,
     private alertService: AlertService,
     private router: Router
   ) {
@@ -71,7 +68,7 @@ export class CheckoutComponent {
               this.subscriptions.push(
                 this.shoppingCartService.getCartState().subscribe({
                   next: (state) => {
-                    this.orderService
+                    this.ordersService
                       .createOrder({ ...state, user: user.user })
                       .subscribe({
                         next: () => {

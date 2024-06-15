@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { CheckoutComponent } from './checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { OrderService } from './order.service';
 import { SharedModule } from '../../../../shared/shared.module';
+import { OrdersService } from '../../../admin/pages/customers/pages/order-detail/orders.service';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { SharedModule } from '../../../../shared/shared.module';
     ReactiveFormsModule
   ],
   providers: [
-    OrderService
+    OrdersService
   ]
 })
 export class CheckoutModule { }

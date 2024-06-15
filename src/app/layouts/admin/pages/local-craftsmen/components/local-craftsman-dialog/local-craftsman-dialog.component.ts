@@ -110,9 +110,6 @@ export class LocalCraftsmanDialogComponent implements OnInit {
           }
           this.matDialogRef.close({ localCraftsmanData, image: imageToSend });
         },
-        error: (err) => {
-          console.error('Error in one of the requests', err);
-        },
       });
     }
   }

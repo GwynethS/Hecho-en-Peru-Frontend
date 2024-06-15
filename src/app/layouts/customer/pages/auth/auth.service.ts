@@ -72,16 +72,13 @@ export class AuthService {
 
       if (!this.jwtHelper.isTokenExpired(userData.jwtResponse.jwttoken)) {
         this.setAuthUser(userData);
-        console.log("token válido");
         return true;
       } else {
         this.store.dispatch(AuthAction.logout());
         localStorage.removeItem('userData');
-        console.log("token inválido");
         return false;
       }
     } else {
-      console.log("sin token");
       return false;
     }
   }

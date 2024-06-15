@@ -5,7 +5,6 @@ import { environment } from '../../../../../environments/environment';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../customer/pages/auth/auth.service';
 import { UserProfile } from '../../../customer/pages/user/pages/profile/models/user-profile';
-import { OrderDetail } from './pages/order-detail/models/order-detail';
 import { LoadingService } from '../../../../core/services/loading.service';
 
 @Injectable()
@@ -27,27 +26,6 @@ export class CustomersService {
     this.loadingService.setIsLoading(true);
     return this.httpClient
       .get<Customer>(`${environment.apiURL}user/${id}`)
-      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
-  }
-
-  getOrderDetailByUserIdByPageAdmin(customerId: string, offset: number, limit: number) {
-    this.loadingService.setIsLoading(true);
-    return this.httpClient
-      .get<OrderDetail[]>(`${environment.apiURL}orderDetailByUserId?userId=${customerId}&offset=${offset}&limit=${limit}`)
-      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
-  }
-
-  getAllOrderDetailsByUserIdAdmin(customerId: string) {
-    this.loadingService.setIsLoading(true);
-    return this.httpClient
-      .get<OrderDetail[]>(`${environment.apiURL}allOrderDetailsByUserId?userId=${customerId}`)
-      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
-  }
-
-  getSearchOrderDetailsById(orderId: string, userId: string) {
-    this.loadingService.setIsLoading(true);
-    return this.httpClient
-      .get<OrderDetail[]>(`${environment.apiURL}ordersDetails?orderId=${orderId}&userId=${userId}`)
       .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 

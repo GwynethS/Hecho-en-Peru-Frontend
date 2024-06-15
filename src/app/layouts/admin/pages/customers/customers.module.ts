@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CustomersService } from './customers.service';
 import { CustomerTableComponent } from './components/customer-table/customer-table.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
+import { OrdersService } from './pages/order-detail/orders.service';
 
 
 @NgModule({
@@ -23,6 +24,6 @@ import { OrderDetailComponent } from './pages/order-detail/order-detail.componen
     ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [CustomersService],
+  providers: [CustomersService, OrdersService],
 })
 export class CustomersModule {}
