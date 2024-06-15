@@ -60,7 +60,6 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.dataSource.data = [];
-          this.searchAttempted = true;
           this.alertService.showError(
             'Ups! Ocurrió un error',
             'No se pudieron cargar los datos correctamente'
@@ -111,7 +110,6 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
                 this.loadLocalCraftsmen(),
                 this.toastService.showToast("Se añadió el artesano correctamente");
               },
-              error: (err) => console.error('Error adding local craftsman', err)
             });
         }}
       );
@@ -132,11 +130,9 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
                   this.loadLocalCraftsmen(),
                   this.toastService.showToast("Se actualizó el artesano correctamente");
                 },
-                error: (err) => console.error('Error updating local craftsman', err)
               });
           }
         },
-        error: (err) => console.error('Failed to open local craftsman dialog', err),
       });
   }
 
@@ -152,7 +148,6 @@ export class LocalCraftsmenComponent implements OnInit, OnDestroy {
                 this.loadLocalCraftsmen(),
                 this.toastService.showToast("Se eliminó el artesano correctamente");
               },
-              error: (err) => console.error('Failed to delete local craftsman', err)
             });
           this.subscriptions.push(deleteSubscription);
         }

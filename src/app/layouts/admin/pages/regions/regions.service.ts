@@ -2,26 +2,39 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Region } from './models/region';
 import { environment } from '../../../../../environments/environment';
-import { catchError, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
+import { LoadingService } from '../../../../core/services/loading.service';
 
 @Injectable()
 export class RegionsService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private loadingService: LoadingService
+  ) {}
 
   getRegions() {
     return this.httpClient.get<Region[]>(`${environment.apiURL}regions`);
   }
 
   getAllRegions() {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}allRegions`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<Region[]>(`${environment.apiURL}allRegions`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getSearchRegionByName(name: string) {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}regionSearch/${name}`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<Region[]>(`${environment.apiURL}regionSearch/${name}`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getSearchRegionDetailsByID(id: string) {
-    return this.httpClient.get<Region[]>(`${environment.apiURL}regionDetail/${id}`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<Region[]>(`${environment.apiURL}regionDetail/${id}`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getRegionDetailsByID(id: string) {
@@ -29,6 +42,7 @@ export class RegionsService {
   }
 
   addRegions(data: Region, file: File) {
+    this.loadingService.setIsLoading(true);
     const formData = new FormData();
     formData.append('regionDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
@@ -39,11 +53,13 @@ export class RegionsService {
       catchError((err) => {
         console.error('Failed to add region', err);
         return of({ err });
-      })
+      }),
+      finalize(() => this.loadingService.setIsLoading(false))
     );
   }
 
   updateRegions(id: string, data: Region, file: File) {
+    this.loadingService.setIsLoading(true);
     const formData = new FormData();
     formData.append('regionDTO', new Blob([JSON.stringify(data)], { type: 'application/json' }));
     if (file) {
@@ -54,7 +70,8 @@ export class RegionsService {
       catchError((err) => {
         console.error('Failed to update region', err);
         return of({ err });
-      })
+      }),
+      finalize(() => this.loadingService.setIsLoading(false))
     );
   }
 }

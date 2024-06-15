@@ -37,7 +37,7 @@ export class RegionsComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
   ) {
     this.regionSearchForm = this.fb.group({
-      name: this.fb.control('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚñÑ]*')]),
+      name: this.fb.control('', [ Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$')]),
     });
   }
 
@@ -60,7 +60,6 @@ export class RegionsComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.dataSource.data = [];
-          this.searchAttempted = true;
           this.alertService.showError(
             'Ups! Ocurrió un error',
             'No se pudieron cargar los datos correctamente'
@@ -111,7 +110,6 @@ export class RegionsComponent implements OnInit, OnDestroy {
                 this.loadRegions(),
                 this.toastService.showToast("Se añadió la región correctamente");
               },
-              error: (err) => console.error('Error adding region', err),
             });
         }}
       );
@@ -132,11 +130,9 @@ export class RegionsComponent implements OnInit, OnDestroy {
                   this.loadRegions(),
                   this.toastService.showToast("Se actualizó la región correctamente");
                 },
-                error: (err) => console.error('Error updating region', err),
               });
           }
         },
-        error: (err) => console.error('Failed to open region dialog', err),
       });
   }
 }

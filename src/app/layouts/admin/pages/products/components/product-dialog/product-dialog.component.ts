@@ -67,7 +67,7 @@ export class ProductDialogComponent implements OnInit {
   }
 
   loadLocalCraftsmen(): void {
-    this.localCraftsmanService.getLocalCraftsmen().subscribe({
+    this.localCraftsmanService.getAllLocalCraftsmen().subscribe({
       next: (localCraftsmen) => this.localCraftsmen = localCraftsmen,
     });
   }
@@ -129,9 +129,6 @@ export class ProductDialogComponent implements OnInit {
             imageToSend = this.productForm.get('image')?.value || new Blob();
           }
           this.matDialogRef.close({ productData, image: imageToSend });
-        },
-        error: (err) => {
-          console.error('Error in one of the requests', err);
         },
       });
     }

@@ -22,8 +22,6 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
   touristSites: TouristSite[] = [];
   dataSource = new MatTableDataSource<TouristSite>();
 
-  searchAttempted: boolean = false;
-
   subscriptions: Subscription[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -71,14 +69,11 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
         .getAllTouristSitesByRegionId(regionId)
         .subscribe({
           next: (touristSites) => {
-            this.searchAttempted = false;
             this.touristSites = touristSites || [];
             this.dataSource.data = this.touristSites;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
-            this.searchAttempted = true;
-            console.error('Failed to load tourist sites by region', err);
           }
         });
     } else {
@@ -86,14 +81,11 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
         .getTouristSites()
         .subscribe({
           next: (touristSites) => {
-            this.searchAttempted = false;
             this.touristSites = touristSites || [];
             this.dataSource.data = this.touristSites;
           },
-          error: (err) => {
+          error: () => {
             this.dataSource.data = [];
-            this.searchAttempted = true;
-            console.error('Failed to load tourist sites', err);
           },
         });
     }
@@ -119,7 +111,6 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
                   this.loadTouristSites(),
                   this.toastService.showToast('Se añadió el lugar turístico correctamente');
                 },
-                error: (err) => console.error('Error adding tourist site', err),
               });
           }
         }
@@ -145,7 +136,6 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
                   this.loadTouristSites(),
                   this.toastService.showToast('Se actualizó el lugar turístico correctamente');
                 },
-                error: (err) => console.error('Error adding tourist site', err),
               });
           }
         }
@@ -162,7 +152,6 @@ export class TouristSitesComponent implements OnInit, OnDestroy {
                 this.loadTouristSites(),
                 this.toastService.showToast("Se eliminó el lugar turístico correctamente");
               },
-              error: (err) => console.error('Failed to delete tourist site', err)
             });
           this.subscriptions.push(deleteSubscription);
         }

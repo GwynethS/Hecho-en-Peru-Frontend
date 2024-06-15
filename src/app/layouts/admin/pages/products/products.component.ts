@@ -66,10 +66,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.dataSource.data = [];
-          this.alertService.showError(
-            'Ups! Ocurrió un error',
-            'No se pudieron cargar los datos correctamente'
-          )
         }
       });
     this.subscriptions.push(subscription);
@@ -116,7 +112,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.loadProducts(),
                 this.toastService.showToast('Se añadió el producto correctamente');
               },
-              error: (err) => console.error('Error adding product', err),
             });
         }
       });
@@ -137,11 +132,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
                   this.loadProducts(),
                   this.toastService.showToast('Se actualizó el producto correctamente');
                 },
-                error: (err) => console.error('Error updating product', err),
               });
           }
         },
-        error: (err) => console.error('Failed to open product dialog', err),
       });
   }
 
@@ -157,7 +150,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.loadProducts(),
                 this.toastService.showToast('Se eliminó el producto correctamente');
               },
-              error: (err) => console.error('Failed to delete product', err),
             });
           this.subscriptions.push(deleteSubscription);
         }
@@ -178,12 +170,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
                   this.loadCategories(),
                   this.toastService.showToast('Se añadió la categoría correctamente');
                 },
-                error: (err) => console.error('Failed to add category', err),
               });
             this.subscriptions.push(addSubscription);
           }
         },
-        error: (err) => console.error('Failed to open category dialog', err),
       });
     this.subscriptions.push(subscription);
   }

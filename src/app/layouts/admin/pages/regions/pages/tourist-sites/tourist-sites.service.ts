@@ -2,25 +2,39 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TouristSite } from './models/tourist-site';
 import { environment } from '../../../../../../../environments/environment';
-import { catchError, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
+import { LoadingService } from '../../../../../../core/services/loading.service';
 
 @Injectable()
 export class TouristSitesService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private loadingService: LoadingService
+  ) {}
 
   getTouristSites() {
-    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSites`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<TouristSite[]>(`${environment.apiURL}touristSites`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getAllTouristSitesByRegionId(regionId: string) {
-    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}allTouristSitesByRegionId?regionId=${regionId}`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<TouristSite[]>(`${environment.apiURL}allTouristSitesByRegionId?regionId=${regionId}`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   getTouristSitesByRegion(regionId: string) {
-    return this.httpClient.get<TouristSite[]>(`${environment.apiURL}touristSitesByRegion/${regionId}`);
+    this.loadingService.setIsLoading(true);
+    return this.httpClient
+      .get<TouristSite[]>(`${environment.apiURL}touristSitesByRegion/${regionId}`)
+      .pipe(finalize(() => this.loadingService.setIsLoading(false)));
   }
 
   addTouristSites(data: TouristSite, file: File) {
+    this.loadingService.setIsLoading(true);
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
     if (file) {
@@ -31,11 +45,13 @@ export class TouristSitesService {
       catchError((err) => {
         console.error('Failed to add tourist site', err);
         return of({ err });
-      })
+      }),
+      finalize(() => this.loadingService.setIsLoading(false))
     );
   }
 
   updateTouristSites(id: string, data: TouristSite, file: File) {
+    this.loadingService.setIsLoading(true);
     const formData: FormData = new FormData();
     formData.append('touristSiteDTO', new Blob([JSON.stringify(data)], { type: "application/json" }));
     if (file) {
@@ -46,18 +62,21 @@ export class TouristSitesService {
       catchError((err) => {
         console.error('Failed to update tourist site', err);
         return of({ err });
-      })
+      }),
+      finalize(() => this.loadingService.setIsLoading(false))
     );
   }
 
   deleteTouristSiteByID(id: string) {
+    this.loadingService.setIsLoading(true);
     return this.httpClient
       .delete(`${environment.apiURL}touristSite/${id}`, { responseType: 'text' })
       .pipe(
         catchError((err) => {
           console.error('Failed to delete tourist site', err);
           return of([]);
-        })
+        }),
+        finalize(() => this.loadingService.setIsLoading(false))
       );
   }
 }

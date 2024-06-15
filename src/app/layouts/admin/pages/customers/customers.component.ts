@@ -55,7 +55,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.dataSource.data = [];
-          this.searchAttempted = true;
           this.alertService.showError(
             'Ups! Ocurrió un error',
             'No se pudieron cargar los datos correctamente'
