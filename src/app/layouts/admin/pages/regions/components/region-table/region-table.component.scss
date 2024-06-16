@@ -41,6 +41,9 @@ td {
   right: 1rem;
   padding-left: 1rem;
   background-color: #fff;
+  @media (min-width: 1837px) {
+    bottom: 1rem;
+  }
 }
 
 .paginator-border {
