@@ -66,6 +66,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.dataSource.data = [];
+          this.alertService.showError(
+            'Ups! Ocurrió un error',
+            'No se pudieron cargar los datos correctamente'
+          )
         }
       });
     this.subscriptions.push(subscription);
