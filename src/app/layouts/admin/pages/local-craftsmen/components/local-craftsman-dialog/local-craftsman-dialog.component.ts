@@ -27,9 +27,16 @@ export class LocalCraftsmanDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private editingLocalCraftsman?: LocalCraftsman
   ) {
     this.localCraftsmanForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(10)]],
-      description: ['', Validators.required],
-      specialty: ['', Validators.required],
+      fullName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$'),
+        ],
+      ],
+      description: ['', [Validators.required, Validators.minLength(5)]],
+      specialty: ['', [Validators.required, Validators.minLength(5)]],
       experience: ['', [Validators.required, Validators.minLength(3)]],
       region_id: ['', Validators.required],
     });
@@ -52,7 +59,7 @@ export class LocalCraftsmanDialogComponent implements OnInit {
 
   loadRegions(): void {
     this.regionService.getRegions().subscribe({
-      next: (regions) => this.regions = regions,
+      next: (regions) => (this.regions = regions),
     });
   }
 
@@ -85,14 +92,14 @@ export class LocalCraftsmanDialogComponent implements OnInit {
   onSave(): void {
     if (this.localCraftsmanForm.invalid) {
       this.localCraftsmanForm.markAllAsTouched();
-      if(!this.selectedFile) this.requiredImage = true;
+      if (!this.selectedFile) this.requiredImage = true;
     } else {
       if (!this.editingLocalCraftsman && !this.selectedFile) {
         this.requiredImage = true;
-        return; 
+        return;
       }
       this.requiredImage = false;
-      
+
       forkJoin({
         region: this.regionService.getSearchRegionDetailsByID(
           this.localCraftsmanForm.get('region_id')?.value
@@ -100,13 +107,17 @@ export class LocalCraftsmanDialogComponent implements OnInit {
       }).subscribe({
         next: (results) => {
           const region = results.region;
-          const localCraftsmanData = { ...this.localCraftsmanForm.value, region };
+          const localCraftsmanData = {
+            ...this.localCraftsmanForm.value,
+            region,
+          };
           let imageToSend;
-          
+
           if (this.selectedFile) {
             imageToSend = this.selectedFile;
           } else {
-            imageToSend = this.localCraftsmanForm.get('image')?.value || new Blob();
+            imageToSend =
+              this.localCraftsmanForm.get('image')?.value || new Blob();
           }
           this.matDialogRef.close({ localCraftsmanData, image: imageToSend });
         },

@@ -23,7 +23,14 @@ export class TouristSiteDialogComponent {
     @Inject(MAT_DIALOG_DATA) private editingTouristSite?: TouristSite
   ) {
     this.touristSiteForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$'),
+        ],
+      ],
       description: ['', Validators.required],
     });
     if (this.editingTouristSite) {
@@ -71,13 +78,13 @@ export class TouristSiteDialogComponent {
         return;
       }
       this.requiredImage = false;
-      
+
       const touristSiteData = { ...this.touristSiteForm.value };
-      
+
       if (!this.selectedFile && this.editingTouristSite) {
         touristSiteData.image = this.editingTouristSite.image;
       }
-      
+
       let imageToSend;
       if (this.selectedFile) {
         imageToSend = this.selectedFile;

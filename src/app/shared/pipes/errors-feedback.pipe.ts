@@ -24,6 +24,9 @@ export class ErrorsFeedbackPipe implements PipeTransform {
           case '^[a-zA-Z\\s]*$':
             messages.push('Solo debe contener letras');
             break;
+          case '^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$':
+            messages.push('Solo debe contener letras');
+            break;
           case '^\\d{9}$':
             messages.push('Ingrese un número de teléfono válido');
             break;

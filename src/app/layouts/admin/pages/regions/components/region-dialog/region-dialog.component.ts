@@ -22,10 +22,20 @@ export class RegionDialogComponent {
     @Inject(MAT_DIALOG_DATA) private editingRegion?: Region
   ) {
     this.regionForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*$'),
+        ],
+      ],
       history: ['', [Validators.required, Validators.minLength(3)]],
       sitesIntroduction: ['', [Validators.required, Validators.minLength(3)]],
-      craftsmenIntroduction: ['', [Validators.required, Validators.minLength(3)]],
+      craftsmenIntroduction: [
+        '',
+        [Validators.required, Validators.minLength(3)],
+      ],
     });
     if (this.editingRegion) {
       this.regionForm.patchValue(this.editingRegion);
@@ -65,21 +75,21 @@ export class RegionDialogComponent {
   onSave(): void {
     if (this.regionForm.invalid) {
       this.regionForm.markAllAsTouched();
-      if(!this.selectedFile) this.requiredImage = true;
+      if (!this.selectedFile) this.requiredImage = true;
     } else {
-      if (!this.editingRegion && !this.selectedFile) { 
+      if (!this.editingRegion && !this.selectedFile) {
         this.requiredImage = true;
         return;
       }
-      
+
       this.requiredImage = false;
-      
+
       const regionData = { ...this.regionForm.value };
-      
+
       if (!this.selectedFile && this.editingRegion) {
         regionData.image = this.editingRegion.image;
       }
-      
+
       let imageToSend;
       if (this.selectedFile) {
         imageToSend = this.selectedFile;
