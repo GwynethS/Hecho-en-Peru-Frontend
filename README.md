@@ -1,27 +1,101 @@
-# HechoEnPeru
+# 🦙 Hecho en Perú
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+Hecho en Perú es una tienda en línea de artesanías peruanas. El proyecto incluye una vista administrativa para la gestión de productos, clientes, artesanos y regiones, y está desarrollado con Angular para el frontend y Spring Boot para el backend.
 
-## Development server
+## 📂 Repositorio del backend
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+https://github.com/GonzaloPA23/HechoEnPeru
 
-## Code scaffolding
+## 📝 Descripción
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Hecho en Perú es una plataforma integral que permite la gestión completa de una tienda de artesanías. Los usuarios pueden navegar y comprar productos, mientras que los administradores pueden gestionar todos los aspectos de la tienda a través de una interfaz administrativa.
 
-## Build
+## ✅ Funcionalidades
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Gestión de Productos:** CRUD completo para productos.
+- **Gestión de Clientes:** Listar y buscar clientes.
+- **Gestión de Artesanos:** CRUD completo para artesanos.
+- **Gestión de Regiones:** Crear y editar regiones.
+- **Carrito de Compras:** Implementación de un carrito de compras con simulación de plataforma de pago.
+- **Comentarios y Valoraciones:** Los clientes pueden interactuar mediante comentarios y valoraciones de productos.
+- **Roles y Permisos:** Diferentes funciones disponibles según el rol del usuario.
+- **Protección de Rutas:** Implementación de guards para proteger las rutas.
+- **Despliegue:** El proyecto se desplegará en una instancia de AWS (en desarrollo).
 
-## Running unit tests
+## 💡 Tecnologías Utilizadas
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Frontend:** Angular, Angular Material, Redux, SweetAlert, Routing, Guards
+- **Backend:** Java Spring Boot
+- **Base de Datos:** PostgreSQL
+- **Lenguajes:** TypeScript, Java
+- **Herramientas de Desarrollo:** Git, GitHub, AWS
 
-## Running end-to-end tests
+## 🔨 Instalación
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+##### Backend:
 
-## Further help
+1. Clona el repositorio del backend:
+    ```bash
+    git clone https://github.com/GonzaloPA23/HechoEnPeru.git
+    ```
+2. Navega al directorio del proyecto:
+    ```bash
+    cd HechoEnPeru
+    ```
+3. Instala las dependencias:
+    ```bash
+    mvn install
+    ```
+4. Configura la base de datos PostgreSQL y actualiza las credenciales en el archivo `application.properties`.
+5. Ejecuta la aplicación Spring Boot
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+##### Frontend:
+
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/GwynethS/Hecho-en-Peru-Frontend.git
+    ```
+2. Navega al directorio del proyecto:
+    ```bash
+    cd Hecho-en-Peru-Frontend
+    ```
+3. Instala las dependencias
+    ```bash
+    npm install
+    ```
+
+
+
+## 👩🏻‍💻 Uso
+
+1. Inicia sesión con las credenciales creadas en la base de datos.
+2. Gestiona la plataforma con el rol ADMIN.
+3. Interactúa con la plataforma como cliente con el rol USER para comprar productos, dejar comentarios y valoraciones.
+
+## 📸 Ejecución
+
+#### Vista de cliente
+
+Catálogo de Productos
+
+![Catálogo de productos](./src/assets/img/excution/catalog.jpg)
+
+Perfil de usuario
+
+![Perfil de usuario](./src/assets/img/excution/profile.jpg)
+
+#### Vista de administrador
+
+Página de Inicio
+
+![Página de inicio del administrador](./src/assets/img/excution/home-admin.jpg)
+
+Página de Productos
+
+![Página de productos del administrador](./src/assets/img/excution/view-products.jpg)
+
+Añadir un producto
+
+![Formulario de productos del administrador](./src/assets/img/excution/add-product.jpg)
+
+
