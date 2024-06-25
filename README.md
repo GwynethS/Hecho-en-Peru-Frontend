@@ -32,39 +32,37 @@ Hecho en Perú es una plataforma integral que permite la gestión completa de un
 
 ## 🔨 Instalación
 
-##### Backend:
+### Backend:
 
 1. Clona el repositorio del backend:
-    ```bash
-    git clone https://github.com/GonzaloPA23/HechoEnPeru.git
-    ```
+  ```bash
+  git clone https://github.com/GonzaloPA23/HechoEnPeru.git
+  ```
 2. Navega al directorio del proyecto:
-    ```bash
-    cd HechoEnPeru
-    ```
+  ```bash
+  cd HechoEnPeru
+  ```
 3. Instala las dependencias:
-    ```bash
-    mvn install
-    ```
+  ```bash
+  mvn install
+  ```
 4. Configura la base de datos PostgreSQL y actualiza las credenciales en el archivo `application.properties`.
 5. Ejecuta la aplicación Spring Boot
 
-##### Frontend:
+### Frontend:
 
 1. Clona el repositorio:
-    ```bash
-    git clone https://github.com/GwynethS/Hecho-en-Peru-Frontend.git
-    ```
+  ```bash
+  git clone https://github.com/GwynethS/Hecho-en-Peru-Frontend.git
+  ```
 2. Navega al directorio del proyecto:
-    ```bash
-    cd Hecho-en-Peru-Frontend
-    ```
+  ```bash
+  cd Hecho-en-Peru-Frontend
+  ```
 3. Instala las dependencias
-    ```bash
-    npm install
-    ```
-
-
+  ```bash
+  npm install
+  ```
 
 ## 👩🏻‍💻 Uso
 
@@ -74,7 +72,7 @@ Hecho en Perú es una plataforma integral que permite la gestión completa de un
 
 ## 📸 Ejecución
 
-#### Vista de cliente
+### Vista de cliente
 
 Catálogo de Productos
 
@@ -84,7 +82,7 @@ Perfil de usuario
 
 ![Perfil de usuario](./src/assets/img/excution/profile.jpg)
 
-#### Vista de administrador
+### Vista de administrador
 
 Página de Inicio
 
@@ -97,5 +95,3 @@ Página de Productos
 Añadir un producto
 
 ![Formulario de productos del administrador](./src/assets/img/excution/add-product.jpg)
-
-
