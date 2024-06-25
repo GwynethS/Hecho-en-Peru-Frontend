@@ -3,7 +3,7 @@
       <h2>Mis productos</h2>
       <div class="cart-items-container">
         <div  *ngFor="let orderDetail of cartProducts$ | async" class="cart-item">
-          <figure><img src="http://localhost:8080/api/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
+          <figure><img src="http://3.145.166.105:6868/uploadsLoadImage/{{ orderDetail.product.image }}" /></figure>
           <div class="product-info">
             <h4>{{orderDetail.product.name}}</h4>
             <p>Cantidad: {{orderDetail.quantity}}</p>

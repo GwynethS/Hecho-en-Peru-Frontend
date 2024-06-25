@@ -1,6 +1,6 @@
 <section>
     <div class="fondo-inicio-reg-img">
-        <img src="http://localhost:8080/api/region/{{regionSelected?.image}}" alt="Region Image" class="background-img">
+        <img src="http://3.145.166.105:6868/api/region/{{regionSelected?.image}}" alt="Region Image" class="background-img">
         <div class="inicio-fondo-region">
              <div data-aos="fade-up" data-aos-duration="2000">
                     <h1 class="h1-desc-reg">{{regionSelected?.name}}</h1>
@@ -26,7 +26,7 @@
         <div class="row">
             <div class="lug col-lg-4 col-md-4 col-sm-12 col-12" *ngFor="let touristSite of touristSites" >
                 <div class="img-lug">
-                    <img class="img-fluid" src="http://localhost:8080/api/touristSite/{{touristSite.image}}" alt="Fotografía del lugar turistico de {{touristSite.name}}">
+                    <img class="img-fluid" src="http://3.145.166.105:6868/api/touristSite/{{touristSite.image}}" alt="Fotografía del lugar turistico de {{touristSite.name}}">
                 </div>
                 <div class="info-lug">
                     <h3>{{touristSite.name}}</h3>
@@ -46,7 +46,7 @@
         <div class="row">
             <div class="art col-lg-3 col-md-3 col-sm-12 col-12" *ngFor="let localCraftsmen of localCraftsman">
                 <div class="img-art">
-                    <img class="img-fluid" src="http://localhost:8080/api/localCraftsmanLoadImage/{{localCraftsmen.image}}"
+                    <img class="img-fluid" src="http://3.145.166.105:6868/api/localCraftsmanLoadImage/{{localCraftsmen.image}}"
                         alt="Fotografía del artesano {{localCraftsmen.fullName}}">
                 </div>
                 <div class="info-art">
