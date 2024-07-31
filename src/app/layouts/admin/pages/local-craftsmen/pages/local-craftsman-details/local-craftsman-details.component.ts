@@ -3,6 +3,7 @@ import { LocalCraftsman } from '../../models/local-craftsman';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalCraftsmenService } from '../../local-craftsmen.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-local-craftsman-details',
@@ -10,6 +11,8 @@ import { LocalCraftsmenService } from '../../local-craftsmen.service';
   styleUrl: './local-craftsman-details.component.scss'
 })
 export class LocalCraftsmanDetailsComponent implements OnInit, OnDestroy {
+  apiURL = environment.apiURL;
+  
   localCraftsmanSelected: LocalCraftsman | null = null;
   subscriptions: Subscription[] = [];
 

@@ -8,6 +8,7 @@ import { LocalCraftsmenService } from '../../../../../admin/pages/local-craftsme
 import { TouristSite } from '../../../../../admin/pages/regions/pages/tourist-sites/models/tourist-site';
 import { TouristSitesService } from '../../../../../admin/pages/regions/pages/tourist-sites/tourist-sites.service';
 import { AlertService } from '../../../../../../core/services/alert.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-region-detail',
@@ -15,6 +16,8 @@ import { AlertService } from '../../../../../../core/services/alert.service';
   styleUrl: './region-detail.component.scss',
 })
 export class RegionDetailComponent {
+  apiURL = environment.apiURL;
+
   regionSelected: Region | null = null;
   localCraftsman: LocalCraftsman[] = [];
   touristSites: TouristSite[] = [];

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { RegionsService } from '../../../admin/pages/regions/regions.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../../../core/services/alert.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-regions',
@@ -11,6 +12,8 @@ import { AlertService } from '../../../../core/services/alert.service';
   styleUrl: './regions.component.scss',
 })
 export class RegionsComponent {
+  apiURL = environment.apiURL;
+
   regions: Region[] = [];
 
   subscriptions: Subscription[] = [];

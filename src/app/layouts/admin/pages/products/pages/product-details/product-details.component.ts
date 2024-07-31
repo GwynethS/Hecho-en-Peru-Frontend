@@ -3,6 +3,7 @@ import { Product } from '../../models/product';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../products.service';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -10,6 +11,8 @@ import { ProductsService } from '../../products.service';
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
+  apiURL = environment.apiURL;
+    
   productSelected: Product | null = null;
   subscriptions: Subscription[] = [];
 

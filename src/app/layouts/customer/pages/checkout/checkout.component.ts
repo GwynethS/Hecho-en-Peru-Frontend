@@ -11,6 +11,7 @@ import { LoginResponse } from '../auth/models/login-response';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { AuthService } from '../auth/auth.service';
 import { AlertService } from '../../../../core/services/alert.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,8 @@ import { AlertService } from '../../../../core/services/alert.service';
   styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent {
+  apiURL = environment.apiURL;
+
   paymentForm: FormGroup;
   authUser$: Observable<LoginResponse | null>;
   cartProducts$: Observable<OrderDetailRequest[]>;
